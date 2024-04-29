@@ -1,30 +1,38 @@
 import { useApi } from "./hooks/useApi";
+import { LoggedInUser } from "./interfaces";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const { data, status } = useApi(
-    "https://v2.api.noroff.dev/holidaze/profiles?_bookings=true&_venues=true",
-    {
-      method: "GET",
+  const inputOptions = useMemo(
+    () => ({
+      method: "POST",
       headers: {
-        "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2luZGVyYmxvY2siLCJlbWFpbCI6InNpbmRlcmJsb2NrQHN0dWQubm9yb2ZmLm5vIiwiaWF0IjoxNzEzMjExMDI5fQ.1dnOhjEfE_bhfiRJMaAxSbTRKpE721WaZoLWqIkQ_Qw",
         "Content-Type": "application/json",
       },
-    }
+      body: JSON.stringify({
+        email: "sinderblock2@stud.noroff.no",
+        password: "12345678",
+      }),
+    }),
+    []
   );
 
-  console.log(data, status);
+  const [count, setCount] = useState(0);
+  const { data, status } = useApi<LoggedInUser>(
+    "https://v2.api.noroff.dev/auth/login",
+    inputOptions
+  );
+
+  console.log(data?.data.accessToken, status);
 
   return (
     <>
       <div>
+        <p></p>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
