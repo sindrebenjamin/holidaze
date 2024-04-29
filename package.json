@@ -11,9 +11,11 @@
     "unit-test": "jest"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
+    "tailwind-styled-components": "^2.2.0",
     "yup": "^1.4.0",
     "zustand": "^4.5.2"
   },
