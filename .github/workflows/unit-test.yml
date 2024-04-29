@@ -15,10 +15,10 @@ jobs:
       - name: Set up NodeJS
         uses: actions/setup-node@v1
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Install all dependencies
         run: npm install
 
       - name: Run Tests
-        run: npm run test-unit
+        run: npm run unit-test
