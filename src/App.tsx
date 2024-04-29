@@ -1,9 +1,6 @@
 import { useApi } from "./hooks/useApi";
-import { Card, TextInput, Textarea } from "flowbite-react";
-
 import { useState, useMemo } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 
 function App() {
@@ -20,8 +17,6 @@ function App() {
     }),
     []
   );
-
-  const [count, setCount] = useState(0);
   const { data, status } = useApi(
     "https://v2.api.noroff.dev/auth/login",
     inputOptions
@@ -29,13 +24,7 @@ function App() {
 
   console.log(data, status);
 
-  return (
-    <>
-      <Card>Test</Card>
-      <TextInput color="pink-500" />
-      <Textarea />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
