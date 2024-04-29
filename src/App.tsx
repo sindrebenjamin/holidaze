@@ -1,5 +1,4 @@
 import { useApi } from "./hooks/useApi";
-import { LoggedInUser } from "./interfaces";
 
 import { useState, useMemo } from "react";
 import reactLogo from "./assets/react.svg";
@@ -22,17 +21,16 @@ function App() {
   );
 
   const [count, setCount] = useState(0);
-  const { data, status } = useApi<LoggedInUser>(
+  const { data, status } = useApi(
     "https://v2.api.noroff.dev/auth/login",
     inputOptions
   );
 
-  console.log(data?.data.accessToken, status);
+  console.log(data, status);
 
   return (
     <>
       <div>
-        <p></p>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -40,7 +38,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1 className="text-3xl">Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
