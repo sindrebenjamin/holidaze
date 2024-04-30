@@ -1,5 +1,10 @@
 import tw from "tailwind-styled-components";
 
+export const HomeContainer = tw.div`
+  max-w-[3000px]
+  m-auto
+`;
+
 export const Container = tw.div`
     max-w-[1200px]
     m-auto
@@ -11,19 +16,17 @@ py-12
 sm:px-6
 `;
 
-export const Textarea = tw.textarea<{ $status: string }>`
-${(p) =>
-  p.$status === "success"
-    ? "border-green-500"
-    : p.$status === "error"
-    ? "border-red-500"
-    : "border-gray-400"}
-placeholder-gray-400
-rounded-sm
+export const Textarea = tw.textarea<{ $error: boolean }>`
+${(p) => (p.$error ? "border-red-500" : "border-gray-400")}
+${(p) => (p.$error ? "placeholder-red-500" : "placeholder-gray-500")}
+
+rounded-lg
 border
-p-3
+px-4
+py-3
 focus:outline-none
-focus:border-amber-500
+focus:border-pink-500
+w-full
 `;
 
 export const Input = tw.input`
