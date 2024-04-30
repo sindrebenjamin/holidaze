@@ -1,30 +1,8 @@
 /*
 import { useApi } from "./hooks/useApi";
 import { useState, useMemo } from "react";
-import { Textarea } from "./components/TailwindComponents";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
-
-const schema = yup
-  .object({
-    firstName: yup
-      .string()
-      .min(3, "Your first name should be at least 3 characters.")
-      .max(10)
-      .required("Please enter your first name"),
-  })
-  .required();
-
-function App() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ resolver: yupResolver(schema), mode: "onChange" });
-
-  const inputOptions = useMemo(
+ const inputOptions = useMemo(
     () => ({
       method: "POST",
       headers: {
@@ -41,31 +19,53 @@ function App() {
     "https://v2.api.noroff.dev/auth/login",
     inputOptions
   );
+*/
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
+
+const schema = yup
+  .object({
+    firstName: yup
+      .string()
+      .min(3, "Your first name should be at least 3 characters.")
+      .max(10)
+      .required("Please enter your first name"),
+  })
+  .required();
+
+const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ resolver: yupResolver(schema), mode: "onBlur" });
 
   function onSubmit(data) {
     console.log(data);
   }
 
+  const isError = errors.firstName ? true : false;
+
   console.log(isValid);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Textarea
-        {...register("firstName")}
-        $status={errors.firstName ? "error" : ""}
+      <InputAndLabelAndMessage
+        register={register}
+        placeholder="First name"
+        name="firstName"
+        label="First name"
+        error={isError}
+        message={errors.firstName?.message}
       />
-      <p>{errors.firstName?.message}</p>
+
       <input type="submit" disabled={!isValid} />
     </form>
   );
-}
-
-export default App;
-
-*/
-
-const RegisterPage = () => {
-  return <h1>Register</h1>;
 };
 
 export default RegisterPage;
