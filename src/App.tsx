@@ -1,62 +1,31 @@
-import { useApi } from "./hooks/useApi";
-import { useState, useMemo } from "react";
-import { Textarea } from "./components/TailwindComponents";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Routes, Route } from "react-router-dom";
 
-import "./App.css";
-
-const schema = yup
-  .object({
-    firstName: yup
-      .string()
-      .min(3, "Your first name should be at least 3 characters.")
-      .max(10)
-      .required("Please enter your first name"),
-  })
-  .required();
+import Layout from "./components/Layout";
+import AccountPage from "./pages/AccountPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import AddVenuePage from "./pages/AddVenuePage";
+import EditVenuePage from "./pages/EditVenuePage";
+import VenuePage from "./pages/VenuePage";
 
 function App() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ resolver: yupResolver(schema), mode: "onChange" });
-
-  const inputOptions = useMemo(
-    () => ({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "sinderblock2@stud.noroff.no",
-        password: "12345678",
-      }),
-    }),
-    []
-  );
-  const { data, status } = useApi(
-    "https://v2.api.noroff.dev/auth/login",
-    inputOptions
-  );
-
-  function onSubmit(data) {
-    console.log(data);
-  }
-
-  console.log(isValid);
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Textarea
-        {...register("firstName")}
-        $status={errors.firstName ? "error" : ""}
-      />
-      <p>{errors.firstName?.message}</p>
-      <input type="submit" disabled={!isValid} />
-    </form>
+    <Routes>
+      <Route path="/*" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="account" element={<AccountPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="notfound" element={<NotFoundPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="add" element={<AddVenuePage />} />
+        <Route path="edit/:id" element={<EditVenuePage />} />
+        <Route path="venue/:id" element={<VenuePage />} />
+      </Route>
+    </Routes>
   );
 }
 
