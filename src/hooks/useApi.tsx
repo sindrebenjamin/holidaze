@@ -34,7 +34,7 @@ export function useApi<T>(url: string, options: object): UseDataReturn<T> {
     return () => {
       ignore = true;
     };
-  }, [url]);
+  }, [url, options]);
 
   return { data, status };
 }
