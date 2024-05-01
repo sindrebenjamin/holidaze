@@ -27,6 +27,10 @@ import * as yup from "yup";
 
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 
+interface FormData {
+  firstName: string;
+}
+
 const schema = yup
   .object({
     firstName: yup
@@ -44,7 +48,7 @@ const RegisterPage = () => {
     formState: { errors, isValid },
   } = useForm({ resolver: yupResolver(schema), mode: "onBlur" });
 
-  function onSubmit(data) {
+  function onSubmit(data: FormData) {
     console.log(data);
   }
 
