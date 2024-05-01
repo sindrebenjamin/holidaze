@@ -1,39 +1,14 @@
-/*
-import { useApi } from "./hooks/useApi";
-import { useState, useMemo } from "react";
-
- const inputOptions = useMemo(
-    () => ({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "sinderblock2@stud.noroff.no",
-        password: "12345678",
-      }),
-    }),
-    []
-  );
-  const { data, status } = useApi(
-    "https://v2.api.noroff.dev/auth/login",
-    inputOptions
-  );
-*/
-
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import { registerUser } from "../auth/registerUser";
 import { StyledH1 } from "../components/TailwindComponents";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import SelectorButton from "../components/SelectorButton";
 import Button from "../components/Button";
-
-interface FormData {
-  name: string;
-}
+import { ApiStatus, FormData } from "../interfaces";
 
 const schema = yup
   .object({
@@ -63,6 +38,9 @@ const schema = yup
 const RegisterPage = () => {
   const [venueManager, setVenueManager] = useState(true);
   const [subPage, setSubPage] = useState("accountType");
+  const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
+
+  const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
   const {
     register,
@@ -72,7 +50,26 @@ const RegisterPage = () => {
 
   function onSubmit(data: FormData) {
     console.log(data);
-    console.log(venueManager);
+    console.log("venueManager:", venueManager);
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        venueManager: venueManager,
+      }),
+    };
+
+    registerUser(
+      "https://v2.api.noroff.dev/auth/register",
+      options,
+      setApiStatus
+    );
   }
 
   return (
@@ -146,39 +143,35 @@ const RegisterPage = () => {
               error={Boolean(errors.confirmPassword)}
               message={errors.confirmPassword?.message}
             />
-
-            <input type="submit" disabled={!isValid} />
+            <Button
+              fullWidth={true}
+              onClick={() => setSubPage("accountType")}
+              size="xl"
+              color="white"
+            >
+              Back
+            </Button>
+            <Button
+              disabled={!isValid}
+              type="submit"
+              fullWidth={true}
+              size="xl"
+              color="gray-dark"
+            >
+              {" "}
+              {apiStatus === "loading" ? "loading..." : "Create account"}
+            </Button>
           </form>
-          <Button
-            fullWidth={true}
-            onClick={() => setSubPage("accountType")}
-            size="xl"
-            color="gray-dark"
-          >
-            Back
-          </Button>
+          <ul className="text-red-500">
+            {apiErrors &&
+              apiErrors.map((error) => {
+                return <li key={error.message}>{error.message}</li>;
+              })}
+          </ul>
         </>
       )}
     </>
   );
-
-  /*
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <InputAndLabelAndMessage
-        register={register}
-        placeholder="First name"
-        name="firstName"
-        label="First name"
-        error={Boolean(errors.firstName)}
-        message={errors.firstName?.message}
-      />
-
-      <input type="submit" disabled={!isValid} />
-    </form>
-  );
-
-  */
 };
 
 export default RegisterPage;

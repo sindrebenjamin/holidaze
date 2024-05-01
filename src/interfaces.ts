@@ -136,3 +136,28 @@ interface Count {
   venues: number;
   bookings: number;
 }
+
+// Local
+
+export interface ApiOptions {
+  method: string;
+  headers: HeadersInit;
+  body: string;
+}
+
+export interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface ApiError {
+  message: string;
+}
+
+export type ApiStatus =
+  | "idle"
+  | "loading"
+  | "success"
+  | "error"
+  | { errors: ApiError[]; status: string; statusCode: number };

@@ -1,16 +1,20 @@
 interface ButtonProps {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   color: string;
   size: string;
-  fullWidth: boolean;
+  type?: "submit" | "reset" | "button" | undefined;
+  fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
   color,
   size,
+  type,
   fullWidth,
   children,
+  disabled,
   onClick,
 }) => {
   const sizeClasses =
@@ -32,16 +36,18 @@ const Button: React.FC<ButtonProps> = ({
       : color === "pink"
       ? "border bg-pink-700 hover:bg-pink-800 text-white border-pink-700 hover:border-pink-800 focus:outline focus:outline-pink-300"
       : color === "white"
-      ? "border bg-white text-gray-900 border-gray-300 hover:bg-gray-50 focus:outline focus:outline-pink-500"
+      ? "border bg-white text-gray-900 border-gray-300 hover:bg-gray-50 focus:outline focus:outline-gray-800"
       : color === "gray-light"
       ? "border bg-gray-200 hover:bg-gray-300 text-gray-900 border-gray-200 hover:bg-gray-300 focus:outline focus:outline-gray-800"
       : "opacity-50 hover:opacity-100";
 
   return (
     <button
-      className={`${colorClasses} ${sizeClasses} ${
-        fullWidth && "w-full"
-      } flex items-center gap-2 justify-center transition-all duration-100 rounded-lg`}
+      disabled={disabled}
+      type={type}
+      className={`${colorClasses} ${sizeClasses} ${fullWidth && "w-full"} ${
+        disabled && "opacity-50"
+      } flex items-center gap-2 justify-center transition-all duration-100 rounded-lg disabled:pointer-events-none`}
       onClick={onClick}
     >
       {children}
