@@ -28,6 +28,7 @@ import * as yup from "yup";
 
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import SelectorButton from "../components/SelectorButton";
+import Button from "../components/Button";
 
 interface FormData {
   firstName: string;
@@ -60,21 +61,55 @@ const RegisterPage = () => {
   console.log(Boolean(errors.firstName));
 
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-sm font-medium">Account type</p>
-      <SelectorButton
-        onClick={() => setVenueManager(true)}
-        selected={venueManager === true}
+    <>
+      <div className="flex flex-col gap-2">
+        <p className="text-sm font-medium">Account type</p>
+        <SelectorButton
+          onClick={() => setVenueManager(true)}
+          selected={venueManager === true}
+        >
+          Venue manager
+        </SelectorButton>
+        <SelectorButton
+          onClick={() => setVenueManager(false)}
+          selected={!venueManager}
+        >
+          Guest
+        </SelectorButton>
+      </div>
+      <Button
+        fullWidth={true}
+        onClick={() => console.log("Hei")}
+        size="xl"
+        color="pink"
       >
-        Venue manager
-      </SelectorButton>
-      <SelectorButton
-        onClick={() => setVenueManager(false)}
-        selected={!venueManager}
+        Continue
+      </Button>
+      <Button
+        fullWidth={true}
+        onClick={() => console.log("Hei")}
+        size="lg"
+        color="gray-light"
       >
-        Guest
-      </SelectorButton>
-    </div>
+        Continue
+      </Button>
+      <Button
+        fullWidth={false}
+        onClick={() => console.log("Hei")}
+        size="md"
+        color="gray"
+      >
+        Continue
+      </Button>
+      <Button
+        fullWidth={false}
+        onClick={() => console.log("Hei")}
+        size=""
+        color=""
+      >
+        Continue
+      </Button>
+    </>
   );
 
   /*
