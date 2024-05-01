@@ -26,6 +26,7 @@ py-3
 focus:outline-none
 focus:border-pink-500
 w-full
+bg-gray-50
 `;
 
 export const Input = tw.input<{ $error: boolean }>`
@@ -36,8 +37,9 @@ border
 px-4
 py-3
 focus:outline-none
-focus:border-pink-500
+focus:border-gray-900
 w-full
+bg-gray-50
 `;
 
 export const StyledH1 = tw.h1`

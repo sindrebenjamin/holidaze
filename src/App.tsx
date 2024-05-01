@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import AddVenuePage from "./pages/AddVenuePage";
 import EditVenuePage from "./pages/EditVenuePage";
 import VenuePage from "./pages/VenuePage";
+import "./global.css";
 
 function App() {
   return (
