@@ -61,7 +61,7 @@ const RegisterPage = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-sm">Account type</p>
+      <p className="text-sm font-medium">Account type</p>
       <SelectorButton
         onClick={() => setVenueManager(true)}
         selected={venueManager === true}
