@@ -117,6 +117,7 @@ const RegisterPage = () => {
               message={errors.name?.message}
             />
             <InputAndLabelAndMessage
+              autocomplete="username"
               type="email"
               register={register}
               placeholder="john@stud.noroff.no"
@@ -126,6 +127,7 @@ const RegisterPage = () => {
               message={errors.email?.message}
             />
             <InputAndLabelAndMessage
+              autocomplete="new-password"
               type="password"
               register={register}
               placeholder="********"
@@ -135,6 +137,7 @@ const RegisterPage = () => {
               message={errors.password?.message}
             />
             <InputAndLabelAndMessage
+              autocomplete="new-password"
               type="password"
               register={register}
               placeholder="********"
@@ -144,6 +147,7 @@ const RegisterPage = () => {
               message={errors.confirmPassword?.message}
             />
             <Button
+              type="button"
               fullWidth={true}
               onClick={() => setSubPage("accountType")}
               size="xl"
@@ -159,7 +163,11 @@ const RegisterPage = () => {
               color="gray-dark"
             >
               {" "}
-              {apiStatus === "loading" ? "loading..." : "Create account"}
+              {apiStatus === "loading" ? (
+                <div className="spinner-light"></div>
+              ) : (
+                "Create account"
+              )}
             </Button>
           </form>
           <ul className="text-red-500">

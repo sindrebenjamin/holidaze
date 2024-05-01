@@ -8,6 +8,7 @@ interface InputAndLabelAndMessageProps<T extends FieldValues> {
   message?: string;
   label: string;
   type: string;
+  autocomplete?: string;
   register: UseFormRegister<T>;
 }
 
@@ -18,6 +19,7 @@ function InputAndLabelAndMessage<T extends FieldValues>({
   message,
   label,
   type,
+  autocomplete,
   register,
 }: InputAndLabelAndMessageProps<T>) {
   const errorClasses = error ? "text-red-500" : "";
@@ -29,6 +31,7 @@ function InputAndLabelAndMessage<T extends FieldValues>({
       </label>
       <div>
         <Input
+          autoComplete={autocomplete}
           {...register(name)}
           id={String(name)}
           placeholder={placeholder}
