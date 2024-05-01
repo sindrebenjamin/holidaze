@@ -22,10 +22,12 @@ import { useState, useMemo } from "react";
 */
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
+import SelectorButton from "../components/SelectorButton";
 
 interface FormData {
   firstName: string;
@@ -42,20 +44,40 @@ const schema = yup
   .required();
 
 const RegisterPage = () => {
+  const [venueManager, setVenueManager] = useState(true);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm({ resolver: yupResolver(schema), mode: "onChange" });
 
   function onSubmit(data: FormData) {
     console.log(data);
+    console.log(venueManager);
   }
 
-  const isError = errors.firstName ? true : false;
+  console.log(Boolean(errors.firstName));
 
-  console.log(isValid);
+  return (
+    <div className="flex flex-col gap-2">
+      <p className="text-sm">Account type</p>
+      <SelectorButton
+        onClick={() => setVenueManager(true)}
+        selected={venueManager === true}
+      >
+        Venue manager
+      </SelectorButton>
+      <SelectorButton
+        onClick={() => setVenueManager(false)}
+        selected={!venueManager}
+      >
+        Guest
+      </SelectorButton>
+    </div>
+  );
 
+  /*
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputAndLabelAndMessage
@@ -63,13 +85,15 @@ const RegisterPage = () => {
         placeholder="First name"
         name="firstName"
         label="First name"
-        error={isError}
+        error={Boolean(errors.firstName)}
         message={errors.firstName?.message}
       />
 
       <input type="submit" disabled={!isValid} />
     </form>
   );
+
+  */
 };
 
 export default RegisterPage;

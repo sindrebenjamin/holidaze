@@ -20,7 +20,9 @@ function InputAndLabelAndMessage<T extends FieldValues>({
 }: InputAndLabelAndMessageProps<T>) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={String(name)}>{label}</label>
+      <label className="text-sm" htmlFor={String(name)}>
+        {label}
+      </label>
       <div>
         <Input
           {...register(name)}
