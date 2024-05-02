@@ -1,20 +1,44 @@
+import { useMemo } from "react";
+
+import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
+import { Venue, VenueResponse } from "../interfaces";
+import VenueCard from "../components/VenueCard";
 
 const HomePage = () => {
-  const user = useUserStore((state) => state.user);
-  if (user) {
-    return (
-      <div>
-        <h1>{user.name}</h1>
-        <p>
-          {user.venueManager ? "Is venue manager!" : "Is not venue manager!"}
-        </p>
-        <p>{user.email}</p>
-      </div>
-    );
-  }
+  //const user = useUserStore((state) => state.user);
+  const options = useMemo(
+    () => ({
+      method: "GET",
+    }),
+    []
+  );
+  const { data, status } = useApi<VenueResponse>(
+    "https://v2.api.noroff.dev/holidaze/venues",
+    options
+  );
 
-  return <h1>no user</h1>;
+  console.log(data);
+
+  return (
+    <div>
+      {data &&
+        data.data.map((venue: Venue) => {
+          if (venue.media[0]) {
+            return (
+              <VenueCard
+                key={venue.id}
+                id={venue.id}
+                media={venue.media[0]}
+                address={venue.location.address}
+                price={venue.price}
+                rating={venue.rating}
+              />
+            );
+          }
+        })}
+    </div>
+  );
 };
 
 export default HomePage;

@@ -36,24 +36,8 @@ interface BookingData {
 // Venue
 
 export interface VenueResponse {
-  data: VenueData;
+  data: Venue[];
   meta: Record<string, unknown>;
-}
-
-interface VenueData {
-  id: string;
-  name: string;
-  description: string;
-  media: MediaItem[];
-  price: number;
-  maxGuests: number;
-  rating: number;
-  created: string;
-  updated: string;
-  meta: VenueMeta;
-  location: Location;
-  bookings: Booking[];
-  _count: Count;
 }
 
 // Profile
@@ -77,9 +61,9 @@ interface ProfileData {
 
 // Shared interfaces
 
-interface MediaItem {
-  url: string;
+export interface MediaItem {
   alt: string;
+  url: string;
 }
 
 interface VenueMeta {
@@ -109,7 +93,7 @@ interface Person {
   banner: MediaItem;
 }
 
-interface Venue {
+export interface Venue {
   id: string;
   name: string;
   description: string;
@@ -120,7 +104,9 @@ interface Venue {
   created: string;
   updated: string;
   meta: VenueMeta;
-  location: Location | null;
+  location: Location;
+  bookings: Booking[];
+  _count: Count;
 }
 
 interface Booking {
