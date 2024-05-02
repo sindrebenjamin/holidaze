@@ -1,8 +1,8 @@
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  color: string;
-  size: string;
+  color?: string;
+  size?: string;
   type?: "submit" | "reset" | "button" | undefined;
   fullWidth?: boolean;
   disabled?: boolean;
@@ -28,7 +28,7 @@ const Button: React.FC<ButtonProps> = ({
       ? "px-5 py-3 text-base"
       : size === "2xl"
       ? "px-6 py-3.5 text-base"
-      : "text-xs";
+      : "text-sm";
 
   const colorClasses =
     color === "gray-dark"
@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
       ? "border bg-white text-gray-900 border-gray-300 hover:bg-gray-50 focus:outline focus:outline-gray-800"
       : color === "gray-light"
       ? "border bg-gray-200 hover:bg-gray-300 text-gray-900 border-gray-200 hover:bg-gray-300 focus:outline focus:outline-gray-800"
-      : "opacity-50 hover:opacity-100";
+      : "opacity-70 hover:opacity-100";
 
   return (
     <button

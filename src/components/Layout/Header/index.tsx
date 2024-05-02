@@ -1,45 +1,45 @@
+import { NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+
 import { useUserStore } from "../../../store/useUserStore";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { useRef } from "react";
+
 import Logo from "../../icons/Logo";
+import UnauthorizedNavigation from "./UnauthorizedNavigation";
+import Dropdown from "./Dropdown";
+import UserAvatar from "./UserAvatar";
 
 const Header = () => {
+  const location = useLocation();
   const user = useUserStore((state) => state.user);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const wrapperRef = useRef(null);
+
+  useOutsideClick(wrapperRef, () => setIsOpen(false));
+
+  const maxWidth =
+    location.pathname === "/" ? "max-w-[3000px]" : "max-w-[1200px]";
+
   return (
-    <header>
-      <Logo />
-      {!user ? "hei" : "nei"}
-      <UserAvatar />
+    <header className="py-3 px-4 sm:px-6">
+      <div
+        className={`relative m-auto ${maxWidth} flex items-center justify-between`}
+      >
+        <NavLink to="/">
+          <Logo />
+        </NavLink>
+        <div ref={wrapperRef}>
+          {user ? (
+            <UserAvatar isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+          ) : (
+            <UnauthorizedNavigation />
+          )}
+          {user && isOpen && <Dropdown />}
+        </div>
+      </div>
     </header>
   );
 };
 
 export default Header;
-
-const UserAvatar = () => {
-  const user = useUserStore((state) => state.user);
-  return (
-    <div className="relative w-fit h-fit">
-      <img
-        className="rounded-full h-11 w-11"
-        src={user?.avatar.url}
-        alt={user?.avatar.alt}
-      />
-      <div className="bg-gray-50 justify-center items-center flex rounded-full h-3 w-3 absolute bottom-0 right-0">
-        <svg
-          width={6}
-          height={4}
-          viewBox="0 0 6 4"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 1L3 3L5 1"
-            stroke="#F472B6"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    </div>
-  );
-};
