@@ -6,7 +6,7 @@ export async function registerUser(
   options: ApiOptions,
   setApiStatus: (status: ApiStatus) => void
 ) {
-  const data = JSON.parse(options.body);
+  const data = options.body !== undefined && JSON.parse(options.body);
 
   try {
     setApiStatus("loading");
