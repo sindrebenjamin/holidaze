@@ -24,7 +24,7 @@ export async function registerUser(
         }),
       };
       loginUser(
-        "https://v2.api.noroff.dev/auth/login",
+        "https://v2.api.noroff.dev/auth/login?_holidaze=true",
         loginOptions,
         setApiStatus
       );

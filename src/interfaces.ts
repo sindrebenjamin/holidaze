@@ -1,17 +1,18 @@
 // Login
 
 export interface LoggedInUserResponse {
-  data: LoggedInUserData;
+  data: User;
   meta: Record<string, unknown>;
 }
 
-interface LoggedInUserData {
+export interface User {
   name: string;
   email: string;
   bio: string;
   avatar: MediaItem;
   banner: MediaItem;
   accessToken: string;
+  venueManager: boolean;
 }
 
 // Booking
