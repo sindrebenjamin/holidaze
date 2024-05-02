@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 
 import { useApi } from "../hooks/useApi";
-import { useUserStore } from "../store/useUserStore";
+//import { useUserStore } from "../store/useUserStore";
 import { Venue, VenueResponse } from "../interfaces";
+import { validateVenue } from "../utils/validateVenue";
 import VenueCard from "../components/VenueCard";
+import VenueManagerCard from "../components/VenueManagerCard";
 
 const HomePage = () => {
   //const user = useUserStore((state) => state.user);
@@ -24,8 +26,9 @@ const HomePage = () => {
     <div>
       {data &&
         data.data.map((venue: Venue) => {
-          if (venue.media[0]) {
+          if (validateVenue(venue)) {
             return (
+              /*
               <VenueCard
                 key={venue.id}
                 id={venue.id}
@@ -33,6 +36,15 @@ const HomePage = () => {
                 address={venue.location.address}
                 price={venue.price}
                 rating={venue.rating}
+              />
+              */
+              <VenueManagerCard
+                name={venue.name}
+                key={venue.id}
+                id={venue.id}
+                media={venue.media[0]}
+                address={venue.location.address}
+                bookings={venue._count.bookings}
               />
             );
           }

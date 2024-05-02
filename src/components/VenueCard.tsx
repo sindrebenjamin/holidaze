@@ -48,7 +48,7 @@ const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
       <div>
         <div className="flex justify-between">
           <p className="font-bold">{address}</p>
-          <div className="flex items-center">
+          <div className="flex items-center gap-0.5">
             <Star />
             <p>{rating}</p>
           </div>
