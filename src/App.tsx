@@ -15,7 +15,7 @@ import "./global.css";
 function App() {
   return (
     <Routes>
-      <Route path="/*" element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="account" element={<AccountPage />} />
         <Route path="login" element={<LoginPage />} />
