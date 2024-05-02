@@ -142,7 +142,7 @@ interface Count {
 export interface ApiOptions {
   method: string;
   headers: HeadersInit;
-  body: string;
+  body?: string;
 }
 
 export interface FormData {
