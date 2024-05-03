@@ -7,10 +7,12 @@ import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import QuantitySelector from "../components/QuantitySelector";
+import RatingSelector from "../components/RatingSelector";
 
 const AddVenuePage = () => {
   const { register, handleSubmit } = useForm();
   const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(0);
 
   const locationContent = (
     <div className="max-w-[500px]">
@@ -29,7 +31,7 @@ const AddVenuePage = () => {
     { title: "Details", id: 3, content: <p>Details</p> },
     { title: "Amenities", id: 4, content: <p>Amenities</p> },
     { title: "Media", id: 5, content: <p>Amenities</p> },
-    { title: "Publish", id: 4, content: <p>Amenities</p> },
+    { title: "Publish", id: 6, content: <p>Amenities</p> },
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
@@ -37,6 +39,7 @@ const AddVenuePage = () => {
         <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">List Venue</FormH1>
         <Tabs tabs={tabsData} />
         <QuantitySelector quantity={quantity} handleQuantity={setQuantity} />
+        <RatingSelector rating={rating} setRating={setRating} />
       </div>
     </main>
   );
