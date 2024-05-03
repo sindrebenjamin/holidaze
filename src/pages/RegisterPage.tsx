@@ -188,7 +188,7 @@ const RegisterPage = () => {
             Log in here
           </NavLink>
         </p>
-        <ul className="text-red-500">
+        <ul className="text-red-500 mt-2">
           {apiErrors &&
             apiErrors.map((error) => {
               return <li key={error.message}>{error.message}</li>;

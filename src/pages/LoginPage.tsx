@@ -32,7 +32,7 @@ const LoginPage = () => {
   return (
     <main className="sm:bg-gray-50 sm:flex sm:flex-col sm:justify-center sm:items-center sm:min-h-screen sm:py-12">
       <div className="bg-white w-full px-4 py-12 min-h-screen sm:min-h-0 sm:p-10 sm:rounded-lg sm:shadow-md max-w-[535px]">
-        <FormH1 className="mb-6">Create Account</FormH1>{" "}
+        <FormH1 className="mb-6">Login</FormH1>{" "}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <InputAndLabelAndMessage
             autocomplete="username"
@@ -69,7 +69,7 @@ const LoginPage = () => {
             Create new user
           </NavLink>
         </p>
-        <ul className="text-red-500">
+        <ul className="text-red-500 mt-2">
           {apiErrors &&
             apiErrors.map((error) => {
               return <li key={error.message}>{error.message}</li>;

@@ -22,7 +22,7 @@ const Dropdown = () => {
         {user?.venueManager && (
           <NavLink
             className="text-gray-500 px-4 py-3 hover:bg-gray-50 transtion-colors duration-100"
-            to={"/account"}
+            to={"/add"}
           >
             Add new venue
           </NavLink>
