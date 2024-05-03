@@ -9,7 +9,7 @@ import { FormH1 } from "../components/TailwindComponents";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import SelectorButton from "../components/SelectorButton";
 import Button from "../components/Button";
-import { ApiStatus, FormData } from "../interfaces";
+import { ApiStatus, RegisterFormData } from "../interfaces";
 
 const schema = yup
   .object({
@@ -40,6 +40,11 @@ const RegisterPage = () => {
   const [venueManager, setVenueManager] = useState(true);
   const [subPage, setSubPage] = useState("accountType");
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ resolver: yupResolver(schema), mode: "onBlur" });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,13 +52,7 @@ const RegisterPage = () => {
 
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ resolver: yupResolver(schema), mode: "onBlur" });
-
-  function onSubmit(data: FormData) {
+  function onSubmit(data: RegisterFormData) {
     const options = {
       method: "POST",
       headers: {
@@ -178,12 +177,6 @@ const RegisterPage = () => {
                 </Button>
               </div>
             </form>
-            <ul className="text-red-500">
-              {apiErrors &&
-                apiErrors.map((error) => {
-                  return <li key={error.message}>{error.message}</li>;
-                })}
-            </ul>
           </>
         )}
         <p className="text-gray-800 mt-4">
@@ -195,6 +188,12 @@ const RegisterPage = () => {
             Log in here
           </NavLink>
         </p>
+        <ul className="text-red-500">
+          {apiErrors &&
+            apiErrors.map((error) => {
+              return <li key={error.message}>{error.message}</li>;
+            })}
+        </ul>
       </div>
     </main>
   );

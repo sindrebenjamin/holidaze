@@ -16,7 +16,9 @@ py-12
 sm:px-6
 `;
 
-export const Textarea = tw.textarea<{ $error: boolean }>`
+export const Textarea = tw.textarea<{
+  $error: boolean | undefined | undefined;
+}>`
 ${(p) => (p.$error ? "border-red-500" : "border-gray-400")}
 ${(p) => (p.$error ? "placeholder-red-500" : "placeholder-gray-500")}
 rounded-lg
@@ -29,7 +31,7 @@ w-full
 bg-gray-50
 `;
 
-export const Input = tw.input<{ $error: boolean }>`
+export const Input = tw.input<{ $error: boolean | undefined }>`
 ${(p) => (p.$error ? "border-red-500" : "border-gray-400")}
 ${(p) => (p.$error ? "placeholder-red-500" : "placeholder-gray-500")}
 rounded-lg

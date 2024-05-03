@@ -4,7 +4,7 @@ import { Input } from "./TailwindComponents";
 interface InputAndLabelAndMessageProps<T extends FieldValues> {
   name: Path<T>;
   placeholder: string;
-  error: boolean;
+  error?: boolean;
   message?: string;
   label: string;
   type: string;
