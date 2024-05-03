@@ -30,8 +30,8 @@ const AddVenuePage = () => {
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-      <div className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 md:rounded-lg md:shadow-md overflow-hidden">
-        <FormH1 className="mb-6">List Venue</FormH1>
+      <div className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden">
+        <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">List Venue</FormH1>
         <Tabs tabs={tabsData} />
       </div>
     </main>

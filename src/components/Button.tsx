@@ -6,6 +6,7 @@ interface ButtonProps {
   type?: "submit" | "reset" | "button" | undefined;
   fullWidth?: boolean;
   disabled?: boolean;
+  override?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   disabled,
   onClick,
+  override,
 }) => {
   const sizeClasses =
     size === "sm"
@@ -47,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       className={`${colorClasses} ${sizeClasses} ${fullWidth && "w-full"} ${
         disabled && "opacity-50"
-      } flex items-center gap-2 justify-center transition-all duration-100 rounded-lg disabled:pointer-events-none`}
+      } flex items-center gap-2 justify-center transition-all duration-100 rounded-lg disabled:pointer-events-none ${override}`}
       onClick={onClick}
     >
       {children}

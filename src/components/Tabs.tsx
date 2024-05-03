@@ -20,8 +20,8 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
   }
 
   return (
-    <>
-      <div className="w-full flex overflow-auto no-scrollbar">
+    <div className="flex flex-col gap-6 md:gap-8">
+      <div className="w-full flex overflow-auto no-scrollbar px-4 md:px-0">
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -44,19 +44,28 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
         }
       })}
 
-      <Button
-        onClick={() => setCurrentTab(currentTab - 1)}
-        disabled={currentTab === 0}
-      >
-        Previous
-      </Button>
-      <Button
-        onClick={() => setCurrentTab(currentTab + 1)}
-        disabled={currentTab === tabs.length - 1}
-      >
-        Next
-      </Button>
-    </>
+      <div className="px-4 md:px-0">
+        <div className="h-[1px] bg-gray-200 w-full"></div>
+      </div>
+
+      <div className="flex justify-between px-4 md:px-0">
+        <Button
+          onClick={() => setCurrentTab(currentTab - 1)}
+          disabled={currentTab === 0}
+        >
+          Previous
+        </Button>
+        <Button
+          color="gray-dark"
+          size="sm"
+          override="w-[80px]"
+          onClick={() => setCurrentTab(currentTab + 1)}
+          disabled={currentTab === tabs.length - 1}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 
