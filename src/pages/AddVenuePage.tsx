@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
+import QuantitySelector from "../components/QuantitySelector";
 
 const AddVenuePage = () => {
   const { register, handleSubmit } = useForm();
+  const [quantity, setQuantity] = useState(1);
 
   const locationContent = (
     <div className="max-w-[500px]">
@@ -33,6 +36,7 @@ const AddVenuePage = () => {
       <div className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden">
         <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">List Venue</FormH1>
         <Tabs tabs={tabsData} />
+        <QuantitySelector quantity={quantity} handleQuantity={setQuantity} />
       </div>
     </main>
   );
