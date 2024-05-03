@@ -10,23 +10,27 @@ import RegisterPage from "./pages/RegisterPage";
 import AddVenuePage from "./pages/AddVenuePage";
 import EditVenuePage from "./pages/EditVenuePage";
 import VenuePage from "./pages/VenuePage";
+import ScrollToTop from "./components/ScrollToTop";
 import "./global.css";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path="account" element={<AccountPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="notfound" element={<NotFoundPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="add" element={<AddVenuePage />} />
-        <Route path="edit/:id" element={<EditVenuePage />} />
-        <Route path="venue/:id" element={<VenuePage />} />
-      </Route>
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="account" element={<AccountPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="notfound" element={<NotFoundPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="add" element={<AddVenuePage />} />
+          <Route path="edit/:id" element={<EditVenuePage />} />
+          <Route path="venue/:id" element={<VenuePage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

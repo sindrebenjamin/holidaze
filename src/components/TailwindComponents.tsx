@@ -42,6 +42,11 @@ w-full
 bg-gray-50
 `;
 
+export const FormH1 = tw.h1`
+text-3xl
+font-bold
+`;
+
 export const StyledH1 = tw.h1`
 text-3xl 
 md:text-4xl 
