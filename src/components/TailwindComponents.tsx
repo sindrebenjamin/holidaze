@@ -10,7 +10,7 @@ export const Container = tw.div`
     m-auto
 `;
 
-export const Section = tw.section<{ $noXPadding: boolean }>`
+export const Section = tw.section<{ $noXPadding?: boolean }>`
 ${(p) => (p.$noXPadding ? "px-0" : "px-4")}
 py-12
 sm:px-6
