@@ -1,11 +1,16 @@
-import NumberSelector from "../components/NumberSelector";
-import BackButton from "../components/BackButton";
+import HostCard from "../components/HostCard";
+import { useUserStore } from "../store/useUserStore";
 
 const AccountPage = () => {
+  const user = useUserStore((state) => state.user);
   return (
     <>
-      <NumberSelector title="6+" selected={false} />
-      <BackButton />
+      <HostCard
+        name="Sindre"
+        mediaItem={user.avatar}
+        email="sindre@stud.noroff.no"
+        averageScore={4.4}
+      />
     </>
   );
 };
