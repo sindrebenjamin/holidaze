@@ -54,7 +54,7 @@ const VenueManagerCard = ({
         </div>
         <p className="text-gray-700 flex items-center gap-1">
           <User />
-          {bookings} {bookings > 1 ? "Bookings" : "Booking"}
+          {bookings} {bookings !== 1 ? "Bookings" : "Booking"}
         </p>
       </div>
     </NavLink>

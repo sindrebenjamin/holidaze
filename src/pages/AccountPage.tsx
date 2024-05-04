@@ -1,5 +1,7 @@
+import GuestSelector from "../components/GuestSelector";
+
 const AccountPage = () => {
-  return <h1>Account Page</h1>;
+  return <GuestSelector />;
 };
 
 export default AccountPage;
