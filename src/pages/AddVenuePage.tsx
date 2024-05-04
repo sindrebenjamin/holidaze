@@ -8,11 +8,23 @@ import Tabs from "../components/Tabs";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import QuantitySelector from "../components/QuantitySelector";
 import RatingSelector from "../components/RatingSelector";
+import AmenityCard from "../components/AmenityCard";
 
 const AddVenuePage = () => {
   const { register, handleSubmit } = useForm();
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
+  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+
+  function handleAmenityClick(amenity: string) {
+    if (!selectedAmenities.includes(amenity)) {
+      setSelectedAmenities([...selectedAmenities, amenity]);
+    } else {
+      const nextAmenities = selectedAmenities.filter((a) => a !== amenity);
+      setSelectedAmenities(nextAmenities);
+    }
+    console.log(selectedAmenities);
+  }
 
   const locationContent = (
     <div className="max-w-[500px]">
@@ -40,6 +52,18 @@ const AddVenuePage = () => {
         <Tabs tabs={tabsData} />
         <QuantitySelector quantity={quantity} handleQuantity={setQuantity} />
         <RatingSelector rating={rating} setRating={setRating} />
+        <AmenityCard
+          onClick={() => handleAmenityClick("parking")}
+          title="Parking"
+          selected={selectedAmenities.includes("parking")}
+          icon="car"
+        />
+        <AmenityCard
+          onClick={() => handleAmenityClick("wifi")}
+          title="Wifi"
+          selected={selectedAmenities.includes("wifi")}
+          icon="wifi"
+        />
       </div>
     </main>
   );
