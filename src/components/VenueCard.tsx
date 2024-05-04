@@ -35,7 +35,7 @@ const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
       className="group flex flex-col gap-2 cursor-pointer"
     >
       <div className="relative rounded-xl overflow-hidden aspect-square">
-        <div className="absolute bg-black w-full h-full opacity-0 group-hover:opacity-80 transition-color duration-200  flex items-center justify-center z-10">
+        <div className="absolute bg-black w-full h-full opacity-0 group-hover:opacity-80 transition-colors duration-200  flex items-center justify-center z-10">
           <p className="text-white">View more</p>
         </div>
 

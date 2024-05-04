@@ -1,7 +1,7 @@
-import GuestSelector from "../components/GuestSelector";
+import NumberSelector from "../components/NumberSelector";
 
 const AccountPage = () => {
-  return <GuestSelector />;
+  return <NumberSelector title="6+" selected={false} />;
 };
 
 export default AccountPage;

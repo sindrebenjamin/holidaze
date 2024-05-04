@@ -85,7 +85,7 @@ const Tab = ({
     : "text-gray-500 border-gray-200 hover:text-gray-900 hover:border-gray-400";
   return (
     <button
-      className={`${classes} transition-color duration-100 text-sm border-b w-[38%] sm:w-[22%] md:w-full font-medium pb-3 grow-0 shrink-0 md:grow md:shrink`}
+      className={`${classes} transition-colors duration-100 text-sm border-b w-[38%] sm:w-[22%] md:w-full font-medium pb-3 grow-0 shrink-0 md:grow md:shrink`}
       onClick={onClick}
     >
       {title}

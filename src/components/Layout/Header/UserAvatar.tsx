@@ -13,7 +13,7 @@ const UserAvatar = ({
       onClick={onClick}
       className={`${
         isOpen ? "opacity-50" : ""
-      } hover:opacity-80 transition-color duration-100 cursor-pointer relative w-fit h-fit`}
+      } hover:opacity-80 transition-colors duration-100 cursor-pointer relative w-fit h-fit`}
     >
       <img
         className="rounded-full h-11 w-11"
