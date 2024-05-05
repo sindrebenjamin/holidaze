@@ -11,8 +11,15 @@ import QuantitySelector from "../components/QuantitySelector";
 import RatingSelector from "../components/RatingSelector";
 import AmenityCard from "../components/AmenityCard";
 import { checkMedia } from "../utils/checkMedia";
+import DragAndDropArea from "../components/DragAndDropArea";
+import DraggableImage from "../components/DraggableImage";
 
 let nextId = 1;
+
+type MediaArrayItem = {
+  id: number;
+  url: string;
+};
 
 const AddVenuePage = () => {
   const { register, handleSubmit } = useForm();
@@ -21,7 +28,15 @@ const AddVenuePage = () => {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [currentMediaString, setCurrentMediaString] = useState("");
   const [isMediaError, setIsMediaError] = useState(false);
-  const [mediaArray, setMediaArray] = useState<object[]>([]);
+  const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
+
+  function handleMoveImage(dragIndex: number, hoverIndex: number): void {
+    const dragImage = mediaArray[dragIndex];
+    const newImages = [...mediaArray];
+    newImages.splice(dragIndex, 1);
+    newImages.splice(hoverIndex, 0, dragImage);
+    setMediaArray(newImages);
+  }
 
   function handleMediaStringOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
@@ -59,6 +74,19 @@ const AddVenuePage = () => {
         }
         error={isMediaError}
       />
+      <DragAndDropArea>
+        {mediaArray.map((image, index) => {
+          return (
+            <DraggableImage
+              key={image.id}
+              id={image.id}
+              url={image.url}
+              index={index}
+              moveImage={handleMoveImage}
+            />
+          );
+        })}
+      </DragAndDropArea>
     </div>
   );
 
