@@ -45,5 +45,3 @@ function InputAndLabelAndMessage<T extends FieldValues>({
 }
 
 export default InputAndLabelAndMessage;
-
-//type..... for button as well? Submit?

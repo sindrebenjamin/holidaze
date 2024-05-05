@@ -6,15 +6,37 @@ import * as yup from "yup";
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
+import VenueMediaInput from "../components/VenueMediaInput";
 import QuantitySelector from "../components/QuantitySelector";
 import RatingSelector from "../components/RatingSelector";
 import AmenityCard from "../components/AmenityCard";
+import { checkMedia } from "../utils/checkMedia";
+
+let nextId = 1;
 
 const AddVenuePage = () => {
   const { register, handleSubmit } = useForm();
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+  const [currentMediaString, setCurrentMediaString] = useState("");
+  const [isMediaError, setIsMediaError] = useState(false);
+  const [mediaArray, setMediaArray] = useState<object[]>([]);
+
+  function handleMediaStringOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    setCurrentMediaString(value);
+    console.log(value);
+    (async () => {
+      const checkImage = await checkMedia(value);
+      const isError = checkImage === "/public/nomedia.jpg" ? true : false;
+      setIsMediaError(isError);
+      if (!isError) {
+        setMediaArray([...mediaArray, { id: nextId++, url: value }]);
+        setCurrentMediaString("");
+      }
+    })();
+  }
 
   function handleAmenityClick(amenity: string) {
     if (!selectedAmenities.includes(amenity)) {
@@ -23,8 +45,24 @@ const AddVenuePage = () => {
       const nextAmenities = selectedAmenities.filter((a) => a !== amenity);
       setSelectedAmenities(nextAmenities);
     }
-    console.log(selectedAmenities);
   }
+
+  const mediaContent = (
+    <div>
+      <VenueMediaInput
+        name="media"
+        placeholder="https://images.com/image.jpg"
+        label="Add photo URL"
+        value={currentMediaString}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleMediaStringOnChange(e)
+        }
+        error={isMediaError}
+      />
+    </div>
+  );
+
+  // LOCATION
 
   const locationContent = (
     <div className="max-w-[500px]">
@@ -37,12 +75,13 @@ const AddVenuePage = () => {
       />
     </div>
   );
+
   const tabsData = [
     { title: "Location", id: 1, content: locationContent },
     { title: "Description", id: 2, content: <p>Description</p> },
     { title: "Details", id: 3, content: <p>Details</p> },
     { title: "Amenities", id: 4, content: <p>Amenities</p> },
-    { title: "Media", id: 5, content: <p>Amenities</p> },
+    { title: "Media", id: 5, content: mediaContent },
     { title: "Publish", id: 6, content: <p>Amenities</p> },
   ];
   return (
