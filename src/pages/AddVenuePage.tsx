@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
@@ -29,11 +30,13 @@ const schema = yup.object({
   title: yup.string().required("Please include a title for your venue"),
   price: yup
     .number()
+    .max(10000, "Price cannot be greater than 10,000")
     .typeError("Price must be a numerical value")
     .required("Please include the price per night for your venue"),
 });
 
 const AddVenuePage = () => {
+  const navigate = useNavigate();
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const user = useUserStore((state) => state.user);
   const {
@@ -53,6 +56,7 @@ const AddVenuePage = () => {
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
   const watchedFields = watch(["title", "address", "price"]);
+  const priceCheck = !watchedFields[2] || watchedFields[2] >= 10000;
 
   const mediaData = mediaArray.map((media) => {
     return {
@@ -92,12 +96,14 @@ const AddVenuePage = () => {
         },
       }),
     };
-
-    basicApi(
-      "https://v2.api.noroff.dev/holidaze/venues",
-      options,
-      setApiStatus
-    );
+    (async () => {
+      const result = await basicApi(
+        "https://v2.api.noroff.dev/holidaze/venues",
+        options,
+        setApiStatus
+      );
+      navigate(`/venue/${result.data.id}`);
+    })();
   }
 
   function handleMoveImage(dragIndex: number, hoverIndex: number): void {
@@ -168,7 +174,7 @@ const AddVenuePage = () => {
     {
       title: "Amenities",
       id: 4,
-      lock: !watchedFields[2] || !watchedFields[0] || !watchedFields[1],
+      lock: priceCheck || !watchedFields[0] || !watchedFields[1],
       content: (
         <AmenitiesModule
           selectedAmenities={selectedAmenities}
@@ -179,7 +185,7 @@ const AddVenuePage = () => {
     {
       title: "Media",
       id: 5,
-      lock: !watchedFields[2] || !watchedFields[0] || !watchedFields[1],
+      lock: priceCheck || !watchedFields[0] || !watchedFields[1],
       content: (
         <MediaModule
           currentMediaString={currentMediaString}
@@ -196,7 +202,7 @@ const AddVenuePage = () => {
       id: 6,
       lock:
         mediaArray.length === 0 ||
-        !watchedFields[2] ||
+        priceCheck ||
         !watchedFields[0] ||
         !watchedFields[1],
       content: <PublishModule apiStatus={apiStatus} apiErrors={apiErrors} />,
@@ -204,13 +210,13 @@ const AddVenuePage = () => {
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-      <div
+      <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
       >
         <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">List Venue</FormH1>
         <Tabs tabs={tabsData} />
-      </div>
+      </form>
     </main>
   );
 };
@@ -218,3 +224,4 @@ const AddVenuePage = () => {
 export default AddVenuePage;
 
 //pass onSubmit to tabs
+//price can't be greater than 10k

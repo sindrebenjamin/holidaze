@@ -42,12 +42,12 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
       {tabs.map((tab, index) => {
         if (index === currentTab) {
           return (
-            <form
+            <div
               className="px-4 md:px-0 max-w-[500px] flex flex-col gap-6"
               key={tab.id}
             >
               {tab.content}
-            </form>
+            </div>
           );
         }
       })}
@@ -62,7 +62,7 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
         } px-4 md:px-0`}
       >
         {!isFirstPage && (
-          <Button onClick={() => setCurrentTab(currentTab - 1)}>
+          <Button type="button" onClick={() => setCurrentTab(currentTab - 1)}>
             Previous
           </Button>
         )}
@@ -74,6 +74,7 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
             override="w-[80px] "
             onClick={() => setCurrentTab(currentTab + 1)}
             disabled={nextPageIsLocked}
+            type="button"
           >
             Next
           </Button>
@@ -101,6 +102,7 @@ const Tab = ({
     : "text-gray-500 border-gray-200 hover:text-gray-900 hover:border-gray-300";
   return (
     <button
+      type="button"
       disabled={disabled}
       className={`${classes} ${
         disabled && "opacity-50"

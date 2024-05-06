@@ -30,8 +30,8 @@ const DetailsModule = ({
       <h2 className="text-gray-500 text-lg">Provide a Details of your venue</h2>
       <InputAndLabelAndMessage
         name="price"
-        label="Price per night"
-        placeholder="1000 kr"
+        label="Price per night in NOK"
+        placeholder="1000"
         register={register}
         type="number"
         error={Boolean(errors.price)}

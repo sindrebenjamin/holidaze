@@ -35,7 +35,7 @@ const Header = () => {
           ) : (
             <UnauthorizedNavigation />
           )}
-          {user && isOpen && <Dropdown />}
+          {user && isOpen && <Dropdown setIsOpen={setIsOpen} />}
         </div>
       </div>
     </header>

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import { useUserStore } from "../../../store/useUserStore";
 
-const Dropdown = () => {
+const Dropdown = ({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) => {
   const user = useUserStore((state) => state.user);
 
   return (
@@ -14,6 +14,7 @@ const Dropdown = () => {
       <div className="h-[1px] w-full bg-gray-100"></div>
       <div className="flex flex-col">
         <NavLink
+          onClick={() => setIsOpen(false)}
           className="text-gray-500 px-4 py-3 hover:bg-gray-50 transtion-colors duration-100"
           to={"/account"}
         >
@@ -21,6 +22,7 @@ const Dropdown = () => {
         </NavLink>
         {user?.venueManager && (
           <NavLink
+            onClick={() => setIsOpen(false)}
             className="text-gray-500 px-4 py-3 hover:bg-gray-50 transtion-colors duration-100"
             to={"/add"}
           >

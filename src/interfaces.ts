@@ -40,6 +40,11 @@ export interface VenueResponse {
   meta: Record<string, unknown>;
 }
 
+export interface SingleVenueResponse {
+  data: Venue;
+  meta: Record<string, unknown>;
+}
+
 // Profile
 
 export interface ProfileResponse {

@@ -37,7 +37,7 @@ const schema = yup
   .required();
 
 const RegisterPage = () => {
-  const [venueManager, setVenueManager] = useState(true);
+  const [venueManager, setVenueManager] = useState<boolean | null>(null);
   const [subPage, setSubPage] = useState("accountType");
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const {
@@ -92,7 +92,7 @@ const RegisterPage = () => {
               </SelectorButton>
               <SelectorButton
                 onClick={() => setVenueManager(false)}
-                selected={!venueManager}
+                selected={!venueManager && venueManager !== null}
               >
                 Guest
               </SelectorButton>
@@ -102,6 +102,7 @@ const RegisterPage = () => {
               onClick={() => setSubPage("form")}
               size="xl"
               color="white"
+              disabled={venueManager === null}
             >
               Continue
             </Button>
