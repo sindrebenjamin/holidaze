@@ -1,6 +1,13 @@
 import Button from "../../Button";
+import { ApiError, ApiStatus } from "../../../interfaces";
 
-const PublishModule = () => {
+const PublishModule = ({
+  apiErrors,
+  apiStatus,
+}: {
+  apiErrors: ApiError[] | null;
+  apiStatus: ApiStatus;
+}) => {
   return (
     <>
       <h2 className="text-gray-500 text-lg">Ready to Publish!</h2>
@@ -19,9 +26,23 @@ const PublishModule = () => {
           Once you're ready, hit 'Publish' to make your venue visible to guests.
         </p>
         <Button size="md" color="gray-dark" type="submit">
-          Publish
+          {apiStatus === "loading" ? (
+            <div className="spinner-light"></div>
+          ) : (
+            "Publish"
+          )}
         </Button>
       </div>
+      <ul>
+        {apiErrors &&
+          apiErrors.map((error) => {
+            return (
+              <li className="text-red-500" key={error.message}>
+                {error.message}
+              </li>
+            );
+          })}
+      </ul>
     </>
   );
 };

@@ -168,7 +168,6 @@ const RegisterPage = () => {
                   size="xl"
                   color="gray-dark"
                 >
-                  {" "}
                   {apiStatus === "loading" ? (
                     <div className="spinner-light"></div>
                   ) : (

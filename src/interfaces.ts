@@ -154,7 +154,7 @@ export interface VenueFormData {
   price: number;
 }
 
-interface ApiError {
+export interface ApiError {
   message: string;
 }
 

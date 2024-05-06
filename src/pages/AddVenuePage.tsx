@@ -39,7 +39,8 @@ const AddVenuePage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
+    watch,
   } = useForm<VenueFormData>({
     resolver: yupResolver(schema),
     mode: "onBlur",
@@ -51,11 +52,15 @@ const AddVenuePage = () => {
   const [isMediaError, setIsMediaError] = useState(false);
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
+  const watchedFields = watch(["title", "address", "price"]);
+
   const mediaData = mediaArray.map((media) => {
     return {
       url: media.url,
     };
   });
+
+  const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
   function onSubmit(data: VenueFormData) {
     const options = {
@@ -111,7 +116,7 @@ const AddVenuePage = () => {
   function handleMediaStringOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     setCurrentMediaString(value);
-    console.log(value);
+
     (async () => {
       const checkImage = await checkMedia(value);
       const isError = checkImage === "/public/nomedia.jpg" ? true : false;
@@ -137,15 +142,18 @@ const AddVenuePage = () => {
       title: "Location",
       id: 1,
       content: <LocationModule errors={errors} register={register} />,
+      lock: false,
     },
     {
       title: "Description",
       id: 2,
+      lock: !watchedFields[1],
       content: <DescriptionModule errors={errors} register={register} />,
     },
     {
       title: "Details",
       id: 3,
+      lock: !watchedFields[0] || !watchedFields[1],
       content: (
         <DetailsModule
           errors={errors}
@@ -160,6 +168,7 @@ const AddVenuePage = () => {
     {
       title: "Amenities",
       id: 4,
+      lock: !watchedFields[2] || !watchedFields[0] || !watchedFields[1],
       content: (
         <AmenitiesModule
           selectedAmenities={selectedAmenities}
@@ -170,6 +179,7 @@ const AddVenuePage = () => {
     {
       title: "Media",
       id: 5,
+      lock: !watchedFields[2] || !watchedFields[0] || !watchedFields[1],
       content: (
         <MediaModule
           currentMediaString={currentMediaString}
@@ -181,7 +191,16 @@ const AddVenuePage = () => {
         />
       ),
     },
-    { title: "Publish", id: 6, content: <PublishModule /> },
+    {
+      title: "Publish",
+      id: 6,
+      lock:
+        mediaArray.length === 0 ||
+        !watchedFields[2] ||
+        !watchedFields[0] ||
+        !watchedFields[1],
+      content: <PublishModule apiStatus={apiStatus} apiErrors={apiErrors} />,
+    },
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
@@ -197,3 +216,5 @@ const AddVenuePage = () => {
 };
 
 export default AddVenuePage;
+
+//pass onSubmit to tabs
