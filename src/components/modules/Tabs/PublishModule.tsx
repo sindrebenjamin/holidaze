@@ -4,7 +4,7 @@ const PublishModule = () => {
   return (
     <>
       <h2 className="text-gray-500 text-lg">Ready to Publish!</h2>
-      <div className="p-6 rounded-lg border border-gray-300 flex flex-col gap-6">
+      <div className="max-w-[400px] p-6 rounded-lg border border-gray-300 flex flex-col gap-6">
         <p>Please review all information carefully before publishing.</p>
 
         <div>
@@ -12,7 +12,7 @@ const PublishModule = () => {
           <p>✓ Check description</p>
           <p>✓ Confirm pricing</p>
           <p>✓ Verify amenities</p>
-          <p>✓ Look over uploaded photos</p>
+          <p>✓ Look over photos</p>
         </div>
 
         <p>

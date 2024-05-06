@@ -1,20 +1,23 @@
-import { UseFormRegister, FieldValues } from "react-hook-form";
+import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
+import { VenueFormData } from "../../../interfaces";
 
 import InputAndLabelAndMessage from "../../InputAndLabelAndMessage";
 import TextareaAndLabelAndMessage from "../../TextareaAndLabelAndMessage";
 
 interface DescriptionModuleProps<T extends FieldValues> {
   register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
 }
 
-interface DescriptionFields {
-  title?: string;
-  description?: string;
-}
+// interface DescriptionFields {
+//   title?: string;
+//   description?: string;
+// }
 
 const DescriptionModule = ({
   register,
-}: DescriptionModuleProps<DescriptionFields>) => {
+  errors,
+}: DescriptionModuleProps<VenueFormData>) => {
   return (
     <>
       <h2 className="text-gray-500 text-lg">
@@ -26,6 +29,8 @@ const DescriptionModule = ({
         placeholder="The Getaway Beach House"
         register={register}
         type="text"
+        error={Boolean(errors.title)}
+        message={errors.title?.message}
       />
       <TextareaAndLabelAndMessage
         name="description"

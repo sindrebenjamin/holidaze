@@ -1,28 +1,30 @@
-import { UseFormRegister, FieldValues } from "react-hook-form";
-
+import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
+import { VenueFormData } from "../../../interfaces";
 import InputAndLabelAndMessage from "../../InputAndLabelAndMessage";
 import QuantitySelector from "../../QuantitySelector";
 import RatingSelector from "../../RatingSelector";
 
 interface DetailsModuleProps<T extends FieldValues> {
   register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
   quantity: number;
   setQuantity: (quantity: number) => void;
   rating: number;
   setRating: (rating: number) => void;
 }
 
-interface DetailsFields {
-  price?: number;
-}
+// interface DetailsFields {
+//   price?: number;
+// }
 
 const DetailsModule = ({
   register,
+  errors,
   quantity,
   setQuantity,
   rating,
   setRating,
-}: DetailsModuleProps<DetailsFields>) => {
+}: DetailsModuleProps<VenueFormData>) => {
   return (
     <>
       <h2 className="text-gray-500 text-lg">Provide a Details of your venue</h2>
@@ -32,6 +34,8 @@ const DetailsModule = ({
         placeholder="1000 kr"
         register={register}
         type="number"
+        error={Boolean(errors.price)}
+        message={errors.price?.message}
       />
       <div className="flex flex-col gap-2">
         <p className="text-sm font-medium">Max guests</p>

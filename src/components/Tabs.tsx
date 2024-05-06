@@ -37,12 +37,12 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
       {tabs.map((tab, index) => {
         if (index === currentTab) {
           return (
-            <div
+            <form
               className="px-4 md:px-0 max-w-[500px] flex flex-col gap-6"
               key={tab.id}
             >
               {tab.content}
-            </div>
+            </form>
           );
         }
       })}
@@ -58,15 +58,17 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
         >
           Previous
         </Button>
-        <Button
-          color="gray-dark"
-          size="sm"
-          override="w-[80px]"
-          onClick={() => setCurrentTab(currentTab + 1)}
-          disabled={currentTab === tabs.length - 1}
-        >
-          Next
-        </Button>
+        {currentTab !== tabs.length - 1 && (
+          <Button
+            color="gray-dark"
+            size="sm"
+            override="w-[80px]"
+            onClick={() => setCurrentTab(currentTab + 1)}
+            disabled={currentTab === tabs.length - 1}
+          >
+            Next
+          </Button>
+        )}
       </div>
     </div>
   );

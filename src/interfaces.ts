@@ -144,14 +144,14 @@ export interface LoginFormData {
 }
 
 export interface VenueFormData {
-  address?: string;
+  address: string;
   city?: string;
   zip?: string;
   country?: string;
   continent?: string;
-  title?: string;
+  title: string;
   description?: string;
-  price?: number;
+  price: number;
 }
 
 interface ApiError {

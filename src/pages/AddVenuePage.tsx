@@ -22,8 +22,24 @@ type MediaArrayItem = {
   url: string;
 };
 
+const schema = yup.object({
+  address: yup.string().required("Please enter the address of your venue"),
+  title: yup.string().required("Please include a title for your venue"),
+  price: yup
+    .number()
+    .typeError("Price must be a numerical value")
+    .required("Please include the price per night for your venue"),
+});
+
 const AddVenuePage = () => {
-  const { register, handleSubmit } = useForm<VenueFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<VenueFormData>({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+  });
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
@@ -76,18 +92,19 @@ const AddVenuePage = () => {
     {
       title: "Location",
       id: 1,
-      content: <LocationModule register={register} />,
+      content: <LocationModule errors={errors} register={register} />,
     },
     {
       title: "Description",
       id: 2,
-      content: <DescriptionModule register={register} />,
+      content: <DescriptionModule errors={errors} register={register} />,
     },
     {
       title: "Details",
       id: 3,
       content: (
         <DetailsModule
+          errors={errors}
           quantity={quantity}
           setQuantity={setQuantity}
           rating={rating}
@@ -124,14 +141,13 @@ const AddVenuePage = () => {
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-      <form
+      <div
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
       >
         <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">List Venue</FormH1>
         <Tabs tabs={tabsData} />
-        <button type="submit">Submit</button>
-      </form>
+      </div>
     </main>
   );
 };
