@@ -4,7 +4,7 @@ import { useApi } from "../hooks/useApi";
 //import { useUserStore } from "../store/useUserStore";
 import { Venue, VenueResponse } from "../interfaces";
 import { validateVenue } from "../utils/validateVenue";
-import VenueCard from "../components/VenueCard";
+//import VenueCard from "../components/VenueCard";
 import VenueManagerCard from "../components/VenueManagerCard";
 
 const HomePage = () => {
@@ -15,7 +15,7 @@ const HomePage = () => {
     }),
     []
   );
-  const { data, status } = useApi<VenueResponse>(
+  const { data } = useApi<VenueResponse>(
     "https://v2.api.noroff.dev/holidaze/venues",
     options
   );

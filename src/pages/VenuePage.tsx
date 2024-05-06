@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import { useApi } from "../hooks/useApi";
-import { SingleVenueResponse, Venue } from "../interfaces";
+import { SingleVenueResponse } from "../interfaces";
 
 const VenuePage = () => {
   const params = useParams();
@@ -12,7 +12,7 @@ const VenuePage = () => {
     }),
     []
   );
-  const { data, status } = useApi<SingleVenueResponse>(
+  const { data } = useApi<SingleVenueResponse>(
     `https://v2.api.noroff.dev/holidaze/venues/${params.id}`,
     options
   );

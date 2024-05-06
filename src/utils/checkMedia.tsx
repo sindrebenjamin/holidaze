@@ -1,6 +1,6 @@
 export const checkMedia = (url: string) => {
   return new Promise((resolve) => {
-    let img = new Image();
+    const img = new Image();
 
     img.onload = function () {
       resolve(url);
