@@ -1,8 +1,8 @@
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  color?: string;
-  size?: string;
+  color?: "gray-dark" | "pink" | "white" | "gray-light" | undefined;
+  size?: "sm" | "md" | "lg" | "xl" | "2xl" | undefined;
   type?: "submit" | "reset" | "button" | undefined;
   fullWidth?: boolean;
   disabled?: boolean;

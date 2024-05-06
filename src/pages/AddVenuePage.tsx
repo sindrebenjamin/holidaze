@@ -13,6 +13,7 @@ import DescriptionModule from "../components/modules/Tabs/DescriptionModule";
 import DetailsModule from "../components/modules/Tabs/DetailsModule";
 import AmenitiesModule from "../components/modules/Tabs/AmenitiesModule";
 import MediaModule from "../components/modules/Tabs/MediaModule";
+import PublishModule from "../components/modules/Tabs/PublishModule";
 
 let nextId = 1;
 
@@ -119,7 +120,7 @@ const AddVenuePage = () => {
         />
       ),
     },
-    { title: "Publish", id: 6, content: <p>Amenities</p> },
+    { title: "Publish", id: 6, content: <PublishModule /> },
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">

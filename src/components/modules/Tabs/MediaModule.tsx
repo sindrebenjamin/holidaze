@@ -69,7 +69,10 @@ const MediaModule = ({
               onClick={() => inputRef.current?.focus()}
               className={`border ${boxClasses} aspect-square rounded-lg border-dotted`}
             ></div>
-            <div className="border border-gray-300 aspect-square rounded-lg border-dotted"></div>
+            <div
+              onClick={() => inputRef.current?.focus()}
+              className="border border-gray-300 aspect-square rounded-lg border-dotted"
+            ></div>
           </>
         )}
         {isFocused && mediaArray.length > 0 && (
