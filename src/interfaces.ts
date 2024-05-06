@@ -36,24 +36,13 @@ interface BookingData {
 // Venue
 
 export interface VenueResponse {
-  data: VenueData;
+  data: Venue[];
   meta: Record<string, unknown>;
 }
 
-interface VenueData {
-  id: string;
-  name: string;
-  description: string;
-  media: MediaItem[];
-  price: number;
-  maxGuests: number;
-  rating: number;
-  created: string;
-  updated: string;
-  meta: VenueMeta;
-  location: Location;
-  bookings: Booking[];
-  _count: Count;
+export interface SingleVenueResponse {
+  data: Venue;
+  meta: Record<string, unknown>;
 }
 
 // Profile
@@ -77,9 +66,9 @@ interface ProfileData {
 
 // Shared interfaces
 
-interface MediaItem {
-  url: string;
+export interface MediaItem {
   alt: string;
+  url: string;
 }
 
 interface VenueMeta {
@@ -109,7 +98,7 @@ interface Person {
   banner: MediaItem;
 }
 
-interface Venue {
+export interface Venue {
   id: string;
   name: string;
   description: string;
@@ -120,7 +109,9 @@ interface Venue {
   created: string;
   updated: string;
   meta: VenueMeta;
-  location: Location | null;
+  location: Location;
+  bookings: Booking[];
+  _count: Count;
 }
 
 interface Booking {
@@ -146,13 +137,29 @@ export interface ApiOptions {
   body?: string;
 }
 
-export interface FormData {
+export interface RegisterFormData {
   name: string;
   email: string;
   password: string;
 }
 
-interface ApiError {
+export interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+export interface VenueFormData {
+  address: string;
+  city?: string;
+  zip?: string;
+  country?: string;
+  continent?: string;
+  title: string;
+  description?: string;
+  price: number;
+}
+
+export interface ApiError {
   message: string;
 }
 

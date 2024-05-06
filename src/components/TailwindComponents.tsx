@@ -10,26 +10,15 @@ export const Container = tw.div`
     m-auto
 `;
 
-export const Section = tw.section<{ $noXPadding: boolean }>`
+export const Section = tw.section<{ $noXPadding?: boolean }>`
 ${(p) => (p.$noXPadding ? "px-0" : "px-4")}
 py-12
 sm:px-6
 `;
 
-export const Textarea = tw.textarea<{ $error: boolean }>`
-${(p) => (p.$error ? "border-red-500" : "border-gray-400")}
-${(p) => (p.$error ? "placeholder-red-500" : "placeholder-gray-500")}
-rounded-lg
-border
-px-4
-py-3
-focus:outline-none
-focus:border-pink-500
-w-full
-bg-gray-50
-`;
-
-export const Input = tw.input<{ $error: boolean }>`
+export const Textarea = tw.textarea<{
+  $error: boolean | undefined | undefined;
+}>`
 ${(p) => (p.$error ? "border-red-500" : "border-gray-400")}
 ${(p) => (p.$error ? "placeholder-red-500" : "placeholder-gray-500")}
 rounded-lg
@@ -40,6 +29,25 @@ focus:outline-none
 focus:border-gray-900
 w-full
 bg-gray-50
+min-h-[125px]
+`;
+
+export const Input = tw.input<{ $error: boolean | undefined }>`
+${(p) => (p.$error ? "border-red-500" : "border-gray-400")}
+${(p) => (p.$error ? "placeholder-red-500" : "placeholder-gray-500")}
+rounded-lg
+border
+px-4
+py-3
+focus:outline-none
+focus:border-gray-900
+w-full
+bg-gray-50
+`;
+
+export const FormH1 = tw.h1`
+text-3xl
+font-bold
 `;
 
 export const StyledH1 = tw.h1`
