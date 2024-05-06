@@ -37,19 +37,27 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
       }
     },
   });
+
+  const classes = !isDragging
+    ? "hover:opacity-90"
+    : isDragging
+    ? "opacity-50"
+    : "";
+
   return (
     <div
-      className="bg-transparent"
-      style={{ opacity: isDragging ? 0.5 : 1 }}
+      className={` flex flex-col gap-2`}
       ref={(node) => dragRef(dropRef(node))}
     >
       <img
         src={url}
         alt=""
         draggable="false"
-        className="aspect-square w-full object-cover rounded-lg"
+        className={`${classes} duration-100 cursor-move aspect-square w-full object-cover rounded-lg`}
       />
-      <button onClick={onClick}>Remove</button>
+      <button className="hover:opacity-50 duration-100" onClick={onClick}>
+        Remove
+      </button>
     </div>
   );
 };

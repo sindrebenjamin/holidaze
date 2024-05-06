@@ -5,17 +5,14 @@ import * as yup from "yup";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
-import VenueMediaInput from "../components/VenueMediaInput";
-import AmenityCard from "../components/AmenityCard";
 import { checkMedia } from "../utils/checkMedia";
-import DragAndDropArea from "../components/DragAndDropArea";
-import DraggableImage from "../components/DraggableImage";
 import { VenueFormData } from "../interfaces";
 
 import LocationModule from "../components/modules/Tabs/LocationModule";
 import DescriptionModule from "../components/modules/Tabs/DescriptionModule";
 import DetailsModule from "../components/modules/Tabs/DetailsModule";
 import AmenitiesModule from "../components/modules/Tabs/AmenitiesModule";
+import MediaModule from "../components/modules/Tabs/MediaModule";
 
 let nextId = 1;
 
@@ -74,35 +71,6 @@ const AddVenuePage = () => {
     }
   }
 
-  const mediaContent = (
-    <div className="max-w-[500px]">
-      <VenueMediaInput
-        name="media"
-        placeholder="https://images.com/image.jpg"
-        label="Add photo URL"
-        value={currentMediaString}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleMediaStringOnChange(e)
-        }
-        error={isMediaError}
-      />
-      <DragAndDropArea>
-        {mediaArray.map((image, index) => {
-          return (
-            <DraggableImage
-              key={image.id}
-              id={image.id}
-              url={image.url}
-              index={index}
-              moveImage={handleMoveImage}
-              onClick={() => handleRemoveImage(image.id)}
-            />
-          );
-        })}
-      </DragAndDropArea>
-    </div>
-  );
-
   const tabsData = [
     {
       title: "Location",
@@ -137,7 +105,20 @@ const AddVenuePage = () => {
         />
       ),
     },
-    { title: "Media", id: 5, content: mediaContent },
+    {
+      title: "Media",
+      id: 5,
+      content: (
+        <MediaModule
+          currentMediaString={currentMediaString}
+          handleMediaStringOnChange={handleMediaStringOnChange}
+          isMediaError={isMediaError}
+          mediaArray={mediaArray}
+          handleMoveImage={handleMoveImage}
+          handleRemoveImage={handleRemoveImage}
+        />
+      ),
+    },
     { title: "Publish", id: 6, content: <p>Amenities</p> },
   ];
   return (

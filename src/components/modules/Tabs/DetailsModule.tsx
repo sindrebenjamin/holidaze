@@ -31,7 +31,7 @@ const DetailsModule = ({
         label="Price per night"
         placeholder="1000 kr"
         register={register}
-        type="text"
+        type="number"
       />
       <div className="flex flex-col gap-2">
         <p className="text-sm font-medium">Max guests</p>
