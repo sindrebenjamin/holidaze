@@ -6,7 +6,9 @@ import * as yup from "yup";
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
 import { checkMedia } from "../utils/checkMedia";
-import { VenueFormData } from "../interfaces";
+import { VenueFormData, ApiStatus } from "../interfaces";
+import { useUserStore } from "../store/useUserStore";
+import { basicApi } from "../utils/basicApi";
 
 import LocationModule from "../components/modules/Tabs/LocationModule";
 import DescriptionModule from "../components/modules/Tabs/DescriptionModule";
@@ -32,6 +34,8 @@ const schema = yup.object({
 });
 
 const AddVenuePage = () => {
+  const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
+  const user = useUserStore((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -47,8 +51,48 @@ const AddVenuePage = () => {
   const [isMediaError, setIsMediaError] = useState(false);
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
-  function onSubmit(data) {
-    console.log(data);
+  const mediaData = mediaArray.map((media) => {
+    return {
+      url: media.url,
+    };
+  });
+
+  function onSubmit(data: VenueFormData) {
+    const options = {
+      method: "POST",
+      headers: {
+        "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.title,
+        description: data.description,
+        media: mediaData,
+        price: data.price,
+        maxGuests: quantity,
+        rating: rating,
+        meta: {
+          wifi: selectedAmenities.includes("wifi"),
+          parking: selectedAmenities.includes("parking"),
+          breakfast: selectedAmenities.includes("breakfast"),
+          pets: selectedAmenities.includes("pets"),
+        },
+        location: {
+          address: data.address,
+          city: data.city,
+          zip: data.zip,
+          county: data.country,
+          continent: data.continent,
+        },
+      }),
+    };
+
+    basicApi(
+      "https://v2.api.noroff.dev/holidaze/venues",
+      options,
+      setApiStatus
+    );
   }
 
   function handleMoveImage(dragIndex: number, hoverIndex: number): void {
