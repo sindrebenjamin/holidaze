@@ -36,7 +36,7 @@ const AmenityCard: React.FC<AmenityCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`${classes} rounded-lg flex flex-col gap-1 items-center border p-4 cursor-pointer transition-colors duration-100`}
+      className={`${classes} rounded-lg flex flex-col gap-1 items-center justify-center border p-4 sm:p-8 cursor-pointer transition-colors duration-100`}
     >
       {selectedIcon()}
       <p>{title}</p>

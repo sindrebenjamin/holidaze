@@ -8,7 +8,7 @@ const DragAndDropArea = ({ children }: { children: React.ReactNode }) => {
   };
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-      <div>{children}</div>
+      <div className="grid grid-cols-2 gap-2">{children}</div>
     </DndProvider>
   );
 };

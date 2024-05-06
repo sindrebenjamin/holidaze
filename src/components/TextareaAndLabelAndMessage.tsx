@@ -1,27 +1,25 @@
 import { UseFormRegister, FieldValues, Path } from "react-hook-form";
-import { Input } from "./TailwindComponents";
+import { Textarea } from "./TailwindComponents";
 
-interface InputAndLabelAndMessageProps<T extends FieldValues> {
+interface TextareaAndLabelAndMessageProps<T extends FieldValues> {
   name: Path<T>;
   placeholder: string;
   error?: boolean;
   message?: string;
   label: string;
-  type: string;
   autocomplete?: string;
   register: UseFormRegister<T>;
 }
 
-const InputAndLabelAndMessage = <T extends FieldValues>({
+const TextareaAndLabelAndMessage = <T extends FieldValues>({
   name,
   placeholder,
   error,
   message,
   label,
-  type,
   autocomplete,
   register,
-}: InputAndLabelAndMessageProps<T>) => {
+}: TextareaAndLabelAndMessageProps<T>) => {
   const errorClasses = error ? "text-red-500" : "";
 
   return (
@@ -30,13 +28,12 @@ const InputAndLabelAndMessage = <T extends FieldValues>({
         {label}
       </label>
       <div>
-        <Input
+        <Textarea
           autoComplete={autocomplete}
           {...register(name)}
           id={String(name)}
           placeholder={placeholder}
           $error={error}
-          type={type}
         />
         <p>{message}</p>
       </div>
@@ -44,4 +41,4 @@ const InputAndLabelAndMessage = <T extends FieldValues>({
   );
 };
 
-export default InputAndLabelAndMessage;
+export default TextareaAndLabelAndMessage;

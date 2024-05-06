@@ -143,6 +143,17 @@ export interface LoginFormData {
   password: string;
 }
 
+export interface VenueFormData {
+  address?: string;
+  city?: string;
+  zip?: string;
+  country?: string;
+  continent?: string;
+  title?: string;
+  description?: string;
+  price?: number;
+}
+
 interface ApiError {
   message: string;
 }

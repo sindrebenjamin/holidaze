@@ -5,6 +5,7 @@ type DraggableImageProps = {
   url: string;
   index: number;
   moveImage: (dragIndex: number, hoverIndex: number) => void;
+  onClick: () => void;
 };
 
 type DragItem = {
@@ -17,6 +18,7 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
   url,
   index,
   moveImage,
+  onClick,
 }) => {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "image",
@@ -37,10 +39,17 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
   });
   return (
     <div
+      className="bg-transparent"
       style={{ opacity: isDragging ? 0.5 : 1 }}
       ref={(node) => dragRef(dropRef(node))}
     >
-      <img src={url} alt="" draggable="false" className="ratio-square" />
+      <img
+        src={url}
+        alt=""
+        draggable="false"
+        className="aspect-square w-full object-cover rounded-lg"
+      />
+      <button onClick={onClick}>Remove</button>
     </div>
   );
 };

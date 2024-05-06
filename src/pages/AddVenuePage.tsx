@@ -5,14 +5,17 @@ import * as yup from "yup";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
-import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import VenueMediaInput from "../components/VenueMediaInput";
-import QuantitySelector from "../components/QuantitySelector";
-import RatingSelector from "../components/RatingSelector";
 import AmenityCard from "../components/AmenityCard";
 import { checkMedia } from "../utils/checkMedia";
 import DragAndDropArea from "../components/DragAndDropArea";
 import DraggableImage from "../components/DraggableImage";
+import { VenueFormData } from "../interfaces";
+
+import LocationModule from "../components/modules/Tabs/LocationModule";
+import DescriptionModule from "../components/modules/Tabs/DescriptionModule";
+import DetailsModule from "../components/modules/Tabs/DetailsModule";
+import AmenitiesModule from "../components/modules/Tabs/AmenitiesModule";
 
 let nextId = 1;
 
@@ -22,7 +25,7 @@ type MediaArrayItem = {
 };
 
 const AddVenuePage = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<VenueFormData>();
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
@@ -30,12 +33,21 @@ const AddVenuePage = () => {
   const [isMediaError, setIsMediaError] = useState(false);
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
+  function onSubmit(data) {
+    console.log(data);
+  }
+
   function handleMoveImage(dragIndex: number, hoverIndex: number): void {
     const dragImage = mediaArray[dragIndex];
     const newImages = [...mediaArray];
     newImages.splice(dragIndex, 1);
     newImages.splice(hoverIndex, 0, dragImage);
     setMediaArray(newImages);
+  }
+
+  function handleRemoveImage(imageId: number) {
+    const nextImages = mediaArray.filter((img) => img.id !== imageId);
+    setMediaArray(nextImages);
   }
 
   function handleMediaStringOnChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -63,7 +75,7 @@ const AddVenuePage = () => {
   }
 
   const mediaContent = (
-    <div>
+    <div className="max-w-[500px]">
       <VenueMediaInput
         name="media"
         placeholder="https://images.com/image.jpg"
@@ -83,6 +95,7 @@ const AddVenuePage = () => {
               url={image.url}
               index={index}
               moveImage={handleMoveImage}
+              onClick={() => handleRemoveImage(image.id)}
             />
           );
         })}
@@ -90,48 +103,53 @@ const AddVenuePage = () => {
     </div>
   );
 
-  // LOCATION
-
-  const locationContent = (
-    <div className="max-w-[500px]">
-      <InputAndLabelAndMessage
-        name="address"
-        label="Address"
-        placeholder="123 Main St, Apt 4"
-        register={register}
-        type="text"
-      />
-    </div>
-  );
-
   const tabsData = [
-    { title: "Location", id: 1, content: locationContent },
-    { title: "Description", id: 2, content: <p>Description</p> },
-    { title: "Details", id: 3, content: <p>Details</p> },
-    { title: "Amenities", id: 4, content: <p>Amenities</p> },
+    {
+      title: "Location",
+      id: 1,
+      content: <LocationModule register={register} />,
+    },
+    {
+      title: "Description",
+      id: 2,
+      content: <DescriptionModule register={register} />,
+    },
+    {
+      title: "Details",
+      id: 3,
+      content: (
+        <DetailsModule
+          quantity={quantity}
+          setQuantity={setQuantity}
+          rating={rating}
+          setRating={setRating}
+          register={register}
+        />
+      ),
+    },
+    {
+      title: "Amenities",
+      id: 4,
+      content: (
+        <AmenitiesModule
+          selectedAmenities={selectedAmenities}
+          handleAmenityClick={handleAmenityClick}
+        />
+      ),
+    },
     { title: "Media", id: 5, content: mediaContent },
     { title: "Publish", id: 6, content: <p>Amenities</p> },
   ];
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-      <div className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
+      >
         <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">List Venue</FormH1>
         <Tabs tabs={tabsData} />
-        <QuantitySelector quantity={quantity} handleQuantity={setQuantity} />
-        <RatingSelector rating={rating} setRating={setRating} />
-        <AmenityCard
-          onClick={() => handleAmenityClick("parking")}
-          title="Parking"
-          selected={selectedAmenities.includes("parking")}
-          icon="car"
-        />
-        <AmenityCard
-          onClick={() => handleAmenityClick("wifi")}
-          title="Wifi"
-          selected={selectedAmenities.includes("wifi")}
-          icon="wifi"
-        />
-      </div>
+        <button type="submit">Submit</button>
+      </form>
     </main>
   );
 };
