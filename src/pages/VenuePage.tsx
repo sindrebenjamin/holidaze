@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
 import { SingleVenueResponse } from "../interfaces";
 import MobileSlideShow from "../components/MobileSlideShow";
+import DesktopSlideShow from "../components/DesktopSlideShow";
+import { isTouchDevice } from "../utils/isTouchDevice";
+import { Section, Container } from "../components/TailwindComponents";
 
 const VenuePage = () => {
   const params = useParams();
@@ -22,7 +25,15 @@ const VenuePage = () => {
   return (
     <>
       <h1>{data?.data.name}</h1>
-      <MobileSlideShow images={data?.data.media} />
+      {isTouchDevice() ? (
+        <MobileSlideShow images={data?.data.media} />
+      ) : (
+        <Section $noXPadding={true}>
+          <Container>
+            <DesktopSlideShow images={data?.data.media} />
+          </Container>
+        </Section>
+      )}
     </>
   );
 };

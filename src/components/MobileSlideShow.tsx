@@ -19,7 +19,7 @@ const MobileSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
       <div className="relative">
         <div
           onScroll={(e) => handleScroll(e)}
-          className="no-scrollbar flex w-full overflow-hidden snap-x snap-mandatory overflow-x-scroll"
+          className=" flex w-full overflow-hidden snap-x snap-mandatory overflow-x-scroll"
         >
           {images.map((image) => {
             return (

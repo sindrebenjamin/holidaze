@@ -1,4 +1,4 @@
-export const checkMedia = (url: string) => {
+export const checkMedia = (url: string): Promise<string> => {
   return new Promise((resolve) => {
     const img = new Image();
 
