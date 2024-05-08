@@ -5,7 +5,6 @@ import { useApi } from "../hooks/useApi";
 import { SingleVenueResponse } from "../interfaces";
 import MobileSlideShow from "../components/MobileSlideShow";
 import DesktopSlideShow from "../components/DesktopSlideShow";
-import { isTouchDevice } from "../utils/isTouchDevice";
 import { Section, Container } from "../components/TailwindComponents";
 
 const VenuePage = () => {
@@ -24,16 +23,18 @@ const VenuePage = () => {
   console.log(data);
   return (
     <>
-      <h1>{data?.data.name}</h1>
-      {isTouchDevice() ? (
+      <div className="lg:hidden">
         <MobileSlideShow images={data?.data.media} />
-      ) : (
+      </div>
+      <div className="hidden lg:block">
         <Section $noXPadding={true}>
           <Container>
             <DesktopSlideShow images={data?.data.media} />
           </Container>
         </Section>
-      )}
+      </div>
+
+      <h1>{data?.data.name}</h1>
     </>
   );
 };

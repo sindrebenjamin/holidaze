@@ -9,6 +9,13 @@ const DesktopSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
   const [processedImages, setProcessedImages] = useState<MediaItem[]>([]);
 
   useEffect(() => {
+    document.body.style.overflow = modalIsOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [modalIsOpen]);
+
+  useEffect(() => {
     const processImages = async () => {
       if (images) {
         const checkedImages = await Promise.all(
