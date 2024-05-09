@@ -1,9 +1,11 @@
 const QuantitySelector = ({
   quantity,
   handleQuantity,
+  lowestAllowed,
 }: {
   quantity: number;
   handleQuantity: (newQuantity: number) => void;
+  lowestAllowed: number;
 }) => {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = parseInt(e.target.value, 10);
@@ -20,11 +22,11 @@ const QuantitySelector = ({
     <div className="relative flex items-center max-w-[8rem]">
       <button
         onClick={() => handleQuantity(quantity - 1)}
-        disabled={quantity === 1}
+        disabled={quantity === lowestAllowed}
         type="button"
         id="decrement-button"
         data-input-counter-decrement="quantity-input"
-        className="bg-gray-200 rounded-full hover:bg-gray-300 border p-2 focus:ring-gray-100 focus:ring-2 focus:outline-none transition-colors duration-100"
+        className="disabled:opacity-50 disabled:pointer-events-none bg-gray-200 rounded-full hover:bg-gray-300 border p-2 focus:ring-gray-100 focus:ring-2 focus:outline-none transition-colors duration-100"
       >
         <svg
           width={20}
@@ -46,7 +48,7 @@ const QuantitySelector = ({
         id="quantity-input"
         data-input-counter=""
         aria-describedby="helper-text-explanation"
-        className="bg-white border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-pink-500 focus:border-pink-500 block py-2.5 w-[32px]"
+        className="pointer-events-none bg-white border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-pink-500 focus:border-pink-500 block py-2.5 w-[32px]"
         value={quantity}
         onChange={handleChange}
       />

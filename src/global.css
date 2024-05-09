@@ -20,3 +20,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.datewrapper svg {
+  visibility: hidden;
+}

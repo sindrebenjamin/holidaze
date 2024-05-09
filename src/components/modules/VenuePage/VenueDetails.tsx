@@ -18,8 +18,6 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
     (amenity) => amenity === false
   );
 
-  console.log(noAmenities);
-
   if (data) {
     return (
       <div className="flex flex-col gap-6">
@@ -63,33 +61,37 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
           </div>
         </div>
         <Divider />
-        <div className="flex flex-col gap-6 sm:flex-row">
-          {data?.data.meta.wifi && (
-            <div className="flex gap-2 items-center">
-              <Wifi />
-              Wifi
+        {!noAmenities && (
+          <>
+            <div className="flex flex-col gap-6 sm:flex-row">
+              {data?.data.meta.wifi && (
+                <div className="flex gap-2 items-center">
+                  <Wifi />
+                  Wifi
+                </div>
+              )}
+              {data?.data.meta.parking && (
+                <div className="flex gap-2 items-center">
+                  <Car />
+                  Parking
+                </div>
+              )}
+              {data?.data.meta.pets && (
+                <div className="flex gap-2 items-center">
+                  <Dog />
+                  Pets allowed
+                </div>
+              )}
+              {data?.data.meta.pets && (
+                <div className="flex gap-2 items-center">
+                  <Coffee />
+                  Breakfast
+                </div>
+              )}
             </div>
-          )}
-          {data?.data.meta.parking && (
-            <div className="flex gap-2 items-center">
-              <Car />
-              Parking
-            </div>
-          )}
-          {data?.data.meta.pets && (
-            <div className="flex gap-2 items-center">
-              <Dog />
-              Pets allowed
-            </div>
-          )}
-          {data?.data.meta.pets && (
-            <div className="flex gap-2 items-center">
-              <Coffee />
-              Breakfast
-            </div>
-          )}
-        </div>
-        {!noAmenities && <Divider />}
+            <Divider />
+          </>
+        )}
 
         <div className="flex flex-col gap-2">
           <p className="font-bold text-gray-700">Description</p>
@@ -101,7 +103,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
               {data.data.description.length > 300 && (
                 <button
                   onClick={() => setModalIsOpen(true)}
-                  className="underline font-bold hover:opacity-50 transition-opacity duration-100"
+                  className="underline font-bold hover:opacity-70 transition-opacity duration-100"
                 >
                   Read more
                 </button>

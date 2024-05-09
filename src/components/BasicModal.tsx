@@ -23,7 +23,7 @@ const BasicModal = ({
         className="bg-black bg-opacity-80 z-[1003] h-screen w-full fixed top-0 right-0"
       ></div>
       {/* Modal */}
-      <div className="bg-white p-4 md:p-6 w-full md:max-w-[600px] shadow-2xl md:shadow rounded-t-lg md:rounded-lg fixed bottom-0 left-0 md:static z-[1004] max-h-[70%] flex flex-col">
+      <div className="bg-white p-4 sm:p-6 w-full sm:max-w-[600px] shadow-2xl sm:shadow rounded-t-lg sm:rounded-lg fixed bottom-0 left-0 sm:static z-[1004] max-h-[70%] flex flex-col">
         {/* Topbar  */}
         <div className="flex justify-between items-center pb-4">
           <p className="text-gray-500">{title}</p>

@@ -39,7 +39,11 @@ const DetailsModule = ({
       />
       <div className="flex flex-col gap-2">
         <p className="text-sm font-medium">Max guests</p>
-        <QuantitySelector quantity={quantity} handleQuantity={setQuantity} />
+        <QuantitySelector
+          lowestAllowed={1}
+          quantity={quantity}
+          handleQuantity={setQuantity}
+        />
       </div>
 
       <div className="flex flex-col gap-2">
