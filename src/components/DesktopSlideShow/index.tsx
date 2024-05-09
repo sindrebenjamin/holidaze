@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import { useScrollLock } from "../../hooks/useScrollLock";
 import { MediaItem } from "../../interfaces";
 import SlideShowModal from "./SlideShowModal";
 import { checkMedia } from "../../utils/checkMedia";
@@ -8,12 +9,7 @@ const DesktopSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [processedImages, setProcessedImages] = useState<MediaItem[]>([]);
 
-  useEffect(() => {
-    document.body.style.overflow = modalIsOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [modalIsOpen]);
+  useScrollLock(modalIsOpen);
 
   useEffect(() => {
     const processImages = async () => {

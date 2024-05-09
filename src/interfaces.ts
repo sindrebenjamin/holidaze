@@ -112,6 +112,7 @@ export interface Venue {
   location: Location;
   bookings: Booking[];
   _count: Count;
+  owner: Person;
 }
 
 interface Booking {

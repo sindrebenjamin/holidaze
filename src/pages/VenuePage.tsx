@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
+import VenueDetails from "../components/modules/VenuePage/VenueDetails";
 import { useApi } from "../hooks/useApi";
 import { SingleVenueResponse } from "../interfaces";
 import MobileSlideShow from "../components/MobileSlideShow";
 import DesktopSlideShow from "../components/DesktopSlideShow";
-import { Section, Container } from "../components/TailwindComponents";
+import { Section, Container, StyledH1 } from "../components/TailwindComponents";
 
 const VenuePage = () => {
   const params = useParams();
@@ -16,7 +17,7 @@ const VenuePage = () => {
     []
   );
   const { data } = useApi<SingleVenueResponse>(
-    `https://v2.api.noroff.dev/holidaze/venues/${params.id}`,
+    `https://v2.api.noroff.dev/holidaze/venues/${params.id}?_owner=true&_bookings=true`,
     options
   );
 
@@ -33,8 +34,12 @@ const VenuePage = () => {
           </Container>
         </Section>
       </div>
-
-      <h1>{data?.data.name}</h1>
+      <Section $noYPadding={true}>
+        <Container>
+          <StyledH1>{data?.data.name}</StyledH1>
+          <VenueDetails data={data} />
+        </Container>
+      </Section>
     </>
   );
 };

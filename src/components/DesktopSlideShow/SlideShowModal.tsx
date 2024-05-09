@@ -46,7 +46,7 @@ const SlideShowModal = ({
 
   if (images) {
     return (
-      <div className="flex items-center justify-center h-screen w-full bg-black absolute top-0 left-0 z-[1001] gap-2">
+      <div className="flex items-center justify-center h-screen w-full bg-black fixed top-0 left-0 z-[1001] gap-2">
         <button
           onClick={onClick}
           className="p-2 hover:bg-white hover:bg-opacity-20 rounded-lg duration-100 absolute top-8 right-8 flex text-white items-center"
