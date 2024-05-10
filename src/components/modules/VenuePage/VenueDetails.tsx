@@ -20,7 +20,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
 
   if (data) {
     return (
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 w-full max-w-[660px]">
         <div className="flex items-center gap-2 text-gray-700">
           <div className="flex items-center gap-0.5">
             <UserCircle color="#374151" />
