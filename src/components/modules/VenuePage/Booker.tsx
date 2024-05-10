@@ -69,7 +69,7 @@ const Booker: React.FC<BookerProps> = ({
       }),
     };
     (async () => {
-      await basicApi(
+      const result = await basicApi(
         "https://v2.api.noroff.dev/holidaze/bookings",
         options,
         setApiStatus
@@ -80,12 +80,16 @@ const Booker: React.FC<BookerProps> = ({
           { startDate: dates?.startDate, endDate: dates?.endDate },
         ]);
       }
-      setDates({
-        startDate: null,
-        endDate: null,
-      });
+      if (result) {
+        setDates({
+          startDate: null,
+          endDate: null,
+        });
+      }
     })();
   }
+
+  const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
   const convertedBookedDates = bookedDates.map((date) => ({
     startDate: date?.startDate || new Date(),
@@ -143,6 +147,9 @@ const Booker: React.FC<BookerProps> = ({
               </div>
               <div ref={inputRef}>
                 <GuestSelector
+                  incrementDisabled={
+                    data?.data.maxGuests - adults - children === 0
+                  }
                   adultQuantity={adults}
                   handleQuantityAdult={setAdults}
                   childQuantity={children}
@@ -173,6 +180,12 @@ const Booker: React.FC<BookerProps> = ({
               "Book"
             )}
           </Button>
+          <ul className="text-red-500 mt-2">
+            {apiErrors &&
+              apiErrors.map((error) => {
+                return <li key={error.message}>{error.message}</li>;
+              })}
+          </ul>
         </form>
       </>
     );

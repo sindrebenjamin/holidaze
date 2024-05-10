@@ -2,10 +2,12 @@ const QuantitySelector = ({
   quantity,
   handleQuantity,
   lowestAllowed,
+  incrementDisabled,
 }: {
   quantity: number;
   handleQuantity: (newQuantity: number) => void;
   lowestAllowed: number;
+  incrementDisabled?: boolean;
 }) => {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = parseInt(e.target.value, 10);
@@ -53,11 +55,12 @@ const QuantitySelector = ({
         onChange={handleChange}
       />
       <button
+        disabled={incrementDisabled}
         onClick={() => handleQuantity(quantity + 1)}
         type="button"
         id="increment-button"
         data-input-counter-increment="quantity-input"
-        className="bg-gray-200 rounded-full hover:bg-gray-300 border p-2 focus:ring-gray-100 focus:ring-2 focus:outline-none transition-colors duration-100"
+        className="disabled:opacity-50 disabled:pointer-events-none bg-gray-200 rounded-full hover:bg-gray-300 border p-2 focus:ring-gray-100 focus:ring-2 focus:outline-none transition-colors duration-100"
       >
         <svg
           width={20}

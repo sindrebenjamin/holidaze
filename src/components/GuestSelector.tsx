@@ -7,6 +7,7 @@ interface GuestSelectorProps {
   handleQuantityChild: (quantity: number) => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  incrementDisabled: boolean;
 }
 
 const GuestSelector: React.FC<GuestSelectorProps> = ({
@@ -16,6 +17,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
   handleQuantityChild,
   isOpen,
   setIsOpen,
+  incrementDisabled,
 }) => {
   const classes = isOpen
     ? `translate-y-0 opacity-1 z-10`
@@ -31,6 +33,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
           <p className="text-sm text-gray-600">18+ years</p>
         </div>
         <QuantitySelector
+          incrementDisabled={incrementDisabled}
           lowestAllowed={1}
           quantity={adultQuantity}
           handleQuantity={handleQuantityAdult}
@@ -42,6 +45,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
           <p className="text-sm text-gray-600">0-17 years</p>
         </div>
         <QuantitySelector
+          incrementDisabled={incrementDisabled}
           lowestAllowed={0}
           quantity={childQuantity}
           handleQuantity={handleQuantityChild}
