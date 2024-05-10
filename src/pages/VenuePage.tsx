@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import VenueDetails from "../components/modules/VenuePage/VenueDetails";
@@ -6,19 +6,18 @@ import { useApi } from "../hooks/useApi";
 import { SingleVenueResponse } from "../interfaces";
 import MobileSlideShow from "../components/MobileSlideShow";
 import DesktopSlideShow from "../components/DesktopSlideShow";
-import { Section, Container, StyledH1 } from "../components/TailwindComponents";
-import { DateValueType } from "react-tailwindcss-datepicker";
+import {
+  Section,
+  Container,
+  StyledH1,
+  StyledH2,
+} from "../components/TailwindComponents";
+import HostCard from "../components/HostCard";
 
 import Booker from "../components/modules/VenuePage/Booker";
 
 const VenuePage = () => {
   const params = useParams();
-  const [dates, setDates] = useState<DateValueType>({
-    startDate: null,
-    endDate: null,
-  });
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
   const options = useMemo(
     () => ({
       method: "GET",
@@ -36,27 +35,30 @@ const VenuePage = () => {
         <div className="lg:hidden">
           <MobileSlideShow images={data?.data.media} />
         </div>
-        <div className="hidden lg:block">
-          <Section $noXPadding={true}>
-            <Container>
-              <DesktopSlideShow images={data?.data.media} />
-            </Container>
-          </Section>
-        </div>
-        <Section $noYPadding={true}>
+
+        <Section className="lg:mt-[60px]" $noYPadding={true}>
           <Container>
-            <StyledH1>{data?.data.name}</StyledH1>
+            <div className="hidden lg:block">
+              <DesktopSlideShow images={data?.data.media} />
+            </div>
+            <StyledH1 className="mt-6 md:mt-[60px]">{data?.data.name}</StyledH1>
             <div className="md:flex justify-between gap-8">
               <VenueDetails data={data} />
-              <Booker
-                data={data}
-                adults={adults}
-                setAdults={setAdults}
-                children={children}
-                setChildren={setChildren}
-                dates={dates}
-                setDates={setDates}
+              <Booker data={data} />
+            </div>
+          </Container>
+        </Section>
+        <Section className="bg-gray-50">
+          <Container>
+            <StyledH2>Meet your host</StyledH2>
+            <div>
+              <HostCard
+                name={data.data.owner.name}
+                mediaItem={data.data.owner.avatar}
+                email={data.data.owner.email}
+                averageScore={3}
               />
+              <p>{data.data.owner.bio}</p>
             </div>
           </Container>
         </Section>

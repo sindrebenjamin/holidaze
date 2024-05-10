@@ -15,7 +15,7 @@ const HostCard: React.FC<HostCardPropos> = ({
   averageScore,
 }) => {
   return (
-    <div className="p-6 rounded-lg shadow-md flex flex-col gap-5 items-center sm:flex-row">
+    <div className="p-6 rounded-lg shadow-md flex flex-col gap-5 items-center sm:flex-row bg-white w-fit">
       <img
         className="rounded-full h-[160px] w-[160px]"
         src={mediaItem.url}

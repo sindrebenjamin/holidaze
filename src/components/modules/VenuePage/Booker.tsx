@@ -16,23 +16,15 @@ import { ApiStatus } from "../../../interfaces";
 
 interface BookerProps {
   data: SingleVenueResponse | undefined;
-  adults: number;
-  setAdults: (adults: number) => void;
-  children: number;
-  setChildren: (children: number) => void;
-  dates: DateValueType;
-  setDates: (dates: DateValueType) => void;
 }
 
-const Booker: React.FC<BookerProps> = ({
-  data,
-  adults,
-  setAdults,
-  children,
-  setChildren,
-  dates,
-  setDates,
-}) => {
+const Booker: React.FC<BookerProps> = ({ data }) => {
+  const [dates, setDates] = useState<DateValueType>({
+    startDate: null,
+    endDate: null,
+  });
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
   const params = useParams();
   const user = useUserStore((state) => state.user);
   const [guestSelectorIsOpen, setGuestSelectorIsOpen] = useState(false);
@@ -102,7 +94,7 @@ const Booker: React.FC<BookerProps> = ({
         <Divider className="mt-6 md:hidden" />
         <form
           onSubmit={onSubmit}
-          className="h-fit flex flex-col gap-6 my-6 sm:max-w-[350px] w-full sm:rounded-lg sm:shadow-md sm:p-6"
+          className="h-fit flex flex-col gap-6 my-6 md:max-w-[350px] w-full md:rounded-lg md:shadow-md md:p-6"
         >
           <p>
             <span className="text-xl text-gray-700">

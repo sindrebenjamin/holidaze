@@ -20,7 +20,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
 
   if (data) {
     return (
-      <div className="flex flex-col gap-6 w-full max-w-[660px]">
+      <div className="flex flex-col gap-6 w-full max-w-[660px] mt-2 lg:mt-6 md:pb-[60px] lg:pb-[120px]">
         <div className="flex items-center gap-2 text-gray-700">
           <div className="flex items-center gap-0.5">
             <UserCircle color="#374151" />
@@ -63,28 +63,28 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
         <Divider />
         {!noAmenities && (
           <>
-            <div className="flex flex-col gap-6 sm:flex-row">
+            <div className="flex flex-col gap-6 sm:flex-row text-gray-700">
               {data?.data.meta.wifi && (
                 <div className="flex gap-2 items-center">
-                  <Wifi />
+                  <Wifi color="#374151" />
                   Wifi
                 </div>
               )}
               {data?.data.meta.parking && (
                 <div className="flex gap-2 items-center">
-                  <Car />
+                  <Car color="#374151" />
                   Parking
                 </div>
               )}
               {data?.data.meta.pets && (
                 <div className="flex gap-2 items-center">
-                  <Dog />
+                  <Dog color="#374151" />
                   Pets allowed
                 </div>
               )}
               {data?.data.meta.pets && (
                 <div className="flex gap-2 items-center">
-                  <Coffee />
+                  <Coffee color="#374151" />
                   Breakfast
                 </div>
               )}
