@@ -49,16 +49,15 @@ const VenuePage = () => {
           </Container>
         </Section>
         <Section className="bg-gray-50">
-          <Container>
-            <StyledH2>Meet your host</StyledH2>
-            <div>
+          <Container className="flex flex-col">
+            <StyledH2 className="text-center">Meet your host</StyledH2>
+            <div className="flex flex-col gap-6 md:items-center">
               <HostCard
                 name={data.data.owner.name}
                 mediaItem={data.data.owner.avatar}
                 email={data.data.owner.email}
-                averageScore={3}
               />
-              <p>{data.data.owner.bio}</p>
+              {/* <p>{data.data.owner.bio}</p> */}
             </div>
           </Container>
         </Section>

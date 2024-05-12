@@ -23,7 +23,7 @@ function App() {
           <Route path="account" element={<AccountPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="notfound" element={<NotFoundPage />} />
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile/:name" element={<ProfilePage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="add" element={<AddVenuePage />} />
           <Route path="edit/:id" element={<EditVenuePage />} />

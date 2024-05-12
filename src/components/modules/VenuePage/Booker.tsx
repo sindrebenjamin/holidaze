@@ -105,7 +105,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
 
           <div className="flex flex-col gap-2">
             <Datepicker
-              toggleClassName="hidden"
+              // toggleClassName="hidden"
               showFooter={true}
               minDate={new Date()}
               separator="->"
@@ -127,7 +127,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
                   guestSelectorIsOpen ? "border-gray-800" : "border-gray-300"
                 }`}
               >
-                <p className="text-sm text-gray-500">
+                <p className="text-sm">
                   {adults < 1 && children < 1 && "Guests"}
                   {adults > 0 &&
                     adults + `${adults === 1 ? " Adult" : " Adults"}`}
@@ -152,13 +152,15 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
               </div>
             </div>
           </div>
-          {dates?.startDate && dates?.endDate && (
+          {dates?.startDate && dates?.endDate ? (
             <div className="flex justify-between">
               <p>
                 Total for {daysBooked} {daysBooked === 1 ? "night" : "nights"}
               </p>
               <p>{daysBooked * data.data.price} NOK</p>
             </div>
+          ) : (
+            <p>Select dates to proceed</p>
           )}
           <Button
             type="submit"

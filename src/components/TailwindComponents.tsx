@@ -65,6 +65,7 @@ text-2xl
 md:text-3xl
 font-medium
 mb-4
+md:mb-6
 `;
 
 export const Divider = tw.div`

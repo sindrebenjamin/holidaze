@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import { SingleVenueResponse } from "../../../interfaces";
 import UserCircle from "../../icons/UserCircle";
@@ -43,14 +44,17 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
         <Divider />
         <div className="flex flex-col gap-2">
           <p className="font-bold">Listed by</p>
-          <div className="flex items-center gap-2">
+          <NavLink
+            to={`/profiles/${data.data.owner.name}`}
+            className="flex items-center gap-2"
+          >
             <img
               className="rounded-full h-11 w-11 object-cover min-h-11 min-w-11"
               src={data?.data.owner.avatar.url}
               alt={data?.data.owner.avatar.alt}
             />
             <p>{data?.data.owner.name}</p>
-          </div>
+          </NavLink>
         </div>
         <Divider />
         <div className="flex flex-col gap-2">
