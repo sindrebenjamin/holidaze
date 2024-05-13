@@ -17,6 +17,8 @@ import AccountSettings from "../components/modules/AccountPage/AccountSettings";
 import Tab from "../components/Tab";
 import { Section } from "../components/TailwindComponents";
 import Bookings from "../components/modules/AccountPage/Bookings";
+import VenueManagerCard from "../components/VenueManagerCard";
+import AccountVenues from "../components/modules/AccountPage/AccountVenues";
 
 const AccountPage = () => {
   const user = useUserStore((state) => state.user);
@@ -40,12 +42,12 @@ const AccountPage = () => {
     console.log("hei");
   }
 
-  console.log(data);
+  console.log(data.data?.data._count.bookings);
 
   if (user) {
     return (
       <>
-        <div className="flex justify-between items-center px-4 mb-6 mt-4">
+        <div className="lg:hidden flex justify-between items-center px-4 mb-6 mt-4">
           <BackButton />
           <NavLink to={`/profile/${user?.name}`}>
             <Button type="button" color="gray-light" size="sm">
@@ -53,9 +55,17 @@ const AccountPage = () => {
             </Button>
           </NavLink>
         </div>
-        <StyledH1 className="text-center mb-6 md:text-left">
-          My Account
-        </StyledH1>
+        <div className="px-6 lg:mt-[120px]">
+          <Container className="lg:flex lg:justify-between items-center mb-6 lg:mb-8">
+            <StyledH1 className="text-center md:text-left">My Account</StyledH1>
+            <NavLink className="hidden lg:block" to={`/profile/${user?.name}`}>
+              <Button type="button" color="gray-light" size="sm">
+                View public profile
+              </Button>
+            </NavLink>
+          </Container>
+        </div>
+
         {/* Settings - Bookings - Wrapper */}
         <div className="md:px-6">
           <Container className="md:flex md:justify-between gap-12">
@@ -64,6 +74,15 @@ const AccountPage = () => {
             <Bookings bookings={data.data?.data.bookings ?? []} />
           </Container>
         </div>
+        <Section className="py-0 md:py-[60px]">
+          <Container>
+            <Divider className="my-6 md:hidden" />
+            <AccountVenues
+              venues={data.data?.data.venues ?? []}
+              bookings={data.data?.data._count.bookings ?? 0}
+            />
+          </Container>
+        </Section>
       </>
     );
   }
