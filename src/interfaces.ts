@@ -22,7 +22,7 @@ export interface BookingResponse {
   meta: Record<string, unknown>;
 }
 
-interface BookingData {
+export interface BookingData {
   id: string;
   dateFrom: string;
   dateTo: string;
@@ -112,9 +112,10 @@ export interface Venue {
   location: Location;
   bookings: Booking[];
   _count: Count;
+  owner: Person;
 }
 
-interface Booking {
+export interface Booking {
   id: string;
   dateFrom: string;
   dateTo: string;

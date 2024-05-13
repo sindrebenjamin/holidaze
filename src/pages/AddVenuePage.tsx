@@ -222,6 +222,3 @@ const AddVenuePage = () => {
 };
 
 export default AddVenuePage;
-
-//pass onSubmit to tabs
-//price can't be greater than 10k

@@ -10,9 +10,12 @@ export const Container = tw.div`
     m-auto
 `;
 
-export const Section = tw.section<{ $noXPadding?: boolean }>`
+export const Section = tw.section<{
+  $noXPadding?: boolean;
+  $noYPadding?: boolean;
+}>`
 ${(p) => (p.$noXPadding ? "px-0" : "px-4")}
-py-12
+${(p) => (p.$noYPadding ? "py-0" : "py-12 md:py-15 lg:py-[120px]")}
 sm:px-6
 `;
 
@@ -60,6 +63,13 @@ font-bold
 export const StyledH2 = tw.h2`
 text-2xl 
 md:text-3xl
-font-bold 
+font-medium
 mb-4
+md:mb-6
+`;
+
+export const Divider = tw.div`
+bg-gray-300
+h-[1px]
+w-full
 `;
