@@ -13,6 +13,7 @@ import {
   StyledH2,
 } from "../components/TailwindComponents";
 import HostCard from "../components/HostCard";
+import { checkLongText } from "../utils/checkLongText";
 
 import Booker from "../components/modules/VenuePage/Booker";
 
@@ -41,7 +42,9 @@ const VenuePage = () => {
             <div className="hidden lg:block">
               <DesktopSlideShow images={data?.data.media} />
             </div>
-            <StyledH1 className="mt-6 md:mt-[60px]">{data?.data.name}</StyledH1>
+            <StyledH1 className="mt-6 md:mt-[60px] break-words">
+              {checkLongText(data?.data.name, 60)}
+            </StyledH1>
             <div className="md:flex justify-between gap-8">
               <VenueDetails data={data} />
               <Booker data={data} />

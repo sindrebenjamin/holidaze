@@ -5,12 +5,11 @@ import ArrowLeft from "./icons/ArrowLeft";
 const BackButton = ({ overrideClasses }: { overrideClasses?: string }) => {
   const navigate = useNavigate();
   const lastPath = useLastPageStore((state) => state.lastPath);
-  const setLastPath = useLastPageStore((state) => state.setLastPath);
+  // const setLastPath = useLastPageStore((state) => state.setLastPath);
 
   function handleBackClick() {
-    if (lastPath === "/add") {
+    if (lastPath === "/add" || lastPath === "") {
       navigate("/");
-      setLastPath("/venue");
     } else {
       navigate(-1);
     }

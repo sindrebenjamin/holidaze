@@ -6,7 +6,7 @@ interface LastPageProps {
 }
 
 const useLastPageStore = create<LastPageProps>((set) => ({
-  lastPath: "/",
+  lastPath: "",
   setLastPath: (path: string) => set({ lastPath: path }),
 }));
 

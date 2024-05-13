@@ -6,6 +6,7 @@ import { useApi } from "../hooks/useApi";
 import { MediaItem } from "../interfaces";
 import Star from "./icons/Star";
 import { ProfileResponse } from "../interfaces";
+import { checkRating } from "../utils/checkRating";
 
 interface HostCardPropos {
   name: string;
@@ -40,11 +41,8 @@ const HostCard: React.FC<HostCardPropos> = ({ name, mediaItem, email }) => {
         return total + num;
       }, 0);
       const average = reduced / venueScores.length;
-      if (Number.isInteger(average)) {
-        return average;
-      } else {
-        return average.toFixed(2);
-      }
+      const checked = checkRating(average);
+      return checked;
     }
   }
   const averageScore = calculateAverage();
