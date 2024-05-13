@@ -17,6 +17,7 @@ import DetailsModule from "../components/modules/Tabs/DetailsModule";
 import AmenitiesModule from "../components/modules/Tabs/AmenitiesModule";
 import MediaModule from "../components/modules/Tabs/MediaModule";
 import PublishModule from "../components/modules/Tabs/PublishModule";
+import useLastPageStore from "../store/useLastPageStore";
 
 let nextId = 1;
 
@@ -48,6 +49,7 @@ const AddVenuePage = () => {
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
+  const setLastPath = useLastPageStore((state) => state.setLastPath);
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
@@ -102,6 +104,7 @@ const AddVenuePage = () => {
         options,
         setApiStatus
       );
+      setLastPath("/add");
       navigate(`/venue/${result.data.id}`);
     })();
   }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { MediaItem } from "../interfaces";
+import BackButton from "./BackButton";
 
 const MobileSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,6 +18,7 @@ const MobileSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
   if (images) {
     return (
       <div className="relative">
+        <BackButton overrideClasses="absolute z-[1010] bg-white top-4 left-4" />
         <div
           onScroll={(e) => handleScroll(e)}
           className="no-scrollbar flex w-full overflow-hidden snap-x snap-mandatory overflow-x-scroll"
