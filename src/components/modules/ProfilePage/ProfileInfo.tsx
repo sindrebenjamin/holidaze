@@ -34,7 +34,7 @@ const ProfileInfo = ({ user }: { user: ProfileData }) => {
           <p className="text-gray-500">{user?.email}</p>
         </div>
         {/* Account card inner*/}
-        <div className="px-4 sm:px-6 md:px-4 py-6 flex flex-col gap-6">
+        <div className="px-4 sm:px-6 lg:px-4 py-6 flex flex-col gap-6">
           <Divider />
           <div className="flex flex-col gap-2">
             <p className="font-bold">Bio</p>

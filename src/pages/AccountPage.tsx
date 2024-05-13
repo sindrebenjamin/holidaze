@@ -46,7 +46,7 @@ const AccountPage = () => {
 
   if (user) {
     return (
-      <>
+      <main className="min-h-screen">
         <div className="lg:hidden flex justify-between items-center px-4 mb-6 mt-4">
           <BackButton />
           <NavLink to={`/profile/${user?.name}`}>
@@ -83,7 +83,7 @@ const AccountPage = () => {
             />
           </Container>
         </Section>
-      </>
+      </main>
     );
   }
 };

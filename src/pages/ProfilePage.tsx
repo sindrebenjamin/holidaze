@@ -5,6 +5,8 @@ import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
 import { ProfileResponse } from "../interfaces";
 import ProfileInfo from "../components/modules/ProfilePage/ProfileInfo";
+import ProfileVenues from "../components/modules/ProfilePage/ProfileVenues";
+import { Container, Divider, StyledH2 } from "../components/TailwindComponents";
 
 const ProfilePage = () => {
   const params = useParams();
@@ -26,11 +28,20 @@ const ProfilePage = () => {
   );
 
   console.log(data.data);
-  return (
-    <main>
-      <ProfileInfo user={data.data?.data} />
-    </main>
-  );
+  if (data) {
+    return (
+      <main className="lg:px-6 lg:py-[120px] md:pb-[60px] min-h-screen">
+        <Container className="lg:flex lg:gap-12">
+          {data.data?.data && <ProfileInfo user={data.data?.data} />}
+          <div className="w-full px-4 sm:px-6 lg:px-0">
+            <Divider className="lg:hidden mb-6" />
+            <StyledH2>{data.data?.data.name}'s Venues</StyledH2>
+            <ProfileVenues venues={data.data?.data.venues ?? []} />
+          </div>
+        </Container>
+      </main>
+    );
+  }
 };
 
 export default ProfilePage;
