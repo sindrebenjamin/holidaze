@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
 import { ProfileResponse } from "../interfaces";
+import ProfileInfo from "../components/modules/ProfilePage/ProfileInfo";
 
 const ProfilePage = () => {
   const params = useParams();
@@ -24,8 +25,12 @@ const ProfilePage = () => {
     options
   );
 
-  console.log(data);
-  return <h1>Profile</h1>;
+  console.log(data.data);
+  return (
+    <main>
+      <ProfileInfo user={data.data?.data} />
+    </main>
+  );
 };
 
 export default ProfilePage;
