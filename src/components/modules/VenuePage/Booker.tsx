@@ -13,12 +13,14 @@ import GuestSelector from "../../GuestSelector";
 import { basicApi } from "../../../utils/basicApi";
 import { useUserStore } from "../../../store/useUserStore";
 import { ApiStatus } from "../../../interfaces";
+import SuccessDialogue from "../../SuccessDialogue";
 
 interface BookerProps {
   data: SingleVenueResponse | undefined;
 }
 
 const Booker: React.FC<BookerProps> = ({ data }) => {
+  const [showDialogueClasses, setShowDialogueClasses] = useState("hidden");
   const [dates, setDates] = useState<DateValueType>({
     startDate: null,
     endDate: null,
@@ -73,6 +75,13 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
         ]);
       }
       if (result) {
+        setShowDialogueClasses("translate-y-4 opacity-0");
+        setTimeout(() => {
+          setShowDialogueClasses("translate-y-0 opacity-1");
+        }, 10);
+        setTimeout(() => {
+          setShowDialogueClasses("translate-y-4 opacity-0");
+        }, 5000);
         setDates({
           startDate: null,
           endDate: null,
@@ -174,6 +183,10 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
               "Book"
             )}
           </Button>
+          <SuccessDialogue
+            showDialogueClasses={showDialogueClasses}
+            message={`Venue successfully booked`}
+          />
           <ul className="text-red-500 mt-2">
             {apiErrors &&
               apiErrors.map((error) => {
