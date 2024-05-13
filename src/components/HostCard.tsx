@@ -24,7 +24,7 @@ const HostCard: React.FC<HostCardPropos> = ({ name, mediaItem, email }) => {
         "Content-Type": "application/json",
       },
     }),
-    []
+    [user?.accessToken]
   );
   const data = useApi<ProfileResponse>(
     `https://v2.api.noroff.dev/holidaze/profiles/${name}?_venues=true`,
