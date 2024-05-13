@@ -50,7 +50,7 @@ const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
         </div>
         <div>
           <div className="flex justify-between">
-            <p className="font-bold">{checkLongText(address, 20)}</p>
+            <p className="font-bold">{checkLongText(address.trim(), 20)}</p>
             <div className="flex items-center gap-0.5">
               <Star />
               <p>{checkRating(rating)}</p>

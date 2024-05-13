@@ -15,7 +15,6 @@ const BackButton = ({ overrideClasses }: { overrideClasses?: string }) => {
     }
   }
 
-  console.log("lastPath:", lastPath);
   return (
     <button
       className={`${overrideClasses} hover:bg-gray-100 duration-100 transition-colors p-2.5 rounded-full`}

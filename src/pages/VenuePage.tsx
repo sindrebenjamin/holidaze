@@ -43,7 +43,7 @@ const VenuePage = () => {
               <DesktopSlideShow images={data?.data.media} />
             </div>
             <StyledH1 className="mt-6 md:mt-[60px] break-words">
-              {checkLongText(data?.data.name, 60)}
+              {checkLongText(data?.data.name.trim(), 60)}
             </StyledH1>
             <div className="md:flex justify-between gap-8">
               <VenueDetails data={data} />

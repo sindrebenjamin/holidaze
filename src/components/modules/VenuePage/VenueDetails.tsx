@@ -64,7 +64,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
             <Location color="#374151" />
             <p className="text-gray-700 max-w-[90%] md:max-w-[300px] break-words">
               {data.data.location.address &&
-                checkLongText(data.data.location.address, 60)}
+                checkLongText(data.data.location.address.trim(), 60)}
             </p>
           </div>
         </div>
@@ -107,7 +107,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
             <p>This venue has no description.</p>
           ) : (
             <p>
-              {checkLongText(data.data.description, 300)}{" "}
+              {checkLongText(data.data.description.trim(), 300)}{" "}
               {data.data.description.length > 300 && (
                 <button
                   onClick={() => setModalIsOpen(true)}
