@@ -32,7 +32,7 @@ const VenuePage = () => {
 
   if (data) {
     return (
-      <>
+      <main>
         <div className="lg:hidden">
           <MobileSlideShow images={data?.data.media} />
         </div>
@@ -64,7 +64,7 @@ const VenuePage = () => {
             </div>
           </Container>
         </Section>
-      </>
+      </main>
     );
   }
 };

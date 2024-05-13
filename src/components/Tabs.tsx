@@ -35,6 +35,7 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
               title={tab.title}
               active={index === currentTab}
               disabled={tab.lock}
+              sizing="w-[38%] sm:w-[22%] md:w-full"
             />
           );
         })}

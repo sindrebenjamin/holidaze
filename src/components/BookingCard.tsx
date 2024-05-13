@@ -2,13 +2,13 @@ import UserCircle from "./icons/UserCircle";
 
 interface BookingCardProps {
   title: string;
-  bookings: number;
+  guests: number;
   duration: string;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
   title,
-  bookings,
+  guests,
   duration,
 }) => {
   return (
@@ -17,7 +17,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <UserCircle />
-          <p>{bookings}</p>
+          <p>{guests}</p>
         </div>
         <p className="text-gray-500 text-sm">{duration}</p>
       </div>

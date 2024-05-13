@@ -3,11 +3,13 @@ const Tab = ({
   onClick,
   active,
   disabled,
+  sizing,
 }: {
   title: string;
   onClick: () => void;
   active: boolean;
   disabled?: boolean;
+  sizing: string;
 }) => {
   const classes = active
     ? "text-pink-600 border-pink-500"
@@ -16,9 +18,9 @@ const Tab = ({
     <button
       type="button"
       disabled={disabled}
-      className={`${classes} ${
+      className={`${classes} ${sizing} ${
         disabled && "opacity-50"
-      } transition-colors duration-100 text-sm border-b w-[38%] sm:w-[22%] md:w-full font-medium pb-3 grow-0 shrink-0 md:grow md:shrink disabled:pointer-events-none`}
+      } transition-colors duration-100 text-sm border-b font-medium pb-3 grow-0 shrink-0 md:grow md:shrink disabled:pointer-events-none`}
       onClick={onClick}
     >
       {title}

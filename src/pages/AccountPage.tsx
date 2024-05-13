@@ -7,8 +7,16 @@ import { useUserStore } from "../store/useUserStore";
 import { ProfileResponse } from "../interfaces";
 import BackButton from "../components/BackButton";
 import Button from "../components/Button";
-import { StyledH1, StyledH2 } from "../components/TailwindComponents";
+import {
+  Container,
+  Divider,
+  StyledH1,
+  StyledH2,
+} from "../components/TailwindComponents";
 import AccountSettings from "../components/modules/AccountPage/AccountSettings";
+import Tab from "../components/Tab";
+import { Section } from "../components/TailwindComponents";
+import Bookings from "../components/modules/AccountPage/Bookings";
 
 const AccountPage = () => {
   const user = useUserStore((state) => state.user);
@@ -33,10 +41,11 @@ const AccountPage = () => {
   }
 
   console.log(data);
+
   if (user) {
     return (
       <>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center px-4 mb-6 mt-4">
           <BackButton />
           <NavLink to={`/profile/${user?.name}`}>
             <Button type="button" color="gray-light" size="sm">
@@ -44,9 +53,17 @@ const AccountPage = () => {
             </Button>
           </NavLink>
         </div>
-        <StyledH1>My Account</StyledH1>
-        <AccountSettings user={user} updateProfile={updateProfile} />
-        <StyledH2>My Bookings</StyledH2>
+        <StyledH1 className="text-center mb-6 md:text-left">
+          My Account
+        </StyledH1>
+        {/* Settings - Bookings - Wrapper */}
+        <div className="md:px-6">
+          <Container className="md:flex md:justify-between gap-12">
+            <AccountSettings user={user} updateProfile={updateProfile} />
+            <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
+            <Bookings bookings={data.data?.data.bookings ?? []} />
+          </Container>
+        </div>
       </>
     );
   }

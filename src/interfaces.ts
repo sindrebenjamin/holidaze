@@ -13,6 +13,7 @@ export interface User {
   banner: MediaItem;
   accessToken: string;
   venueManager: boolean;
+  bookings: Booking[];
 }
 
 // Booking

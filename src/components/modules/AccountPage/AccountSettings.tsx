@@ -13,7 +13,7 @@ const AccountSettings = ({
   return (
     <>
       {/* Account card outer*/}
-      <div className="md:max-w-[400px] md:rounded-lg md:overflow-hidden md:shadow-md">
+      <div className="h-fit md:max-w-[400px] md:rounded-lg overflow-hidden md:shadow-md rounded-t-lg">
         {/* Image settings */}
         <div className="relative">
           {/* Banner */}
@@ -44,7 +44,7 @@ const AccountSettings = ({
           <p className="text-gray-500">{user?.email}</p>
         </div>
         {/* Account card inner*/}
-        <div className="px-4 py-6 flex flex-col gap-6 sm:flex-row md:flex-col">
+        <div className="px-4 sm:px-6 md:px-4 py-6 flex flex-col gap-6 sm:flex-row md:flex-col">
           {/* Account type */}
           <div className="flex flex-col gap-2 w-full">
             <p className="text-sm font-medium">Account type</p>

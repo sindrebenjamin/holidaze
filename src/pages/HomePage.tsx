@@ -27,7 +27,7 @@ const HomePage = () => {
   console.log(data);
 
   return (
-    <div>
+    <main>
       {data &&
         data.data.map((venue: Venue) => {
           if (validateVenue(venue)) {
@@ -43,7 +43,7 @@ const HomePage = () => {
             );
           }
         })}
-    </div>
+    </main>
   );
 };
 
