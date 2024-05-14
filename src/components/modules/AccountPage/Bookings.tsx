@@ -1,12 +1,13 @@
-import { StyledH2 } from "../../TailwindComponents";
+import { StyledH2, Section } from "../../TailwindComponents";
 import Tab from "../../Tab";
 import { Booking } from "../../../interfaces";
 import BookingCard from "../../BookingCard";
+import { NavLink } from "react-router-dom";
 
 const Bookings = ({ bookings }: { bookings: Booking[] }) => {
   return (
-    <div className="w-full max-w-[800px] px-4 sm:px-6 md:px-0">
-      <StyledH2 className="mb-6">My Bookings</StyledH2>
+    <Section $noYPadding={true} className="w-full max-w-[800px] md:px-0">
+      <StyledH2>My Bookings</StyledH2>
       <div className="mb-6">
         <Tab
           sizing="w-[100px]"
@@ -37,9 +38,12 @@ const Bookings = ({ bookings }: { bookings: Booking[] }) => {
           })}
         </div>
       ) : (
-        "No bookings yet"
+        <div>
+          <p>No bookings made yet. </p>
+          <NavLink to="/">View venues here</NavLink>
+        </div>
       )}
-    </div>
+    </Section>
   );
 };
 

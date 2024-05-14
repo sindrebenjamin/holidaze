@@ -27,7 +27,6 @@ const ProfilePage = () => {
     options
   );
 
-  console.log(data.data);
   if (data) {
     return (
       <main className="lg:px-6 lg:py-[120px] md:pb-[60px] min-h-screen">

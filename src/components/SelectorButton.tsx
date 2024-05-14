@@ -14,6 +14,7 @@ const SelectorButton: React.FC<SelectorButtonProps> = ({
     : "bg-gray-50 text-gray-900 hover:bg-gray-100 border-gray-300";
   return (
     <button
+      type="button"
       onClick={onClick}
       className={`${classes} border font-medium transition-colors duration-100 p-6 w-full rounded-lg`}
     >

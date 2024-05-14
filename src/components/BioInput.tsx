@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 import { Textarea } from "./TailwindComponents";
 
 interface BioInputProps {
@@ -8,7 +10,7 @@ interface BioInputProps {
   label: string;
   autocomplete?: string;
   value: string;
-  onBlur: () => void;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const BioInput = ({
@@ -19,7 +21,7 @@ const BioInput = ({
   label,
   autocomplete,
   value,
-  onBlur,
+  onChange,
 }: BioInputProps) => {
   const errorClasses = error ? "text-red-500" : "";
 
@@ -30,7 +32,7 @@ const BioInput = ({
       </label>
       <div>
         <Textarea
-          onBlur={onBlur}
+          onChange={onChange}
           autoComplete={autocomplete}
           id={String(name)}
           placeholder={placeholder}

@@ -1,24 +1,19 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import BookingCard from "../components/BookingCard";
+import { ApiStatus } from "../interfaces";
 import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
 import { ProfileResponse } from "../interfaces";
 import BackButton from "../components/BackButton";
 import Button from "../components/Button";
-import {
-  Container,
-  Divider,
-  StyledH1,
-  StyledH2,
-} from "../components/TailwindComponents";
+import { Container, Divider, StyledH1 } from "../components/TailwindComponents";
 import AccountSettings from "../components/modules/AccountPage/AccountSettings";
-import Tab from "../components/Tab";
 import { Section } from "../components/TailwindComponents";
 import Bookings from "../components/modules/AccountPage/Bookings";
-import VenueManagerCard from "../components/VenueManagerCard";
 import AccountVenues from "../components/modules/AccountPage/AccountVenues";
+import { useDebounce } from "use-debounce";
+import { basicApi } from "../utils/basicApi";
 
 const AccountPage = () => {
   const user = useUserStore((state) => state.user);
@@ -37,12 +32,44 @@ const AccountPage = () => {
     `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}?_venues=true&_bookings=true`,
     options
   );
+  const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
+  const [bio, setBio] = useState(user?.bio);
+  const [debouncedBio] = useDebounce(bio, 500);
 
+  console.log(user);
   function updateProfile() {
     console.log("hei");
   }
 
-  console.log(data.data?.data._count.bookings);
+  {
+    /* Update bio */
+  }
+  useEffect(() => {
+    const bioOptions = {
+      method: "PUT",
+      headers: {
+        "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        bio: debouncedBio,
+      }),
+    };
+
+    if (debouncedBio !== user?.bio) {
+      (async function () {
+        await basicApi(
+          `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}`,
+          bioOptions,
+          setApiStatus
+        );
+        if (user && debouncedBio) {
+          useUserStore.setState({ user: { ...user, bio: debouncedBio } });
+        }
+      })();
+    }
+  }, [debouncedBio]);
 
   if (user) {
     return (
@@ -55,6 +82,8 @@ const AccountPage = () => {
             </Button>
           </NavLink>
         </div>
+
+        {/* H1 - View button - Wrapper */}
         <div className="px-6 lg:mt-[120px]">
           <Container className="lg:flex lg:justify-between items-center mb-6 lg:mb-8">
             <StyledH1 className="text-center md:text-left">My Account</StyledH1>
@@ -69,7 +98,12 @@ const AccountPage = () => {
         {/* Settings - Bookings - Wrapper */}
         <div className="md:px-6">
           <Container className="md:flex md:justify-between gap-12">
-            <AccountSettings user={user} updateProfile={updateProfile} />
+            <AccountSettings
+              bio={bio}
+              setBio={setBio}
+              user={user}
+              updateProfile={updateProfile}
+            />
             <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
             <Bookings bookings={data.data?.data.bookings ?? []} />
           </Container>
