@@ -26,7 +26,11 @@ const LoginPage = () => {
       }),
     };
 
-    loginUser("https://v2.api.noroff.dev/auth/login", options, setApiStatus);
+    loginUser(
+      "https://v2.api.noroff.dev/auth/login?_holidaze=true",
+      options,
+      setApiStatus
+    );
   }
 
   return (

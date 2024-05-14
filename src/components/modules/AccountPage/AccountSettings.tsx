@@ -5,12 +5,12 @@ import { User } from "../../../interfaces";
 
 const AccountSettings = ({
   user,
-  updateProfile,
+  changeAccountType,
   bio,
   setBio,
 }: {
   user: User;
-  updateProfile: () => void;
+  changeAccountType: (venueManager: boolean) => void;
   bio: string | undefined;
   setBio: (bio: string) => void;
 }) => {
@@ -50,11 +50,22 @@ const AccountSettings = ({
         {/* Account type */}
         <div className="flex flex-col gap-2 w-full">
           <p className="text-sm font-medium">Account type</p>
-          <SelectorButton onClick={updateProfile} selected={user?.venueManager}>
+          <SelectorButton
+            onClick={() => {
+              if (!user?.venueManager) {
+                changeAccountType(true);
+              }
+            }}
+            selected={user?.venueManager}
+          >
             Venue manager
           </SelectorButton>
           <SelectorButton
-            onClick={updateProfile}
+            onClick={() => {
+              if (user?.venueManager) {
+                changeAccountType(false);
+              }
+            }}
             selected={!user?.venueManager}
           >
             Guest

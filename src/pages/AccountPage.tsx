@@ -41,17 +41,42 @@ const AccountPage = () => {
     console.log("hei");
   }
 
-  {
-    /* Update bio */
+  const baseOptions = {
+    method: "PUT",
+    headers: {
+      "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+      Authorization: `Bearer ${user?.accessToken}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  /* Update account type */
+
+  function changeAccountType(choice: boolean) {
+    const accountTypeOptions = {
+      ...baseOptions,
+      body: JSON.stringify({
+        venueManager: choice,
+      }),
+    };
+    if (user) {
+      useUserStore.setState({ user: { ...user, venueManager: choice } });
+      (async function () {
+        const res = await basicApi(
+          `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}`,
+          accountTypeOptions,
+          setApiStatus
+        );
+        console.log(res);
+      })();
+    }
   }
+
+  /* Update bio */
+
   useEffect(() => {
     const bioOptions = {
-      method: "PUT",
-      headers: {
-        "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization: `Bearer ${user?.accessToken}`,
-        "Content-Type": "application/json",
-      },
+      ...baseOptions,
       body: JSON.stringify({
         bio: debouncedBio,
       }),
@@ -102,7 +127,7 @@ const AccountPage = () => {
               bio={bio}
               setBio={setBio}
               user={user}
-              updateProfile={updateProfile}
+              changeAccountType={changeAccountType}
             />
             <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
             <Bookings bookings={data.data?.data.bookings ?? []} />
