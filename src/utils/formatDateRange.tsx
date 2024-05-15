@@ -7,7 +7,7 @@ export function formatDateRange(
   const startDate = parseISO(startDateString);
   const endDate = parseISO(endDateString);
 
-  const startFormatted = format(startDate, "MMM dd");
+  const startFormatted = format(startDate, "MMM dd, yyyy");
   const endFormatted = format(endDate, "MMM dd, yyyy");
 
   return `${startFormatted} - ${endFormatted}`;
