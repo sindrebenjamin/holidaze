@@ -3,6 +3,7 @@ import Tab from "../../Tab";
 import { Booking } from "../../../interfaces";
 import BookingCard from "../../BookingCard";
 import { NavLink } from "react-router-dom";
+import { formatDateRange } from "../../../utils/formatDateRange";
 
 const Bookings = ({ bookings }: { bookings: Booking[] }) => {
   return (
@@ -27,12 +28,13 @@ const Bookings = ({ bookings }: { bookings: Booking[] }) => {
       {bookings ? (
         <div className="flex flex-col gap-2">
           {bookings.map((booking) => {
+            console.log(booking);
             return (
               <BookingCard
                 key={booking.id}
                 title={booking.venue.location.address ?? "No address available"}
                 guests={booking.guests}
-                duration="15.03.2025 - 21.05.2024"
+                duration={formatDateRange(booking.dateFrom, booking.dateTo)}
               />
             );
           })}

@@ -86,7 +86,7 @@ const AccountSettings = () => {
             overrideClasses="absolute top-2 right-2"
           />
           <img
-            className="object-cover h-[200px] sm:h-[250px] md:h-[200px] w-full"
+            className="object-cover h-[200px] sm:h-[250px] md:h-[200px] w-full rounded-t-lg"
             src={bannerPreview ? bannerPreview : user?.banner.url}
             alt={user?.banner.alt}
           />
@@ -135,7 +135,7 @@ const AccountSettings = () => {
         <p className="text-gray-500">{user?.email}</p>
       </div>
       {/* Account card inner*/}
-      <div className="px-4 sm:px-6 md:px-4 py-6 flex flex-col gap-6 sm:flex-row md:flex-col">
+      <form className="px-4 sm:px-6 md:px-4 py-6 flex flex-col gap-6 sm:flex-row md:flex-col">
         {/* Account type */}
         <div className="flex flex-col gap-2 w-full">
           <p className="text-sm font-medium">Account type</p>
@@ -171,7 +171,7 @@ const AccountSettings = () => {
           placeholder="Tell us a little about yourself!"
           value={bio ?? ""}
         />
-      </div>
+      </form>
       <ul className="text-red-500 mt-2">
         {apiErrors &&
           apiErrors.map((error) => {
@@ -183,7 +183,3 @@ const AccountSettings = () => {
 };
 
 export default AccountSettings;
-
-//gjør andre elementer til forms?
-//gjør rounded
-//tilpass modal skjermstørrelser.
