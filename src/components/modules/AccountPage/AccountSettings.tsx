@@ -1,41 +1,130 @@
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
+
+import { ApiStatus } from "../../../interfaces";
+import { useUserStore } from "../../../store/useUserStore";
+import { basicApi } from "../../../utils/basicApi";
 import EditButton from "../../EditButton";
 import SelectorButton from "../../SelectorButton";
 import BioInput from "../../BioInput";
-import { User } from "../../../interfaces";
+import ImageUrlModal from "./ImageUrlModal";
 
-const AccountSettings = ({
-  user,
-  changeAccountType,
-  bio,
-  setBio,
-}: {
-  user: User;
-  changeAccountType: (venueManager: boolean) => void;
-  bio: string | undefined;
-  setBio: (bio: string) => void;
-}) => {
+const AccountSettings = () => {
+  const user = useUserStore((state) => state.user);
+  const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
+  const [bio, setBio] = useState(user?.bio);
+  const [debouncedBio] = useDebounce(bio, 500);
+  const [bannerPreview, setBannerPreview] = useState("");
+  const [bannerModalIsOpen, setBannerModalIsOpen] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState("");
+  const [avatarModalIsOpen, setAvatarModalIsOpen] = useState(false);
+
+  const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
+
+  const baseOptions = {
+    method: "PUT",
+    headers: {
+      "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+      Authorization: `Bearer ${user?.accessToken}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  /* Update account type */
+
+  function changeAccountType(choice: boolean) {
+    const accountTypeOptions = {
+      ...baseOptions,
+      body: JSON.stringify({
+        venueManager: choice,
+      }),
+    };
+    if (user) {
+      useUserStore.setState({ user: { ...user, venueManager: choice } });
+      (async function () {
+        const res = await basicApi(
+          `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}`,
+          accountTypeOptions,
+          setApiStatus
+        );
+        console.log(res);
+      })();
+    }
+  }
+
+  /* Update bio */
+
+  useEffect(() => {
+    const bioOptions = {
+      ...baseOptions,
+      body: JSON.stringify({
+        bio: debouncedBio,
+      }),
+    };
+
+    if (debouncedBio !== user?.bio) {
+      (async function () {
+        await basicApi(
+          `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}`,
+          bioOptions,
+          setApiStatus
+        );
+        if (user && debouncedBio) {
+          useUserStore.setState({ user: { ...user, bio: debouncedBio } });
+        }
+      })();
+    }
+  }, [debouncedBio]);
   return (
-    <form className="h-fit md:max-w-[400px] md:rounded-lg overflow-hidden md:shadow-md rounded-t-lg">
+    <div className="h-fit md:max-w-[400px] md:rounded-lg  md:shadow-md rounded-t-lg shrink-0 w-full">
       {/* Image settings */}
       <div className="relative">
         {/* Banner */}
         <div className="relative">
-          <EditButton overrideClasses="absolute top-2 right-2" />
+          <EditButton
+            onClick={() => setBannerModalIsOpen(true)}
+            overrideClasses="absolute top-2 right-2"
+          />
           <img
             className="object-cover h-[200px] sm:h-[250px] md:h-[200px] w-full"
-            src={user?.banner.url}
+            src={bannerPreview ? bannerPreview : user?.banner.url}
             alt={user?.banner.alt}
+          />
+          <ImageUrlModal
+            setIsOpen={setBannerModalIsOpen}
+            isOpen={bannerModalIsOpen}
+            preview={bannerPreview}
+            setPreview={setBannerPreview}
+            saveTo="banner"
+            value={user?.banner.url}
+            position="right-2 top-[59px]"
+            previewPosition="translate-y-[140px]"
+            tipPosition="right-3"
           />
         </div>
 
         {/* Avatar */}
         <div className="bottom-[-18px] left-1/2 translate-x-[-50%] absolute">
           <div className="relative rounded-full w-[120px]">
-            <EditButton overrideClasses="absolute top-0 right-0" />
+            <EditButton
+              onClick={() => setAvatarModalIsOpen(true)}
+              overrideClasses="absolute top-0 right-0"
+            />
             <img
-              className="object-cover w-full rounded-full"
-              src={user?.avatar.url}
+              className="object-cover w-full rounded-full h-[120px]"
+              src={avatarPreview ? avatarPreview : user?.avatar.url}
               alt={user?.avatar.alt}
+            />
+            <ImageUrlModal
+              setIsOpen={setAvatarModalIsOpen}
+              isOpen={avatarModalIsOpen}
+              preview={avatarPreview}
+              setPreview={setAvatarPreview}
+              saveTo="avatar"
+              value={user?.avatar.url}
+              position="top-[51px] left-[-84px]"
+              tipPosition="right-24 "
+              previewPosition="translate-y-[70px]"
             />
           </div>
         </div>
@@ -56,7 +145,7 @@ const AccountSettings = ({
                 changeAccountType(true);
               }
             }}
-            selected={user?.venueManager}
+            selected={user?.venueManager ?? false}
           >
             Venue manager
           </SelectorButton>
@@ -75,7 +164,6 @@ const AccountSettings = ({
         <BioInput
           onChange={(e) => {
             const value = e.target.value;
-            // console.log(value);
             setBio(value);
           }}
           name="bio"
@@ -84,8 +172,18 @@ const AccountSettings = ({
           value={bio ?? ""}
         />
       </div>
-    </form>
+      <ul className="text-red-500 mt-2">
+        {apiErrors &&
+          apiErrors.map((error) => {
+            return <li key={error.message}>{error.message}</li>;
+          })}
+      </ul>
+    </div>
   );
 };
 
 export default AccountSettings;
+
+//gjør andre elementer til forms?
+//gjør rounded
+//tilpass modal skjermstørrelser.

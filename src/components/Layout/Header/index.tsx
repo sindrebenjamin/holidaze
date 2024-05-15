@@ -1,9 +1,8 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { useUserStore } from "../../../store/useUserStore";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { useRef } from "react";
 
 import Logo from "../../icons/Logo";
 import UnauthorizedNavigation from "./UnauthorizedNavigation";

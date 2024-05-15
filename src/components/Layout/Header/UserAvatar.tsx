@@ -16,7 +16,7 @@ const UserAvatar = ({
       } hover:opacity-80 transition-colors duration-100 cursor-pointer relative w-fit h-fit`}
     >
       <img
-        className="rounded-full h-11 w-11"
+        className="rounded-full h-11 w-11 object-cover"
         src={user?.avatar.url}
         alt={user?.avatar.alt}
       />
