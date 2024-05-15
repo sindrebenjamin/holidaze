@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useUserStore } from "../store/useUserStore";
 import { useApi } from "../hooks/useApi";
 import { MediaItem } from "../interfaces";
-import Star from "./icons/Star";
+import Star from "./Layout/icons/Star";
 import { ProfileResponse } from "../interfaces";
 import { checkRating } from "../utils/checkRating";
 

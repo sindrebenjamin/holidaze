@@ -16,14 +16,15 @@ const AccountVenues = ({
     <>
       <div className="flex items-center justify-between mb-6 lg:mb-8">
         <StyledH2 className="m-0 md:m-0">My Venues</StyledH2>
+
         <NavLink to="/add">
           <Button type="button" color="gray-light" size="sm">
             Add new venue
           </Button>
         </NavLink>
       </div>
-
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-[60px] md:mb-0">
+      {venues.length === 0 && <p>You have no venues</p>}
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 ">
         {venues.map((venue) => {
           return (
             <VenueManagerCard

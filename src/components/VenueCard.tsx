@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { MediaItem } from "../interfaces";
 import { checkMedia } from "../utils/checkMedia";
-import Star from "./icons/Star";
+import Star from "./Layout/icons/Star";
 import { checkLongText } from "../utils/checkLongText";
 import { checkRating } from "../utils/checkRating";
 

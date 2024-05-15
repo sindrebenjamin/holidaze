@@ -1,5 +1,5 @@
-import ArrowLeft from "../icons/ArrowLeft";
-import ArrowRight from "../icons/ArrowRight";
+import ArrowLeft from "../Layout/icons/ArrowLeft";
+import ArrowRight from "../Layout/icons/ArrowRight";
 
 const SlideShowButton = ({
   onClick,

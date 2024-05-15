@@ -1,5 +1,5 @@
 import { useScrollLock } from "../hooks/useScrollLock";
-import Close from "./icons/Close";
+import Close from "./Layout/icons/Close";
 
 interface BasicModalProps {
   title: string;

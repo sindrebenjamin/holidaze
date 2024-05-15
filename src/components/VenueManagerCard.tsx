@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { MediaItem } from "../interfaces";
 import { checkMedia } from "../utils/checkMedia";
-import User from "./icons/User";
+import User from "./Layout/icons/User";
 
 interface VenueManagerCardProps {
   name: string;

@@ -56,22 +56,24 @@ const AccountPage = () => {
         </div>
 
         {/* Settings - Bookings - Wrapper */}
-        <div className="md:px-6">
+        <div className={`md:px-6 ${!user.venueManager && "py-[60px]"}`}>
           <Container className="md:flex md:justify-between gap-12">
             <AccountSettings />
             <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
             <Bookings bookings={data.data?.data.bookings ?? []} />
           </Container>
         </div>
-        <Section className="py-0 md:py-[60px]">
-          <Container>
-            <Divider className="my-6 md:hidden" />
-            <AccountVenues
-              venues={data.data?.data.venues ?? []}
-              bookings={data.data?.data._count.bookings ?? 0}
-            />
-          </Container>
-        </Section>
+        {user.venueManager && (
+          <Section className="py-0 md:py-[60px] mb-[60px] md:mb-0">
+            <Container>
+              <Divider className="my-6 md:hidden" />
+              <AccountVenues
+                venues={data.data?.data.venues ?? []}
+                bookings={data.data?.data._count.bookings ?? 0}
+              />
+            </Container>
+          </Section>
+        )}
       </main>
     );
   }
