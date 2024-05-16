@@ -8,6 +8,7 @@ import EditButton from "../../EditButton";
 import SelectorButton from "../../SelectorButton";
 import BioInput from "../../BioInput";
 import ImageUrlModal from "./ImageUrlModal";
+import { useCheckMedia } from "../../../hooks/useCheckMedia";
 
 const AccountSettings = () => {
   const user = useUserStore((state) => state.user);
@@ -18,6 +19,8 @@ const AccountSettings = () => {
   const [bannerModalIsOpen, setBannerModalIsOpen] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("");
   const [avatarModalIsOpen, setAvatarModalIsOpen] = useState(false);
+  const checkedAvatar = useCheckMedia(user?.avatar.url);
+  const checkedBanner = useCheckMedia(user?.banner.url);
 
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
@@ -42,12 +45,11 @@ const AccountSettings = () => {
     if (user) {
       useUserStore.setState({ user: { ...user, venueManager: choice } });
       (async function () {
-        const res = await basicApi(
+        await basicApi(
           `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}`,
           accountTypeOptions,
           setApiStatus
         );
-        console.log(res);
       })();
     }
   }
@@ -87,7 +89,7 @@ const AccountSettings = () => {
           />
           <img
             className="object-cover h-[200px] sm:h-[250px] md:h-[200px] w-full rounded-t-lg"
-            src={bannerPreview ? bannerPreview : user?.banner.url}
+            src={bannerPreview ? bannerPreview : checkedBanner}
             alt={user?.banner.alt}
           />
           <ImageUrlModal
@@ -112,7 +114,7 @@ const AccountSettings = () => {
             />
             <img
               className="object-cover w-full rounded-full h-[120px]"
-              src={avatarPreview ? avatarPreview : user?.avatar.url}
+              src={avatarPreview ? avatarPreview : checkedAvatar}
               alt={user?.avatar.alt}
             />
             <ImageUrlModal

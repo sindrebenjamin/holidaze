@@ -116,8 +116,6 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
     setPreview("");
   }
 
-  console.log(tipPosition);
-
   return (
     <form
       ref={wrapperRef}
@@ -166,6 +164,9 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
             return <li key={error.message}>{error.message}</li>;
           })}
       </ul>
+      {preview && (
+        <p className="text-gray-500 mt-4">You have unsaved changes</p>
+      )}
     </form>
   );
 };

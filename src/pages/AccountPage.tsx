@@ -26,12 +26,20 @@ const AccountPage = () => {
     }),
     [user?.accessToken]
   );
-  const data = useApi<ProfileResponse>(
+  const { data, status } = useApi<ProfileResponse>(
     `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}?_venues=true&_bookings=true`,
     options
   );
 
-  if (user) {
+  if (status === "error") {
+    return <p>Something went wrong.</p>;
+  }
+
+  if (!user) {
+    return <p>Please log in to view your account.</p>;
+  }
+
+  if (status === "success") {
     return (
       <main className="min-h-screen">
         <div className="lg:hidden flex justify-between items-center px-4 mb-6 mt-4">
@@ -60,7 +68,7 @@ const AccountPage = () => {
           <Container className="md:flex md:justify-between gap-12">
             <AccountSettings />
             <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
-            <Bookings bookings={data.data?.data.bookings ?? []} />
+            <Bookings bookings={data?.data.bookings ?? []} />
           </Container>
         </div>
         {user.venueManager && (
@@ -68,8 +76,8 @@ const AccountPage = () => {
             <Container>
               <Divider className="my-6 md:hidden" />
               <AccountVenues
-                venues={data.data?.data.venues ?? []}
-                bookings={data.data?.data._count.bookings ?? 0}
+                venues={data?.data.venues ?? []}
+                bookings={data?.data._count.bookings ?? 0}
               />
             </Container>
           </Section>
