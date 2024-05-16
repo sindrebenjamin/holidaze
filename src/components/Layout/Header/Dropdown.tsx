@@ -10,16 +10,15 @@ const Dropdown = ({
   isOpen: boolean;
 }) => {
   const user = useUserStore((state) => state.user);
-  console.log(isOpen);
   const classes = isOpen
     ? `translate-y-0 opacity-1 z-[1001]`
     : `translate-y-4 opacity-0 z-[-1]`;
 
   return (
     <nav
-      className={`${classes} top-[53px] rounded-lg right-[-11px] border border-gray-300 shadow bg-white absolute transition-all duration-300 ease-out`}
+      className={`${classes} top-[55px] rounded-lg right-0 border border-gray-300 shadow bg-white absolute transition-all duration-300 ease-out`}
     >
-      <div className="absolute z-20 h-4 w-4 rotate-45 mt-0.5 border-l border-t border-gray-300 bg-white top-[-11px] right-2"></div>
+      <div className="absolute z-20 h-4 w-4 rotate-45 mt-0.5 border-l border-t border-gray-300 bg-white top-[-11px] right-3"></div>
       <div className="px-4 py-3">
         <p className="font-semibold">{user?.name}</p>
         <p>{user?.email}</p>

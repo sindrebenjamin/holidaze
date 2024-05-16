@@ -1,6 +1,7 @@
 import { useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
+import { useUserStore } from "../store/useUserStore";
 import VenueDetails from "../components/modules/VenuePage/VenueDetails";
 import { useApi } from "../hooks/useApi";
 import { SingleVenueResponse } from "../interfaces";
@@ -14,10 +15,11 @@ import {
 } from "../components/TailwindComponents";
 import HostCard from "../components/HostCard";
 import { checkLongText } from "../utils/checkLongText";
-
+import { useRedirectStore } from "../store/useRedirectStore";
 import Booker from "../components/modules/VenuePage/Booker";
 
 const VenuePage = () => {
+  const user = useUserStore((state) => state.user);
   const params = useParams();
   const options = useMemo(
     () => ({
@@ -29,6 +31,8 @@ const VenuePage = () => {
     `https://v2.api.noroff.dev/holidaze/venues/${params.id}?_owner=true&_bookings=true`,
     options
   );
+  const redirect = useRedirectStore((state) => state.setRedirect);
+  redirect("/venue/" + params.id);
 
   if (data) {
     return (
@@ -53,15 +57,26 @@ const VenuePage = () => {
         </Section>
         <Section className="bg-gray-50">
           <Container className="flex flex-col">
-            <StyledH2 className="text-center">Meet your host</StyledH2>
-            <div className="flex flex-col gap-6 md:items-center">
-              <HostCard
-                name={data.data.owner.name}
-                mediaItem={data.data.owner.avatar}
-                email={data.data.owner.email}
-              />
-              {/* <p>{data.data.owner.bio}</p> */}
-            </div>
+            {user ? (
+              <>
+                <StyledH2 className="text-center">Meet your host</StyledH2>
+                <div className="flex flex-col gap-6 md:items-center">
+                  <HostCard
+                    name={data.data.owner.name}
+                    mediaItem={data.data.owner.avatar}
+                    email={data.data.owner.email}
+                  />
+                  {/* <p>{data.data.owner.bio}</p> */}
+                </div>
+              </>
+            ) : (
+              <NavLink
+                className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100 text-center"
+                to="/login"
+              >
+                Log in to view more info
+              </NavLink>
+            )}
           </Container>
         </Section>
       </main>

@@ -4,15 +4,17 @@ import { useUserStore } from "../store/useUserStore";
 export async function loginUser(
   url: string,
   options: ApiOptions,
-  setApiStatus: (status: ApiStatus) => void
+  setApiStatus: (status: ApiStatus) => void,
+  navigate: () => void
 ) {
+  // const navigate = useNavigate();
   try {
     setApiStatus("loading");
     const response = await fetch(url, options);
     const result = await response.json();
     if (response.ok) {
-      console.log(result.data);
       useUserStore.setState({ user: result.data });
+      navigate();
     } else {
       setApiStatus(result);
     }
@@ -22,5 +24,3 @@ export async function loginUser(
     //setApiStatus("idle");
   }
 }
-
-//Programatically change location based on where user were.

@@ -7,10 +7,12 @@ import { FormH1 } from "../components/TailwindComponents";
 import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import Button from "../components/Button";
 import { ApiStatus, LoginFormData } from "../interfaces";
+import useLoginRedirect from "../hooks/useLoginRedirect";
 
 const LoginPage = () => {
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const { register, handleSubmit } = useForm<LoginFormData>();
+  const loginRedirect = useLoginRedirect();
 
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
@@ -29,13 +31,14 @@ const LoginPage = () => {
     loginUser(
       "https://v2.api.noroff.dev/auth/login?_holidaze=true",
       options,
-      setApiStatus
+      setApiStatus,
+      loginRedirect
     );
   }
 
   return (
     <main className="sm:bg-gray-50 sm:flex sm:flex-col sm:justify-center sm:items-center sm:min-h-screen sm:py-12">
-      <div className="bg-white w-full px-4 py-12 min-h-screen sm:min-h-0 sm:p-10 sm:rounded-lg sm:shadow-md max-w-[535px]">
+      <div className="bg-white w-full px-4 py-12 min-h-screen sm:min-h-0 sm:p-10 sm:rounded-lg sm:shadow-md sm:max-w-[535px]">
         <FormH1 className="mb-6">Login</FormH1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <InputAndLabelAndMessage
@@ -64,7 +67,7 @@ const LoginPage = () => {
           </Button>
         </form>
         <p className="text-gray-800 mt-4">
-          Not registered?
+          Not registered?{" "}
           <NavLink
             to="/register"
             className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100"

@@ -7,6 +7,7 @@ import { validateVenue } from "../utils/validateVenue";
 //import VenueCard from "../components/VenueCard";
 import VenueCard from "../components/VenueCard";
 import useLastPageStore from "../store/useLastPageStore";
+import { useRedirectStore } from "../store/useRedirectStore";
 
 const HomePage = () => {
   //const user = useUserStore((state) => state.user);
@@ -22,9 +23,9 @@ const HomePage = () => {
     options
   );
 
+  const redirect = useRedirectStore((state) => state.setRedirect);
+  redirect("/");
   setLastPath("/");
-
-  console.log(data);
 
   return (
     <main>
