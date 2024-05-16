@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { NavLink } from "react-router-dom";
 
-import { ApiStatus } from "../interfaces";
 import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
 import { ProfileResponse } from "../interfaces";

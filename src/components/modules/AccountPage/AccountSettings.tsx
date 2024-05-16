@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import { ApiStatus } from "../../../interfaces";
@@ -24,14 +24,17 @@ const AccountSettings = () => {
 
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
-  const baseOptions = {
-    method: "PUT",
-    headers: {
-      "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-      Authorization: `Bearer ${user?.accessToken}`,
-      "Content-Type": "application/json",
-    },
-  };
+  const baseOptions = useMemo(
+    () => ({
+      method: "GET",
+      headers: {
+        "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+        Authorization: `Bearer ${user?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }),
+    [user?.accessToken]
+  );
 
   /* Update account type */
 
@@ -76,7 +79,7 @@ const AccountSettings = () => {
         }
       })();
     }
-  }, [debouncedBio]);
+  }, [debouncedBio, baseOptions, user]);
   return (
     <div className="h-fit md:max-w-[400px] md:rounded-lg  md:shadow-md rounded-t-lg shrink-0 w-full">
       {/* Image settings */}

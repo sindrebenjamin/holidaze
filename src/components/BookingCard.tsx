@@ -4,7 +4,7 @@ interface BookingCardProps {
   title: string;
   guests: number;
   duration: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
