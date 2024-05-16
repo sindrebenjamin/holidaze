@@ -8,8 +8,12 @@ body {
   height: 24px;
   border-radius: 50%;
   border-left-color: rgb(255, 255, 255);
-
   animation: spin 0.4s linear infinite;
+}
+
+.spinner-light.spinner-sm {
+  width: 20px;
+  height: 20px;
 }
 
 @keyframes spin {

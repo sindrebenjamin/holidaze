@@ -2,19 +2,19 @@ import { forwardRef } from "react";
 
 import { Input } from "./TailwindComponents";
 
-interface VenueMediaInputProps {
+interface MediaInputProps {
   name: string;
   placeholder: string;
   label: string;
   value: string;
   error: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus: () => void;
-  onBlur: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   disabled: boolean;
 }
 
-const VenueMediaInput = forwardRef<HTMLInputElement, VenueMediaInputProps>(
+const MediaInput = forwardRef<HTMLInputElement, MediaInputProps>(
   (
     {
       name,
@@ -56,4 +56,4 @@ const VenueMediaInput = forwardRef<HTMLInputElement, VenueMediaInputProps>(
   }
 );
 
-export default VenueMediaInput;
+export default MediaInput;

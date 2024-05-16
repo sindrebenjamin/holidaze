@@ -2,16 +2,17 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { SingleVenueResponse } from "../../../interfaces";
-import UserCircle from "../../icons/UserCircle";
-import Star from "../../icons/Star";
-import Location from "../../icons/Location";
-import Wifi from "../../icons/Wifi";
-import Car from "../../icons/Car";
-import Dog from "../../icons/Dog";
-import Coffee from "../../icons/Coffee";
+import UserCircle from "../../Layout/icons/UserCircle";
+import Star from "../../Layout/icons/Star";
+import Location from "../../Layout/icons/Location";
+import Wifi from "../../Layout/icons/Wifi";
+import Car from "../../Layout/icons/Car";
+import Dog from "../../Layout/icons/Dog";
+import Coffee from "../../Layout/icons/Coffee";
 import { checkLongText } from "../../../utils/checkLongText";
 import { Divider } from "../../TailwindComponents";
 import BasicModal from "../../BasicModal";
+import { checkRating } from "../../../utils/checkRating";
 
 const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
 
   if (data) {
     return (
-      <div className="flex flex-col gap-6 w-full max-w-[660px] mt-2 lg:mt-6 md:pb-[60px] lg:pb-[120px]">
+      <div className="flex flex-col gap-6 w-full lg:max-w-[660px] mt-2 md:mt-4 lg:mt-6 md:pb-[60px] lg:pb-[120px]">
         <div className="flex items-center gap-2 text-gray-700">
           <div className="flex items-center gap-0.5">
             <UserCircle color="#374151" />
@@ -38,14 +39,14 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
           </svg>
           <div className="flex items-center gap-0.5">
             <Star color="#374151" />
-            <p>{data?.data.rating}</p>
+            <p>{checkRating(data?.data.rating)}</p>
           </div>
         </div>
         <Divider />
         <div className="flex flex-col gap-2">
           <p className="font-bold">Listed by</p>
           <NavLink
-            to={`/profiles/${data.data.owner.name}`}
+            to={`/profile/${data.data.owner.name}`}
             className="flex items-center gap-2"
           >
             <img
@@ -61,13 +62,16 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
           <p className="font-bold">Address</p>
           <div className="flex items-center gap-2">
             <Location color="#374151" />
-            <p className="text-gray-700">{data?.data.location.address}</p>
+            <p className="text-gray-700 max-w-[90%] md:max-w-[300px] break-words">
+              {data.data.location.address &&
+                checkLongText(data.data.location.address.trim(), 60)}
+            </p>
           </div>
         </div>
         <Divider />
         {!noAmenities && (
           <>
-            <div className="flex flex-col gap-6 sm:flex-row text-gray-700">
+            <div className="flex flex-col flex-wrap gap-6 md:flex-row text-gray-700">
               {data?.data.meta.wifi && (
                 <div className="flex gap-2 items-center">
                   <Wifi color="#374151" />
@@ -103,7 +107,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
             <p>This venue has no description.</p>
           ) : (
             <p>
-              {checkLongText(data.data.description, 300)}{" "}
+              {checkLongText(data.data.description.trim(), 300)}{" "}
               {data.data.description.length > 300 && (
                 <button
                   onClick={() => setModalIsOpen(true)}

@@ -11,6 +11,7 @@ export async function loginUser(
     const response = await fetch(url, options);
     const result = await response.json();
     if (response.ok) {
+      console.log(result.data);
       useUserStore.setState({ user: result.data });
     } else {
       setApiStatus(result);

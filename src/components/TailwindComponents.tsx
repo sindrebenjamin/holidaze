@@ -56,7 +56,6 @@ font-bold
 export const StyledH1 = tw.h1`
 text-3xl 
 md:text-4xl 
-lg:text-5xl
 font-bold
 `;
 
@@ -71,5 +70,5 @@ md:mb-6
 export const Divider = tw.div`
 bg-gray-300
 h-[1px]
-w-full
+max-w-full
 `;

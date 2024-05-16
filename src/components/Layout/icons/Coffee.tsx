@@ -1,6 +1,7 @@
 const Coffee = ({ color }: { color?: string }) => {
   return (
     <svg
+      className="min-w-[20px] min-h-[20px]"
       width={21}
       height={20}
       viewBox="0 0 21 20"

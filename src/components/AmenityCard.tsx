@@ -1,7 +1,7 @@
-import Car from "./icons/Car";
-import Wifi from "./icons/Wifi";
-import Dog from "./icons/Dog";
-import Coffee from "./icons/Coffee";
+import Car from "./Layout/icons/Car";
+import Wifi from "./Layout/icons/Wifi";
+import Dog from "./Layout/icons/Dog";
+import Coffee from "./Layout/icons/Coffee";
 
 interface AmenityCardProps {
   icon: string;

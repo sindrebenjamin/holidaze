@@ -1,23 +1,28 @@
-import UserCircle from "./icons/UserCircle";
+import UserCircle from "./Layout/icons/UserCircle";
 
 interface BookingCardProps {
   title: string;
-  bookings: number;
+  guests: number;
   duration: string;
+  onClick?: () => void;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
   title,
-  bookings,
+  guests,
   duration,
+  onClick,
 }) => {
   return (
-    <div className="cursor-pointer flex flex-col gap-6 p-3 rounded-lg border border-gray-400 hover:border-gray-600 transition-colors duration-100">
+    <div
+      onClick={onClick}
+      className="cursor-pointer flex flex-col gap-6 p-3 rounded-lg border border-gray-400 hover:border-gray-600 transition-colors duration-100"
+    >
       <p>{title}</p>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-0.5">
           <UserCircle />
-          <p>{bookings}</p>
+          <p>{guests}</p>
         </div>
         <p className="text-gray-500 text-sm">{duration}</p>
       </div>

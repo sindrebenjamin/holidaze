@@ -13,6 +13,7 @@ export interface User {
   banner: MediaItem;
   accessToken: string;
   venueManager: boolean;
+  bookings: Booking[];
 }
 
 // Booking
@@ -52,7 +53,7 @@ export interface ProfileResponse {
   meta: Record<string, unknown>;
 }
 
-interface ProfileData {
+export interface ProfileData {
   name: string;
   email: string;
   bio: string;

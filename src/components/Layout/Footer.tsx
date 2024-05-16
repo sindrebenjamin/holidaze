@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import Logo from "../icons/Logo";
+import Logo from "./icons/Logo";
 
 const Footer = () => {
   const location = useLocation();

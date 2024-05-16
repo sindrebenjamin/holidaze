@@ -6,9 +6,11 @@ import { Venue, VenueResponse } from "../interfaces";
 import { validateVenue } from "../utils/validateVenue";
 //import VenueCard from "../components/VenueCard";
 import VenueCard from "../components/VenueCard";
+import useLastPageStore from "../store/useLastPageStore";
 
 const HomePage = () => {
   //const user = useUserStore((state) => state.user);
+  const setLastPath = useLastPageStore((state) => state.setLastPath);
   const options = useMemo(
     () => ({
       method: "GET",
@@ -20,10 +22,12 @@ const HomePage = () => {
     options
   );
 
+  setLastPath("/");
+
   console.log(data);
 
   return (
-    <div>
+    <main>
       {data &&
         data.data.map((venue: Venue) => {
           if (validateVenue(venue)) {
@@ -39,7 +43,7 @@ const HomePage = () => {
             );
           }
         })}
-    </div>
+    </main>
   );
 };
 

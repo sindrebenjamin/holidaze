@@ -1,6 +1,7 @@
 const Location = ({ color }: { color?: string }) => {
   return (
     <svg
+      className="min-w-[20px] min-h-[20px]"
       width={20}
       height={20}
       viewBox="0 0 20 20"

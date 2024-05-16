@@ -103,7 +103,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
         <Divider className="mt-6 md:hidden" />
         <form
           onSubmit={onSubmit}
-          className="h-fit flex flex-col gap-6 my-6 md:max-w-[350px] w-full md:rounded-lg md:shadow-md md:p-6"
+          className="h-fit flex flex-col gap-6 my-6 md:w-[350px] shrink-0 w-full md:rounded-lg md:shadow-md md:p-6"
         >
           <p>
             <span className="text-xl text-gray-700">

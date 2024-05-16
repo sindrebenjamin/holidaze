@@ -1,11 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { useUserStore } from "../../../store/useUserStore";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { useRef } from "react";
 
-import Logo from "../../icons/Logo";
+import Logo from "../icons/Logo";
 import UnauthorizedNavigation from "./UnauthorizedNavigation";
 import Dropdown from "./Dropdown";
 import UserAvatar from "./UserAvatar";
@@ -18,11 +17,21 @@ const Header = () => {
 
   useOutsideClick(wrapperRef, () => setIsOpen(false));
 
+  const hideMobileHeader =
+    location.pathname.includes("venue") ||
+    location.pathname.includes("account") ||
+    location.pathname.includes("profile") ||
+    location.pathname.includes("edit");
+
   const maxWidth =
     location.pathname === "/" ? "max-w-[3000px]" : "max-w-[1200px]";
 
   return (
-    <header className="py-3 px-4 sm:px-6">
+    <header
+      className={`${
+        hideMobileHeader ? "hidden lg:block" : ""
+      } py-3 px-4 sm:px-6`}
+    >
       <div
         className={`relative m-auto ${maxWidth} flex items-center justify-between`}
       >

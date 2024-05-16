@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import { MediaItem } from "../interfaces";
-import { checkMedia } from "../utils/checkMedia";
-import User from "./icons/User";
+import User from "./Layout/icons/User";
+import { useCheckMedia } from "../hooks/useCheckMedia";
 
 interface VenueManagerCardProps {
   name: string;
@@ -20,20 +19,7 @@ const VenueManagerCard = ({
   id,
   bookings,
 }: VenueManagerCardProps) => {
-  const [imageSrc, setImageSrc] = useState<string>("");
-
-  useEffect(() => {
-    let isMounted = true;
-    checkMedia(media.url).then((url) => {
-      if (isMounted) {
-        setImageSrc(url as string);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [media.url]);
+  const checkedImage = useCheckMedia(media.url);
 
   return (
     <NavLink
@@ -43,7 +29,7 @@ const VenueManagerCard = ({
       <div className="aspect-[4/3] overflow-hidden">
         <img
           className="w-full h-full group-hover:scale-105 transition-transform duration-200 object-cover"
-          src={imageSrc}
+          src={checkedImage}
           alt={media.alt}
         />
       </div>

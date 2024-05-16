@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-import VenueMediaInput from "../../VenueMediaInput";
+import MediaInput from "../../MediaInput";
 import DragAndDropArea from "../../DragAndDropArea";
 import DraggableImage from "../../DraggableImage";
 
@@ -36,7 +36,7 @@ const MediaModule = ({
       <h2 className="text-gray-500 text-lg">
         Add up to 8 photos and order them ({mediaArray.length}/8)
       </h2>
-      <VenueMediaInput
+      <MediaInput
         ref={inputRef}
         name="media"
         placeholder="https://images.com/image.jpg"
