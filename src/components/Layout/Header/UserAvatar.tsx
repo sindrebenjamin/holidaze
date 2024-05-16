@@ -1,3 +1,4 @@
+import { useCheckMedia } from "../../../hooks/useCheckMedia";
 import { useUserStore } from "../../../store/useUserStore";
 
 const UserAvatar = ({
@@ -8,6 +9,7 @@ const UserAvatar = ({
   isOpen: boolean;
 }) => {
   const user = useUserStore((state) => state.user);
+  const checkedAvatar = useCheckMedia(user?.avatar.url);
   return (
     <div
       onClick={onClick}
@@ -17,7 +19,7 @@ const UserAvatar = ({
     >
       <img
         className="rounded-full h-11 w-11 object-cover"
-        src={user?.avatar.url}
+        src={checkedAvatar}
         alt={user?.avatar.alt}
       />
       <div className="bg-gray-50 justify-center items-center flex rounded-full h-3 w-3 absolute bottom-0 right-0">
