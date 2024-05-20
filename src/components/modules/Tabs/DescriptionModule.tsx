@@ -1,5 +1,5 @@
 import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
-import { VenueFormData } from "../../../interfaces";
+import { VenueFormData, SingleVenueResponse } from "../../../interfaces";
 
 import InputAndLabelAndMessage from "../../InputAndLabelAndMessage";
 import TextareaAndLabelAndMessage from "../../TextareaAndLabelAndMessage";
@@ -7,12 +7,8 @@ import TextareaAndLabelAndMessage from "../../TextareaAndLabelAndMessage";
 interface DescriptionModuleProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  data?: SingleVenueResponse;
 }
-
-// interface DescriptionFields {
-//   title?: string;
-//   description?: string;
-// }
 
 const DescriptionModule = ({
   register,

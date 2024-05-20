@@ -93,7 +93,7 @@ const AddVenuePage = () => {
           address: data.address,
           city: data.city,
           zip: data.zip,
-          county: data.country,
+          country: data.country,
           continent: data.continent,
         },
       }),
