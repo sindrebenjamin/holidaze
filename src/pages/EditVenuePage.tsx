@@ -90,6 +90,25 @@ const EditVenuePage = () => {
       setValue("continent", data?.data.location.continent ?? "");
       setValue("title", data?.data.name ?? "");
       setValue("description", data?.data.description ?? "");
+      setValue("price", data?.data.price ?? "");
+
+      setQuantity(data.data.maxGuests);
+      setRating(data.data.rating);
+
+      const trueAmenities = Object.entries(data.data.meta)
+        .filter(([, value]) => value === true)
+        .map(([key]) => key);
+
+      setSelectedAmenities(trueAmenities);
+
+      const uploadedMedia = data.data.media.map((media, index) => {
+        return {
+          id: index,
+          url: media.url,
+        };
+      });
+
+      setMediaArray(uploadedMedia);
     }
   }, [data, setValue]);
 
