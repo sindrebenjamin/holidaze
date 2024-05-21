@@ -8,17 +8,22 @@ interface DescriptionModuleProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   data?: SingleVenueResponse;
+  hideTitle?: boolean;
 }
 
 const DescriptionModule = ({
   register,
   errors,
+  hideTitle,
 }: DescriptionModuleProps<VenueFormData>) => {
   return (
     <>
-      <h2 className="text-gray-500 text-lg">
-        Provide a description of your venue
-      </h2>
+      {!hideTitle && (
+        <h2 className="text-gray-500 text-lg">
+          Provide a description of your venue
+        </h2>
+      )}
+
       <InputAndLabelAndMessage
         name="title"
         label="Title"

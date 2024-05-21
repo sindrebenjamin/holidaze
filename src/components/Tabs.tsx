@@ -2,6 +2,8 @@ import { ReactNode, useState, useEffect } from "react";
 
 import Button from "./Button";
 import Tab from "./Tab";
+import Bookings from "./modules/EditPage/Bookings";
+import { BookingData } from "../interfaces";
 
 interface TabData {
   title: string;
@@ -10,7 +12,13 @@ interface TabData {
   lock: boolean;
 }
 
-const Tabs = ({ tabs }: { tabs: TabData[] }) => {
+const Tabs = ({
+  tabs,
+  bookings,
+}: {
+  tabs: TabData[];
+  bookings?: BookingData[];
+}) => {
   const [currentTab, setCurrentTab] = useState(0);
   const isFirstPage = currentTab === 0;
   const isLastPage = currentTab === tabs.length - 1;
@@ -44,11 +52,18 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
       {tabs.map((tab, index) => {
         if (index === currentTab) {
           return (
-            <div
-              className="px-4 md:px-0 max-w-[500px] flex flex-col gap-6"
-              key={tab.id}
-            >
-              {tab.content}
+            <div className="flex items-start justify-between gap-6">
+              <div
+                className="px-4 sm:px-6 md:px-0 w-full max-w-[500px] flex flex-col gap-6"
+                key={tab.id}
+              >
+                {tab.content}
+              </div>
+              {bookings && (
+                <div className="hidden lg:block">
+                  <Bookings bookings={bookings} />
+                </div>
+              )}
             </div>
           );
         }

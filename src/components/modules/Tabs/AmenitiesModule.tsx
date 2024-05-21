@@ -3,17 +3,22 @@ import AmenityCard from "../../AmenityCard";
 interface AmenitiesModuleProps {
   selectedAmenities: string[];
   handleAmenityClick: (amenity: string) => void;
+  hideTitle?: boolean;
 }
 
 const AmenitiesModule = ({
   selectedAmenities,
   handleAmenityClick,
+  hideTitle,
 }: AmenitiesModuleProps) => {
   return (
     <>
-      <h2 className="text-gray-500 text-lg">
-        Choose amenities available at your venue
-      </h2>
+      {!hideTitle && (
+        <h2 className="text-gray-500 text-lg">
+          Choose amenities available at your venue
+        </h2>
+      )}
+
       <div className="grid grid-cols-2 gap-2">
         <AmenityCard
           onClick={() => handleAmenityClick("parking")}

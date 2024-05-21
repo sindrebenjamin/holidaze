@@ -5,6 +5,7 @@ interface BasicModalProps {
   title: string;
   onCloseModal: () => void;
   children: React.ReactNode;
+  tabs?: React.ReactNode;
   modalIsOpen: boolean;
 }
 
@@ -13,6 +14,7 @@ const BasicModal = ({
   onCloseModal,
   children,
   modalIsOpen,
+  tabs,
 }: BasicModalProps) => {
   useScrollLock(modalIsOpen);
   return (
@@ -34,6 +36,7 @@ const BasicModal = ({
             <Close color="#9CA3AF" />
           </div>
         </div>
+        {tabs}
         <div className="overflow-auto">{children}</div>
       </div>
     </div>

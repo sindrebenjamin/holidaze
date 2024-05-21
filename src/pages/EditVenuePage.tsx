@@ -20,6 +20,7 @@ import PublishModule from "../components/modules/Tabs/PublishModule";
 import useLastPageStore from "../store/useLastPageStore";
 import { SingleVenueResponse } from "../interfaces";
 import { useApi } from "../hooks/useApi";
+import Bookings from "../components/modules/EditPage/Bookings";
 
 let nextId = 1;
 
@@ -47,7 +48,9 @@ const EditVenuePage = () => {
     []
   );
   const { data, status } = useApi<SingleVenueResponse>(
-    "https://v2.api.noroff.dev/holidaze/venues/" + params.id,
+    "https://v2.api.noroff.dev/holidaze/venues/" +
+      params.id +
+      "?_bookings=true",
     options
   );
 
@@ -197,7 +200,11 @@ const EditVenuePage = () => {
       title: "Location",
       id: 1,
       content: (
-        <LocationModule data={data} errors={errors} register={register} />
+        <LocationModule
+          hideTitle={data ? true : false}
+          errors={errors}
+          register={register}
+        />
       ),
       lock: false,
     },
@@ -205,7 +212,13 @@ const EditVenuePage = () => {
       title: "Description",
       id: 2,
       lock: !watchedFields[1],
-      content: <DescriptionModule errors={errors} register={register} />,
+      content: (
+        <DescriptionModule
+          hideTitle={data ? true : false}
+          errors={errors}
+          register={register}
+        />
+      ),
     },
     {
       title: "Details",
@@ -213,6 +226,7 @@ const EditVenuePage = () => {
       lock: !watchedFields[0] || !watchedFields[1],
       content: (
         <DetailsModule
+          hideTitle={data ? true : false}
           errors={errors}
           quantity={quantity}
           setQuantity={setQuantity}
@@ -228,6 +242,7 @@ const EditVenuePage = () => {
       lock: priceCheck || !watchedFields[0] || !watchedFields[1],
       content: (
         <AmenitiesModule
+          hideTitle={data ? true : false}
           selectedAmenities={selectedAmenities}
           handleAmenityClick={handleAmenityClick}
         />
@@ -259,14 +274,23 @@ const EditVenuePage = () => {
       content: <PublishModule apiStatus={apiStatus} apiErrors={apiErrors} />,
     },
   ];
+
+  console.log(data?.data.bookings);
+
   return (
     <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
       >
-        <FormH1 className="mb-6 md:mb-8 px-4 md:px-0">{data?.data.name}</FormH1>
-        <Tabs tabs={tabsData} />
+        <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
+          {data?.data.name}
+        </FormH1>
+        <div className="lg:hidden">
+          <Bookings bookings={data?.data.bookings ?? []} />
+        </div>
+
+        <Tabs bookings={data?.data.bookings} tabs={tabsData} />
       </form>
     </main>
   );

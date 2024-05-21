@@ -11,11 +11,8 @@ interface DetailsModuleProps<T extends FieldValues> {
   setQuantity: (quantity: number) => void;
   rating: number;
   setRating: (rating: number) => void;
+  hideTitle?: boolean;
 }
-
-// interface DetailsFields {
-//   price?: number;
-// }
 
 const DetailsModule = ({
   register,
@@ -24,10 +21,14 @@ const DetailsModule = ({
   setQuantity,
   rating,
   setRating,
+  hideTitle,
 }: DetailsModuleProps<VenueFormData>) => {
   return (
     <>
-      <h2 className="text-gray-500 text-lg">Provide a Details of your venue</h2>
+      {!hideTitle && (
+        <h2 className="text-gray-500 text-lg">Provide details of your venue</h2>
+      )}
+
       <InputAndLabelAndMessage
         name="price"
         label="Price per night in NOK"
