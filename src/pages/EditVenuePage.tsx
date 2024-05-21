@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState, useMemo, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, NavLink } from "react-router-dom";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
@@ -21,6 +21,8 @@ import useLastPageStore from "../store/useLastPageStore";
 import { SingleVenueResponse } from "../interfaces";
 import { useApi } from "../hooks/useApi";
 import Bookings from "../components/modules/EditPage/Bookings";
+import BackButton from "../components/BackButton";
+import Button from "../components/Button";
 
 let nextId = 1;
 
@@ -119,7 +121,7 @@ const EditVenuePage = () => {
 
   function onSubmit(data: VenueFormData) {
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
         Authorization: `Bearer ${user?.accessToken}`,
@@ -149,12 +151,13 @@ const EditVenuePage = () => {
     };
     (async () => {
       const result = await basicApi(
-        "https://v2.api.noroff.dev/holidaze/venues",
+        "https://v2.api.noroff.dev/holidaze/venues/" + params.id,
         options,
         setApiStatus
       );
-      setLastPath("/add");
-      navigate(`/venue/${result.data.id}`);
+      // setLastPath("/add");
+      navigate("/account");
+      console.log(result);
     })();
   }
 
@@ -263,36 +266,49 @@ const EditVenuePage = () => {
         />
       ),
     },
-    {
-      title: "Publish",
-      id: 6,
-      lock:
-        mediaArray.length === 0 ||
-        priceCheck ||
-        !watchedFields[0] ||
-        !watchedFields[1],
-      content: <PublishModule apiStatus={apiStatus} apiErrors={apiErrors} />,
-    },
   ];
 
-  console.log(data?.data.bookings);
-
   return (
-    <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
-      >
-        <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
-          {data?.data.name}
-        </FormH1>
-        <div className="lg:hidden">
-          <Bookings bookings={data?.data.bookings ?? []} />
-        </div>
+    <>
+      <div className="items-start w-full hidden md:flex lg:hidden pt-4 pb-6 px-4 bg-gray-50">
+        <BackButton />
+      </div>
+      <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
+        >
+          <div className="lg:hidden flex justify-between items-center pr-4 pl-1 sm:pl-3 mb-6 mt-4 md:hidden">
+            <BackButton />
 
-        <Tabs bookings={data?.data.bookings} tabs={tabsData} />
-      </form>
-    </main>
+            <Button type="submit" color="gray-light" size="sm">
+              Save and update
+            </Button>
+          </div>
+          <div>
+            <div className="flex items-start justify-between">
+              <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
+                {data?.data.name}
+              </FormH1>
+              <Button
+                override="hidden md:block"
+                type="submit"
+                color="gray-light"
+                size="sm"
+              >
+                Save and update
+              </Button>
+            </div>
+
+            <div className="lg:hidden">
+              <Bookings bookings={data?.data.bookings ?? []} />
+            </div>
+
+            <Tabs bookings={data?.data.bookings} tabs={tabsData} />
+          </div>
+        </form>
+      </main>
+    </>
   );
 };
 

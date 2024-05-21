@@ -52,7 +52,7 @@ const Tabs = ({
       {tabs.map((tab, index) => {
         if (index === currentTab) {
           return (
-            <div className="flex items-start justify-between gap-6">
+            <div key={index} className="flex items-start justify-between gap-6">
               <div
                 className="px-4 sm:px-6 md:px-0 w-full max-w-[500px] flex flex-col gap-6"
                 key={tab.id}

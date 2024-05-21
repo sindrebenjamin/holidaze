@@ -5,7 +5,6 @@ export async function basicApi(
   options: ApiOptions,
   setApiStatus: (status: ApiStatus) => void
 ) {
-  console.log(url);
   try {
     setApiStatus("loading");
     const response = await fetch(url, options);
