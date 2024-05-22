@@ -10,7 +10,7 @@ const Tab = ({
   onClick: () => void;
   active: boolean;
   disabled?: boolean;
-  error: boolean | undefined;
+  error?: boolean | undefined;
   sizing: string;
 }) => {
   const classes = error
