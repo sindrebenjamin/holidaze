@@ -48,7 +48,7 @@ const DetailsModule = ({
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium">Rate your venue</p>
+        <p className="text-sm font-medium">Service level</p>
         <RatingSelector rating={rating} setRating={setRating} />
       </div>
     </>

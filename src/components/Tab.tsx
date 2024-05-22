@@ -4,14 +4,18 @@ const Tab = ({
   active,
   disabled,
   sizing,
+  error,
 }: {
   title: string;
   onClick: () => void;
   active: boolean;
   disabled?: boolean;
+  error: boolean | undefined;
   sizing: string;
 }) => {
-  const classes = active
+  const classes = error
+    ? "text-red-500 border-red-500"
+    : active
     ? "text-pink-600 border-pink-500"
     : "text-gray-500 border-gray-200 hover:text-gray-900 hover:border-gray-300";
   return (

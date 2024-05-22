@@ -25,7 +25,7 @@ const ProfileInfo = ({ user }: { user: ProfileData }) => {
           {/* Avatar */}
           <div className="bottom-[-18px] left-1/2 translate-x-[-50%] object-cover absolute">
             <img
-              className="object-cover rounded-full w-[120px]"
+              className="object-cover rounded-full w-[120px] h-[120px]"
               src={checkedAvatar}
               alt={user?.avatar.alt}
             />

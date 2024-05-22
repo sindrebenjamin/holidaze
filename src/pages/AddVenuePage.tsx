@@ -54,7 +54,7 @@ const AddVenuePage = () => {
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [currentMediaString, setCurrentMediaString] = useState("");
-  const [isMediaError, setIsMediaError] = useState(false);
+  const [mediaErrorMessage, setMediaErrorMessage] = useState("");
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
   const watchedFields = watch(["title", "address", "price"]);
@@ -128,11 +128,22 @@ const AddVenuePage = () => {
 
     (async () => {
       const checkImage = await checkMedia(value);
-      const isError = checkImage === "/public/nomedia.jpg" ? true : false;
-      setIsMediaError(isError);
+      const isError =
+        checkImage === "/public/nomedia.jpg" || checkImage.length > 300
+          ? true
+          : false;
+      switch (isError) {
+        case checkImage.length > 300:
+          setMediaErrorMessage("Image URL cannot exceed 300 characters");
+          break;
+        case checkImage === "/public/nomedia.jpg":
+          setMediaErrorMessage("Must be a valid image URL");
+          break;
+      }
       if (!isError) {
         setMediaArray([...mediaArray, { id: nextId++, url: value }]);
         setCurrentMediaString("");
+        setMediaErrorMessage("");
       }
     })();
   }
@@ -152,17 +163,20 @@ const AddVenuePage = () => {
       id: 1,
       content: <LocationModule errors={errors} register={register} />,
       lock: false,
+      lockMessage: "Add address to proceed",
     },
     {
       title: "Description",
       id: 2,
       lock: !watchedFields[1],
+      lockMessage: "Add title to proceed",
       content: <DescriptionModule errors={errors} register={register} />,
     },
     {
       title: "Details",
       id: 3,
       lock: !watchedFields[0] || !watchedFields[1],
+      lockMessage: "Add price to proceed",
       content: (
         <DetailsModule
           errors={errors}
@@ -177,6 +191,7 @@ const AddVenuePage = () => {
     {
       title: "Amenities",
       id: 4,
+
       lock: priceCheck || !watchedFields[0] || !watchedFields[1],
       content: (
         <AmenitiesModule
@@ -189,11 +204,12 @@ const AddVenuePage = () => {
       title: "Media",
       id: 5,
       lock: priceCheck || !watchedFields[0] || !watchedFields[1],
+      lockMessage: "Add at least one photo to proceed",
       content: (
         <MediaModule
           currentMediaString={currentMediaString}
           handleMediaStringOnChange={handleMediaStringOnChange}
-          isMediaError={isMediaError}
+          mediaErrorMessage={mediaErrorMessage}
           mediaArray={mediaArray}
           handleMoveImage={handleMoveImage}
           handleRemoveImage={handleRemoveImage}

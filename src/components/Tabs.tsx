@@ -10,6 +10,8 @@ interface TabData {
   id: number;
   content: ReactNode;
   lock: boolean;
+  lockMessage?: string;
+  errorFlag?: boolean;
 }
 
 const Tabs = ({
@@ -44,6 +46,7 @@ const Tabs = ({
               active={index === currentTab}
               disabled={tab.lock}
               sizing="w-[38%] sm:w-[22%] md:w-full"
+              error={tab.errorFlag}
             />
           );
         })}
@@ -84,7 +87,7 @@ const Tabs = ({
           </Button>
         )}
 
-        {currentTab !== tabs.length - 1 && (
+        {!isLastPage && (
           <Button
             color="gray-dark"
             size="sm"
@@ -96,7 +99,17 @@ const Tabs = ({
             Next
           </Button>
         )}
+        {isLastPage && tabs[currentTab].errorFlag && (
+          <p className="text-gray-500 text-sm">
+            {tabs[currentTab].lockMessage}
+          </p>
+        )}
       </div>
+      {nextPageIsLocked && (
+        <p className="text-gray-500 text-sm self-end mt-[-12px]">
+          {tabs[currentTab].lockMessage}
+        </p>
+      )}
     </div>
   );
 };

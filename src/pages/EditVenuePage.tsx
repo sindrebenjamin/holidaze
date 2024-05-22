@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState, useMemo, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate, useParams, NavLink } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
@@ -16,8 +16,7 @@ import DescriptionModule from "../components/modules/Tabs/DescriptionModule";
 import DetailsModule from "../components/modules/Tabs/DetailsModule";
 import AmenitiesModule from "../components/modules/Tabs/AmenitiesModule";
 import MediaModule from "../components/modules/Tabs/MediaModule";
-import PublishModule from "../components/modules/Tabs/PublishModule";
-import useLastPageStore from "../store/useLastPageStore";
+
 import { SingleVenueResponse } from "../interfaces";
 import { useApi } from "../hooks/useApi";
 import Bookings from "../components/modules/EditPage/Bookings";
@@ -69,12 +68,12 @@ const EditVenuePage = () => {
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
-  const setLastPath = useLastPageStore((state) => state.setLastPath);
+
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [currentMediaString, setCurrentMediaString] = useState("");
-  const [isMediaError, setIsMediaError] = useState(false);
+  const [mediaErrorMessage, setMediaErrorMessage] = useState("");
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
   const watchedFields = watch(["title", "address", "price"]);
@@ -150,14 +149,12 @@ const EditVenuePage = () => {
       }),
     };
     (async () => {
-      const result = await basicApi(
+      await basicApi(
         "https://v2.api.noroff.dev/holidaze/venues/" + params.id,
         options,
         setApiStatus
       );
-      // setLastPath("/add");
       navigate("/account");
-      console.log(result);
     })();
   }
 
@@ -180,11 +177,22 @@ const EditVenuePage = () => {
 
     (async () => {
       const checkImage = await checkMedia(value);
-      const isError = checkImage === "/public/nomedia.jpg" ? true : false;
-      setIsMediaError(isError);
+      const isError =
+        checkImage === "/public/nomedia.jpg" || checkImage.length > 300
+          ? true
+          : false;
+      switch (isError) {
+        case checkImage.length > 300:
+          setMediaErrorMessage("Image URL cannot exceed 300 characters");
+          break;
+        case checkImage === "/public/nomedia.jpg":
+          setMediaErrorMessage("Must be a valid image URL");
+          break;
+      }
       if (!isError) {
         setMediaArray([...mediaArray, { id: nextId++, url: value }]);
         setCurrentMediaString("");
+        setMediaErrorMessage("");
       }
     })();
   }
@@ -210,11 +218,15 @@ const EditVenuePage = () => {
         />
       ),
       lock: false,
+      lockMessage: "Venue must have an address",
+      errorFlag: !watchedFields[1],
     },
     {
       title: "Description",
       id: 2,
       lock: !watchedFields[1],
+      errorFlag: !watchedFields[0],
+      lockMessage: "Venue must have a title",
       content: (
         <DescriptionModule
           hideTitle={data ? true : false}
@@ -227,6 +239,8 @@ const EditVenuePage = () => {
       title: "Details",
       id: 3,
       lock: !watchedFields[0] || !watchedFields[1],
+      errorFlag: priceCheck,
+      lockMessage: "Venue must have a price per night",
       content: (
         <DetailsModule
           hideTitle={data ? true : false}
@@ -255,11 +269,13 @@ const EditVenuePage = () => {
       title: "Media",
       id: 5,
       lock: priceCheck || !watchedFields[0] || !watchedFields[1],
+      errorFlag: mediaArray.length === 0,
+      lockMessage: "Venue must at least have one photo",
       content: (
         <MediaModule
           currentMediaString={currentMediaString}
           handleMediaStringOnChange={handleMediaStringOnChange}
-          isMediaError={isMediaError}
+          mediaErrorMessage={mediaErrorMessage}
           mediaArray={mediaArray}
           handleMoveImage={handleMoveImage}
           handleRemoveImage={handleRemoveImage}
@@ -281,7 +297,17 @@ const EditVenuePage = () => {
           <div className="lg:hidden flex justify-between items-center pr-4 pl-1 sm:pl-3 mb-6 mt-4 md:hidden">
             <BackButton />
 
-            <Button type="submit" color="gray-light" size="sm">
+            <Button
+              disabled={
+                mediaArray.length === 0 ||
+                priceCheck ||
+                !watchedFields[0] ||
+                !watchedFields[1]
+              }
+              type="submit"
+              color="gray-light"
+              size="sm"
+            >
               Save and update
             </Button>
           </div>
@@ -291,6 +317,12 @@ const EditVenuePage = () => {
                 {data?.data.name}
               </FormH1>
               <Button
+                disabled={
+                  mediaArray.length === 0 ||
+                  priceCheck ||
+                  !watchedFields[0] ||
+                  !watchedFields[1]
+                }
                 override="hidden md:block"
                 type="submit"
                 color="gray-light"
@@ -306,6 +338,16 @@ const EditVenuePage = () => {
 
             <Tabs bookings={data?.data.bookings} tabs={tabsData} />
           </div>
+          <ul>
+            {apiErrors &&
+              apiErrors.map((error) => {
+                return (
+                  <li className="text-red-500" key={error.message}>
+                    {error.message}
+                  </li>
+                );
+              })}
+          </ul>
         </form>
       </main>
     </>

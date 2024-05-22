@@ -7,7 +7,7 @@ interface MediaInputProps {
   placeholder: string;
   label: string;
   value: string;
-  error: boolean;
+  errorMessage: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -21,7 +21,7 @@ const MediaInput = forwardRef<HTMLInputElement, MediaInputProps>(
       placeholder,
       label,
       value,
-      error,
+      errorMessage,
       onChange,
       onFocus,
       onBlur,
@@ -29,7 +29,7 @@ const MediaInput = forwardRef<HTMLInputElement, MediaInputProps>(
     },
     ref
   ) => {
-    const errorClasses = error ? "text-red-500" : "";
+    const errorClasses = errorMessage ? "text-red-500" : "";
 
     return (
       <div className={`${errorClasses} flex flex-col gap-2`}>
@@ -42,14 +42,14 @@ const MediaInput = forwardRef<HTMLInputElement, MediaInputProps>(
             onChange={onChange}
             id={String(name)}
             placeholder={placeholder}
-            $error={error}
+            $error={errorMessage ? true : false}
             type="text"
             value={value}
             onFocus={onFocus}
             onBlur={onBlur}
             disabled={disabled}
           />
-          {error && <p>Must be a valid image URL</p>}
+          {errorMessage && <p>{errorMessage}</p>}
         </div>
       </div>
     );
