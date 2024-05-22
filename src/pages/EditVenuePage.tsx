@@ -116,6 +116,8 @@ const EditVenuePage = () => {
     }
   }, [data, setValue]);
 
+  console.log(status);
+
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
 
   function onSubmit(data: VenueFormData) {
