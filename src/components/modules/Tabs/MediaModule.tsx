@@ -7,7 +7,7 @@ import DraggableImage from "../../DraggableImage";
 interface MediaModuleProps {
   currentMediaString: string;
   handleMediaStringOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isMediaError: boolean;
+  mediaErrorMessage: string;
   mediaArray: Array<{ id: number; url: string }>;
   handleMoveImage: (dragIndex: number, hoverIndex: number) => void;
   handleRemoveImage: (id: number) => void;
@@ -16,7 +16,7 @@ interface MediaModuleProps {
 const MediaModule = ({
   currentMediaString,
   handleMediaStringOnChange,
-  isMediaError,
+  mediaErrorMessage,
   mediaArray,
   handleMoveImage,
   handleRemoveImage,
@@ -34,7 +34,8 @@ const MediaModule = ({
   return (
     <>
       <h2 className="text-gray-500 text-lg">
-        Add up to 8 photos and order them ({mediaArray.length}/8)
+        Add between 1 and 8 photos, then arrange them in your desired order (
+        {mediaArray.length}/8)
       </h2>
       <MediaInput
         ref={inputRef}
@@ -45,7 +46,7 @@ const MediaModule = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           handleMediaStringOnChange(e)
         }
-        error={isMediaError}
+        errorMessage={mediaErrorMessage}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         disabled={mediaArray.length === 8}

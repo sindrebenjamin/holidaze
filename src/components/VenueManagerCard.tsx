@@ -19,7 +19,9 @@ const VenueManagerCard = ({
   id,
   bookings,
 }: VenueManagerCardProps) => {
-  const checkedImage = useCheckMedia(media.url);
+  const imageUrl = media && media.url ? media.url : "/public/nomedia.jpg";
+  const altText = media && media.alt ? media.alt : "";
+  const checkedImage = useCheckMedia(imageUrl);
 
   return (
     <NavLink
@@ -30,7 +32,7 @@ const VenueManagerCard = ({
         <img
           className="w-full h-full group-hover:scale-105 transition-transform duration-200 object-cover"
           src={checkedImage}
-          alt={media.alt}
+          alt={altText}
         />
       </div>
       <div className="flex flex-col gap-2 p-6">

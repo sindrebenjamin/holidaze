@@ -1,44 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { useScrollLock } from "../../hooks/useScrollLock";
 import { MediaItem } from "../../interfaces";
 import SlideShowModal from "./SlideShowModal";
-import { checkMedia } from "../../utils/checkMedia";
+import { useCheckMultipleMedia } from "../../hooks/useCheckMultipleMedia";
 
 const DesktopSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [processedImages, setProcessedImages] = useState<MediaItem[]>([]);
+  const checkedMedia = useCheckMultipleMedia(images);
 
   useScrollLock(modalIsOpen);
-
-  useEffect(() => {
-    const processImages = async () => {
-      if (images) {
-        const checkedImages = await Promise.all(
-          images.map(async (image) => {
-            return {
-              url: await checkMedia(image.url),
-              alt: image.alt,
-            };
-          })
-        );
-        setProcessedImages(checkedImages);
-      }
-    };
-
-    processImages();
-  }, [images]);
 
   return (
     <>
       {modalIsOpen && (
         <SlideShowModal
           onClick={() => setModalIsOpen(false)}
-          images={processedImages}
+          images={checkedMedia}
         />
       )}
       <ImageDisplay
-        images={processedImages}
+        images={checkedMedia}
         onClick={() => setModalIsOpen(true)}
         heightClass="h-[600px]"
       />

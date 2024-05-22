@@ -1,28 +1,23 @@
 import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
-import { VenueFormData } from "../../../interfaces";
 
+import { VenueFormData } from "../../../interfaces";
 import InputAndLabelAndMessage from "../../InputAndLabelAndMessage";
 
 interface LocationModuleProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  hideTitle?: boolean;
 }
-
-// interface AddressFields {
-//   address?: string;
-//   city?: string;
-//   zip?: string;
-//   country?: string;
-//   continent?: string;
-// }
-
 const LocationModule = ({
   register,
   errors,
+  hideTitle,
 }: LocationModuleProps<VenueFormData>) => {
   return (
     <>
-      <h2 className="text-gray-500 text-lg">Specify your venue's location</h2>
+      {!hideTitle && (
+        <h2 className="text-gray-500 text-lg">Specify your venue's location</h2>
+      )}
       <InputAndLabelAndMessage
         name="address"
         label="Address"

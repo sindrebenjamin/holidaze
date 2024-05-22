@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import Datepicker from "react-tailwindcss-datepicker";
 import { DateValueType } from "react-tailwindcss-datepicker";
 
@@ -112,7 +112,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
             <span className="text-gray-500">per night</span>
           </p>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 ">
             <Datepicker
               // toggleClassName="hidden"
               showFooter={true}
@@ -173,7 +173,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
           )}
           <Button
             type="submit"
-            disabled={!dates?.startDate}
+            disabled={!dates?.startDate || !user}
             size="lg"
             color="gray-dark"
           >
@@ -183,6 +183,15 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
               "Book"
             )}
           </Button>
+          {!user && (
+            <NavLink
+              className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100 text-center"
+              to="/login"
+            >
+              Log in to book this venue
+            </NavLink>
+          )}
+
           <SuccessDialogue
             showDialogueClasses={showDialogueClasses}
             message={`Venue successfully booked`}

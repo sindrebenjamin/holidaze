@@ -2,8 +2,10 @@ import { useState } from "react";
 
 import { MediaItem } from "../interfaces";
 import BackButton from "./BackButton";
+import { useCheckMultipleMedia } from "../hooks/useCheckMultipleMedia";
 
 const MobileSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
+  const checkedMedia = useCheckMultipleMedia(images);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   function handleScroll(e: React.UIEvent<HTMLDivElement>) {
@@ -23,7 +25,7 @@ const MobileSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
           onScroll={(e) => handleScroll(e)}
           className="no-scrollbar flex w-full overflow-hidden snap-x snap-mandatory overflow-x-scroll"
         >
-          {images.map((image, index) => {
+          {checkedMedia.map((image, index) => {
             return (
               <div
                 className="w-full h-[400px] md:h-[600px] snap-start grow-0 shrink-0 basis-full"

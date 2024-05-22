@@ -1,5 +1,5 @@
 import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
-import { VenueFormData } from "../../../interfaces";
+import { VenueFormData, SingleVenueResponse } from "../../../interfaces";
 
 import InputAndLabelAndMessage from "../../InputAndLabelAndMessage";
 import TextareaAndLabelAndMessage from "../../TextareaAndLabelAndMessage";
@@ -7,22 +7,23 @@ import TextareaAndLabelAndMessage from "../../TextareaAndLabelAndMessage";
 interface DescriptionModuleProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  data?: SingleVenueResponse;
+  hideTitle?: boolean;
 }
-
-// interface DescriptionFields {
-//   title?: string;
-//   description?: string;
-// }
 
 const DescriptionModule = ({
   register,
   errors,
+  hideTitle,
 }: DescriptionModuleProps<VenueFormData>) => {
   return (
     <>
-      <h2 className="text-gray-500 text-lg">
-        Provide a description of your venue
-      </h2>
+      {!hideTitle && (
+        <h2 className="text-gray-500 text-lg">
+          Provide a description of your venue
+        </h2>
+      )}
+
       <InputAndLabelAndMessage
         name="title"
         label="Title"

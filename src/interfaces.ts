@@ -111,7 +111,7 @@ export interface Venue {
   updated: string;
   meta: VenueMeta;
   location: Location;
-  bookings: Booking[];
+  bookings: BookingData[];
   _count: Count;
   owner: Person;
 }

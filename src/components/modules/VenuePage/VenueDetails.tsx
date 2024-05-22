@@ -45,6 +45,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
         <Divider />
         <div className="flex flex-col gap-2">
           <p className="font-bold">Listed by</p>
+
           <NavLink
             to={`/profile/${data.data.owner.name}`}
             className="flex items-center gap-2"

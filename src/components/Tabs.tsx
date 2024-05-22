@@ -2,15 +2,25 @@ import { ReactNode, useState, useEffect } from "react";
 
 import Button from "./Button";
 import Tab from "./Tab";
+import Bookings from "./modules/EditPage/Bookings";
+import { BookingData } from "../interfaces";
 
 interface TabData {
   title: string;
   id: number;
   content: ReactNode;
   lock: boolean;
+  lockMessage?: string;
+  errorFlag?: boolean;
 }
 
-const Tabs = ({ tabs }: { tabs: TabData[] }) => {
+const Tabs = ({
+  tabs,
+  bookings,
+}: {
+  tabs: TabData[];
+  bookings?: BookingData[];
+}) => {
   const [currentTab, setCurrentTab] = useState(0);
   const isFirstPage = currentTab === 0;
   const isLastPage = currentTab === tabs.length - 1;
@@ -36,6 +46,7 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
               active={index === currentTab}
               disabled={tab.lock}
               sizing="w-[38%] sm:w-[22%] md:w-full"
+              error={tab.errorFlag}
             />
           );
         })}
@@ -44,11 +55,18 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
       {tabs.map((tab, index) => {
         if (index === currentTab) {
           return (
-            <div
-              className="px-4 md:px-0 max-w-[500px] flex flex-col gap-6"
-              key={tab.id}
-            >
-              {tab.content}
+            <div key={index} className="flex items-start justify-between gap-6">
+              <div
+                className="px-4 sm:px-6 md:px-0 w-full max-w-[500px] flex flex-col gap-6"
+                key={tab.id}
+              >
+                {tab.content}
+              </div>
+              {bookings && (
+                <div className="hidden lg:block">
+                  <Bookings bookings={bookings} />
+                </div>
+              )}
             </div>
           );
         }
@@ -69,7 +87,7 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
           </Button>
         )}
 
-        {currentTab !== tabs.length - 1 && (
+        {!isLastPage && (
           <Button
             color="gray-dark"
             size="sm"
@@ -81,7 +99,17 @@ const Tabs = ({ tabs }: { tabs: TabData[] }) => {
             Next
           </Button>
         )}
+        {isLastPage && tabs[currentTab].errorFlag && (
+          <p className="text-gray-500 text-sm">
+            {tabs[currentTab].lockMessage}
+          </p>
+        )}
       </div>
+      {nextPageIsLocked && (
+        <p className="text-gray-500 text-sm self-end mt-[-12px]">
+          {tabs[currentTab].lockMessage}
+        </p>
+      )}
     </div>
   );
 };

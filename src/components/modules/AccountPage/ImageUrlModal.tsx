@@ -34,8 +34,10 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const user = useUserStore((state) => state.user);
   const [mediaUrl, setMediaUrl] = useState(value);
-  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const wrapperRef = useRef(null);
+
+  const isError = errorMessage ? true : false;
 
   useOutsideClick(wrapperRef, () => setIsOpen(false));
 
@@ -57,11 +59,21 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setMediaUrl(e.target.value);
     (async () => {
-      const mediaCheck = await checkMedia(e.target.value);
-      if (mediaCheck === "/public/nomedia.jpg") {
-        setIsError(true);
-      } else {
-        setIsError(false);
+      const checkImage = await checkMedia(e.target.value);
+      const isMediaError =
+        checkImage === "/public/nomedia.jpg" || checkImage.length > 300
+          ? true
+          : false;
+      switch (isMediaError) {
+        case checkImage.length > 300:
+          setErrorMessage("Image URL cannot exceed 300 characters");
+          break;
+        case checkImage === "/public/nomedia.jpg":
+          setErrorMessage("Must be a valid image URL");
+          break;
+      }
+      if (!isMediaError) {
+        setErrorMessage("");
         setPreview(e.target.value);
       }
     })();
@@ -111,7 +123,7 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
   }
 
   function handleDiscard() {
-    setIsError(false);
+    setErrorMessage("");
     setMediaUrl(value);
     setPreview("");
   }
@@ -131,7 +143,7 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
         value={mediaUrl!}
         disabled={false}
         onChange={handleChange}
-        error={isError}
+        errorMessage={errorMessage}
         name="imageurl"
         label="Image URL"
         placeholder="https://images.com/image.jpg"

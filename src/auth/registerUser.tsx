@@ -4,7 +4,8 @@ import { loginUser } from "./loginUser";
 export async function registerUser(
   url: string,
   options: ApiOptions,
-  setApiStatus: (status: ApiStatus) => void
+  setApiStatus: (status: ApiStatus) => void,
+  navigate: () => void
 ) {
   const data = options.body !== undefined && JSON.parse(options.body);
 
@@ -26,7 +27,8 @@ export async function registerUser(
       loginUser(
         "https://v2.api.noroff.dev/auth/login?_holidaze=true",
         loginOptions,
-        setApiStatus
+        setApiStatus,
+        navigate
       );
       // console.log(result);
     } else {

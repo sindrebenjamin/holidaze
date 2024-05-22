@@ -15,6 +15,8 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const wrapperRef = useRef(null);
 
+  // console.log(isOpen);
+
   useOutsideClick(wrapperRef, () => setIsOpen(false));
 
   const hideMobileHeader =
@@ -44,7 +46,7 @@ const Header = () => {
           ) : (
             <UnauthorizedNavigation />
           )}
-          {user && isOpen && <Dropdown setIsOpen={setIsOpen} />}
+          {user && <Dropdown isOpen={isOpen} setIsOpen={setIsOpen} />}
         </div>
       </div>
     </header>

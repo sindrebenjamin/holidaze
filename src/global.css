@@ -24,3 +24,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
+button.line-through {
+  background-color: #f3f4f6;
+}
