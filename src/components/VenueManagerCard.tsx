@@ -19,7 +19,7 @@ const VenueManagerCard = ({
   id,
   bookings,
 }: VenueManagerCardProps) => {
-  const imageUrl = media && media.url ? media.url : "/public/nomedia.jpg";
+  const imageUrl = media && media.url ? media.url : "/nomedia.jpg";
   const altText = media && media.alt ? media.alt : "";
   const checkedImage = useCheckMedia(imageUrl);
 

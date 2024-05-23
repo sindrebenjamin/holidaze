@@ -7,6 +7,7 @@ interface BasicModalProps {
   children: React.ReactNode;
   tabs?: React.ReactNode;
   modalIsOpen: boolean;
+  modalFooter?: React.ReactNode;
 }
 
 const BasicModal = ({
@@ -15,6 +16,7 @@ const BasicModal = ({
   children,
   modalIsOpen,
   tabs,
+  modalFooter,
 }: BasicModalProps) => {
   useScrollLock(modalIsOpen);
   return (
@@ -30,7 +32,7 @@ const BasicModal = ({
         <div className="flex justify-between items-center pb-4">
           <p className="text-gray-500">{title}</p>
           <div
-            className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+            className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors duration-200"
             onClick={onCloseModal}
           >
             <Close color="#9CA3AF" />
@@ -38,6 +40,7 @@ const BasicModal = ({
         </div>
         {tabs}
         <div className="overflow-auto">{children}</div>
+        {modalFooter}
       </div>
     </div>
   );

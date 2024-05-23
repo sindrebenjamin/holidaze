@@ -61,14 +61,12 @@ const ImageUrlModal: React.FC<ImageUrlModalProps> = ({
     (async () => {
       const checkImage = await checkMedia(e.target.value);
       const isMediaError =
-        checkImage === "/public/nomedia.jpg" || checkImage.length > 300
-          ? true
-          : false;
+        checkImage === "/nomedia.jpg" || checkImage.length > 300 ? true : false;
       switch (isMediaError) {
         case checkImage.length > 300:
           setErrorMessage("Image URL cannot exceed 300 characters");
           break;
-        case checkImage === "/public/nomedia.jpg":
+        case checkImage === "/nomedia.jpg":
           setErrorMessage("Must be a valid image URL");
           break;
       }

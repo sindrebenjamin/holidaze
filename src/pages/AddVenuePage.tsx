@@ -129,14 +129,12 @@ const AddVenuePage = () => {
     (async () => {
       const checkImage = await checkMedia(value);
       const isError =
-        checkImage === "/public/nomedia.jpg" || checkImage.length > 300
-          ? true
-          : false;
+        checkImage === "/nomedia.jpg" || checkImage.length > 300 ? true : false;
       switch (isError) {
         case checkImage.length > 300:
           setMediaErrorMessage("Image URL cannot exceed 300 characters");
           break;
-        case checkImage === "/public/nomedia.jpg":
+        case checkImage === "/nomedia.jpg":
           setMediaErrorMessage("Must be a valid image URL");
           break;
       }

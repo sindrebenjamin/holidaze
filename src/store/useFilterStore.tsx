@@ -17,7 +17,7 @@ export const useFilterStore = create<FilterProps>()(
     amenities: [],
     maxGuests: 6,
     minimumRating: 0,
-    sliderValue: [300, 6000],
+    sliderValue: [0, 20000],
     setAmenities: (newAmenities: string[]) => set({ amenities: newAmenities }),
     setMaxGuests: (newMaxGuests: number) => set({ maxGuests: newMaxGuests }),
     setMinimumRating: (newMinimumRating: number) =>
