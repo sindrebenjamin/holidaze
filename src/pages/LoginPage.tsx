@@ -8,13 +8,16 @@ import InputAndLabelAndMessage from "../components/InputAndLabelAndMessage";
 import Button from "../components/Button";
 import { ApiStatus, LoginFormData } from "../interfaces";
 import useLoginRedirect from "../hooks/useLoginRedirect";
+import useLastPageStore from "../store/useLastPageStore";
 
 const LoginPage = () => {
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const { register, handleSubmit } = useForm<LoginFormData>();
   const loginRedirect = useLoginRedirect();
-
+  const setLastPath = useLastPageStore((state) => state.setLastPath);
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
+
+  setLastPath("/");
 
   function onSubmit(data: LoginFormData) {
     const options = {

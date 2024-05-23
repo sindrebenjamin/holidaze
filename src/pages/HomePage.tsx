@@ -8,10 +8,12 @@ import { validateVenue } from "../utils/validateVenue";
 import VenueCard from "../components/VenueCard";
 import useLastPageStore from "../store/useLastPageStore";
 import { useRedirectStore } from "../store/useRedirectStore";
+import FilterModule from "../components/modules/HomePage/FilterModule";
 
 const HomePage = () => {
   //const user = useUserStore((state) => state.user);
   const setLastPath = useLastPageStore((state) => state.setLastPath);
+
   const options = useMemo(
     () => ({
       method: "GET",
@@ -29,6 +31,7 @@ const HomePage = () => {
 
   return (
     <main>
+      <FilterModule />
       {data &&
         data.data.map((venue: Venue) => {
           if (validateVenue(venue)) {

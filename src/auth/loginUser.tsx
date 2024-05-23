@@ -14,6 +14,7 @@ export async function loginUser(
     const result = await response.json();
     if (response.ok) {
       useUserStore.setState({ user: result.data });
+
       navigate();
     } else {
       setApiStatus(result);
