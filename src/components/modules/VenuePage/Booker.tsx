@@ -38,6 +38,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
   useOutsideClick(inputRef, () => setGuestSelectorIsOpen(false));
   function handleDatesChange(newValue: DateValueType) {
     setDates(newValue);
+    console.log(newValue);
   }
 
   const daysBooked =

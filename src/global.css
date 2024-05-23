@@ -28,3 +28,18 @@ body {
 button.line-through {
   background-color: #f3f4f6;
 }
+
+#holidaze-slider {
+  background: #edeef1;
+}
+
+#holidaze-slider .range-slider__thumb {
+  background: #ec4899;
+  transition: transform 0.3s;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+#holidaze-slider .range-slider__range {
+  background: #ec4899;
+  transition: height 0.3s;
+}
