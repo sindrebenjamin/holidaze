@@ -3,11 +3,11 @@ import { devtools } from "zustand/middleware";
 
 interface FilterProps {
   amenities: string[];
-  maxGuests: number;
+  maxGuests: number | null;
   minimumRating: number;
   sliderValue: number[];
   setAmenities: (newAmenities: string[]) => void;
-  setMaxGuests: (newMaxGuests: number) => void;
+  setMaxGuests: (newMaxGuests: number | null) => void;
   setMinimumRating: (newMinimumRating: number) => void;
   setSliderValue: (newSliderValue: [number, number]) => void;
 }
@@ -15,11 +15,12 @@ interface FilterProps {
 export const useFilterStore = create<FilterProps>()(
   devtools((set) => ({
     amenities: [],
-    maxGuests: 6,
+    maxGuests: null,
     minimumRating: 0,
     sliderValue: [0, 20000],
     setAmenities: (newAmenities: string[]) => set({ amenities: newAmenities }),
-    setMaxGuests: (newMaxGuests: number) => set({ maxGuests: newMaxGuests }),
+    setMaxGuests: (newMaxGuests: number | null) =>
+      set({ maxGuests: newMaxGuests }),
     setMinimumRating: (newMinimumRating: number) =>
       set({ minimumRating: newMinimumRating }),
     setSliderValue: (newSliderValue: [number, number]) =>

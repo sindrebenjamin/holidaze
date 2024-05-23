@@ -25,6 +25,8 @@ const HomePage = () => {
     options
   );
 
+  console.log(data);
+
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/");
   setLastPath("/");

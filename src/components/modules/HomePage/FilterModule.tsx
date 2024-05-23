@@ -51,14 +51,23 @@ const FilterModule = () => {
     }
   }
 
+  function handleClearFilter() {
+    setAmenities([]);
+    setMaxGuests(null);
+    setMinimumRating(0);
+    setSliderValue([0, 20000]);
+  }
+
   return (
     <>
-      <button onClick={() => setAmenities(["test5", "test62"])}>update</button>
       {modalIsOpen && (
         <BasicModal
           modalFooter={
             <div className="flex justify-between items-center pt-4 border-t border-gray-300">
-              <button className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+              <button
+                onClick={handleClearFilter}
+                className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              >
                 Clear all
               </button>
               <Button size="xl" color="gray-dark" type="button">
