@@ -9,8 +9,20 @@ import RatingSelector from "../../RatingSelector";
 import BasicModal from "../../BasicModal";
 import { Divider } from "../../TailwindComponents";
 import Button from "../../Button";
+import { validateVenue } from "../../../utils/validateVenue";
+import { Venue } from "../../../interfaces";
 
-const FilterModule = () => {
+interface FilterModuleProps {
+  filteredData: Venue[];
+  setFilteredData: (venues: Venue[]) => void;
+  data: Venue[];
+}
+
+const FilterModule: React.FC<FilterModuleProps> = ({
+  filteredData,
+  setFilteredData,
+  data,
+}) => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const { setAmenities, setMaxGuests, setMinimumRating, setSliderValue } =
     useFilterStore((state) => ({
@@ -56,7 +68,30 @@ const FilterModule = () => {
     setMaxGuests(null);
     setMinimumRating(0);
     setSliderValue([0, 20000]);
+    setFilteredData(data);
   }
+
+  const filteredVenues = filteredData.filter((venue) => {
+    const validated = validateVenue(venue);
+    const amenitiesFilter = amenities.every((amenity) => venue.meta[amenity]);
+    const sliderFilter =
+      venue.price >= sliderValue[0] && venue.price <= sliderValue[1];
+    const ratingFilter = venue.rating >= minimumRating ? true : false;
+    const guestFilter =
+      maxGuests === null ? true : maxGuests <= venue.maxGuests ? true : false;
+    if (
+      validated &&
+      guestFilter &&
+      ratingFilter &&
+      sliderFilter &&
+      amenitiesFilter
+    ) {
+      return venue;
+    }
+  });
+
+  //console.log(filteredData);
+  console.log(filteredVenues);
 
   return (
     <>
@@ -70,8 +105,13 @@ const FilterModule = () => {
               >
                 Clear all
               </button>
-              <Button size="xl" color="gray-dark" type="button">
-                Show x venues
+              <Button
+                onClick={() => setFilteredData(filteredVenues)}
+                size="xl"
+                color="gray-dark"
+                type="button"
+              >
+                Show {filteredVenues.length} venues
               </Button>
             </div>
           }

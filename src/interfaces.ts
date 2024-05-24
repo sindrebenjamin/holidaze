@@ -73,10 +73,7 @@ export interface MediaItem {
 }
 
 interface VenueMeta {
-  wifi: boolean;
-  parking: boolean;
-  breakfast: boolean;
-  pets: boolean;
+  [key: string]: boolean;
 }
 
 interface Location {
