@@ -16,9 +16,10 @@ import { useFilteredDataStore } from "../../../store/useFilteredDataStore";
 
 interface FilterModuleProps {
   data: Venue[];
+  resetLoader: () => void;
 }
 
-const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
+const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setAmenities, setMaxGuests, setMinimumRating, setSliderValue } =
     useFilterStore((state) => ({
@@ -66,6 +67,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
   }
 
   function handleClearFilter() {
+    resetLoader();
     setAmenities([]);
     setMaxGuests(null);
     setMinimumRating(0);
@@ -114,6 +116,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
               </button>
               <Button
                 onClick={() => {
+                  resetLoader();
                   setFilteredData(filteredVenues);
                   setSliderValue([localSliderValue[0], localSliderValue[1]]);
                   setModalIsOpen(false);

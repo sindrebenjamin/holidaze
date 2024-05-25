@@ -11,8 +11,6 @@ export function checkBookedDates(bookings: Booking[] | undefined) {
       };
     });
 
-    console.log([...bookedDates]);
-
     return bookedDates;
   }
 

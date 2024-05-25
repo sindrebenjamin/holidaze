@@ -10,7 +10,13 @@ import { Venue, Booking } from "../../../interfaces";
 import { useFilteredDataStore } from "../../../store/useFilteredDataStore";
 import { useFilterStore } from "../../../store/useFilterStore";
 
-const Searcher = ({ data }: { data: Venue[] }) => {
+const Searcher = ({
+  data,
+  resetLoader,
+}: {
+  data: Venue[];
+  resetLoader: () => void;
+}) => {
   // const [tempDates, setTempDates] = useState<DateValueType>({
   //   startDate: null,
   //   endDate: null,
@@ -53,6 +59,7 @@ const Searcher = ({ data }: { data: Venue[] }) => {
 
   function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    resetLoader();
     setFilteredData(filteredVenues);
     totalGuests >= 6 ? setMaxGuests(6) : setMaxGuests(totalGuests);
   }
