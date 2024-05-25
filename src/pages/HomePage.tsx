@@ -1,27 +1,16 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { useDebounce } from "use-debounce";
+import { useState, useEffect } from "react";
 
 //import { useUserStore } from "../store/useUserStore";
 import { Venue } from "../interfaces";
 import { validateVenue } from "../utils/validateVenue";
-//import VenueCard from "../components/VenueCard";
 import VenueCard from "../components/VenueCard";
 import useLastPageStore from "../store/useLastPageStore";
 import { useRedirectStore } from "../store/useRedirectStore";
-import { useFilterStore } from "../store/useFilterStore";
 import FilterModule from "../components/modules/HomePage/FilterModule";
+import Searcher from "../components/modules/HomePage/Searcher";
 
 const HomePage = () => {
-  //const user = useUserStore((state) => state.user);
   const setLastPath = useLastPageStore((state) => state.setLastPath);
-  // const { amenities, maxGuests, minimumRating, sliderValue } = useFilterStore(
-  //   (state) => ({
-  //     amenities: state.amenities,
-  //     maxGuests: state.maxGuests,
-  //     minimumRating: state.minimumRating,
-  //     sliderValue: state.sliderValue,
-  //   })
-  // );
 
   const [data, setData] = useState<Venue[]>([]);
   const [status, setStatus] = useState("idle");
@@ -79,51 +68,21 @@ const HomePage = () => {
     }
   });
 
-  /*
-  const filteredVenues = useMemo(() => {
-    return data.filter((venue) => {
-      const validated = validateVenue(venue);
-      const amenitiesFilter = amenities.every((amenity) => venue.meta[amenity]);
-      const sliderFilter =
-        venue.price >= debouncedSliderValue[0] &&
-        venue.price <= debouncedSliderValue[1];
-      const ratingFilter = venue.rating >= minimumRating ? true : false;
-      const guestFilter =
-        maxGuests === null ? true : maxGuests <= venue.maxGuests ? true : false;
-      if (
-        validated &&
-        guestFilter &&
-        ratingFilter &&
-        sliderFilter &&
-        amenitiesFilter
-      ) {
-        return venue;
-      }
-    });
-  }, [data, amenities, maxGuests, minimumRating, debouncedSliderValue]);
-
- 
-
-  console.log(data);
-
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/");
   setLastPath("/");
-
-  */
-
-  //console.log(validatedVenues);
 
   console.log("rerender");
 
   return (
     <main>
+      <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
+        <Searcher />
+      </div>
       <FilterModule
         data={data}
         filteredData={filteredData}
         setFilteredData={setFilteredData}
-        //filterCount={filteredVenues.length}
-        //onFilter={() => setData(filteredVenues)}
       />
       {validatedVenues.map((venue: Venue) => {
         return (

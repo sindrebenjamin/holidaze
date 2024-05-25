@@ -1,4 +1,4 @@
-import UserCircle from "./Layout/icons/UserCircle";
+import UserCircle from "./icons/UserCircle";
 
 interface BookingCardProps {
   title: string;

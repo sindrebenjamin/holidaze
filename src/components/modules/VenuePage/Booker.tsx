@@ -36,9 +36,9 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const inputRef = useRef(null);
   useOutsideClick(inputRef, () => setGuestSelectorIsOpen(false));
+
   function handleDatesChange(newValue: DateValueType) {
     setDates(newValue);
-    console.log(newValue);
   }
 
   const daysBooked =
@@ -125,7 +125,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
               disabledDates={convertedBookedDates}
               readOnly={true}
               inputClassName="px-4 py-3.5 border-gray-300 border bg-gray-50 rounded-lg text-sm placeholder-gray-500 w-full focus:border-gray-800 outline-none cursor-pointer hover:bg-gray-100 transition-colors duration-100"
-              placeholder="Start date -> End date"
+              placeholder="Check in -> Check out"
             />
 
             <div className="relative">

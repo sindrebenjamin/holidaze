@@ -1,4 +1,4 @@
-import Edit from "./Layout/icons/Edit";
+import Edit from "./icons/Edit";
 
 const EditButton = ({
   overrideClasses,

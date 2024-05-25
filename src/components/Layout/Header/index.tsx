@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { useUserStore } from "../../../store/useUserStore";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
-import Logo from "../icons/Logo";
+import Logo from "../../icons/Logo";
 import UnauthorizedNavigation from "./UnauthorizedNavigation";
 import Dropdown from "./Dropdown";
 import UserAvatar from "./UserAvatar";

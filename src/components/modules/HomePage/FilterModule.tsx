@@ -23,7 +23,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({
   setFilteredData,
   data,
 }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setAmenities, setMaxGuests, setMinimumRating, setSliderValue } =
     useFilterStore((state) => ({
       setAmenities: state.setAmenities,
@@ -67,7 +67,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({
     setAmenities([]);
     setMaxGuests(null);
     setMinimumRating(0);
-    setSliderValue([0, 20000]);
+    setSliderValue([0, 12000]);
     setFilteredData(data);
   }
 
@@ -89,9 +89,6 @@ const FilterModule: React.FC<FilterModuleProps> = ({
       return venue;
     }
   });
-
-  //console.log(filteredData);
-  console.log(filteredVenues);
 
   return (
     <>
@@ -128,7 +125,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({
                 value={sliderValue}
                 onInput={setSliderValue}
                 step={100}
-                max={20000}
+                max={12000}
               />
               <div className="flex gap-3 items-center">
                 <PriceInput
