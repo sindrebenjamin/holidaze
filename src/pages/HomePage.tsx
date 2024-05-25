@@ -9,13 +9,20 @@ import { useRedirectStore } from "../store/useRedirectStore";
 import FilterModule from "../components/modules/HomePage/FilterModule";
 import Searcher from "../components/modules/HomePage/Searcher";
 import { HomeContainer, Section } from "../components/TailwindComponents";
+import { useFilteredDataStore } from "../store/useFilteredDataStore";
 
 const HomePage = () => {
   const setLastPath = useLastPageStore((state) => state.setLastPath);
 
   const [data, setData] = useState<Venue[]>([]);
   const [status, setStatus] = useState("idle");
-  const [filteredData, setFilteredData] = useState<Venue[]>([]);
+  // const [filteredData, setFilteredData] = useState<Venue[]>([]);
+  const { filteredData, setFilteredData } = useFilteredDataStore((state) => ({
+    filteredData: state.filteredData,
+    setFilteredData: state.setFilteredData,
+  }));
+
+  console.log("test");
 
   useEffect(() => {
     let ignore = false;
@@ -24,7 +31,9 @@ const HomePage = () => {
       try {
         setStatus("loading");
         const res = await fetch(
-          "https://v2.api.noroff.dev/holidaze/venues?page=" + pageNumber
+          "https://v2.api.noroff.dev/holidaze/venues?page=" +
+            pageNumber +
+            "&_bookings=true"
         );
         const json = await res.json();
         if (!ignore) {
@@ -35,13 +44,16 @@ const HomePage = () => {
             );
             return [...prevData, ...newData];
           });
-          setFilteredData((prevData) => {
-            const venueSet = new Set(prevData.map((venue) => venue.id));
-            const newData = json.data.filter(
-              (venue: Venue) => !venueSet.has(venue.id)
-            );
-            return [...prevData, ...newData];
-          });
+          if (filteredData.length === 0) {
+            setFilteredData((prevData: Venue[]) => {
+              const venueSet = new Set(prevData.map((venue) => venue.id));
+              const newData = json.data.filter(
+                (venue: Venue) => !venueSet.has(venue.id)
+              );
+              return [...prevData, ...newData];
+            });
+          }
+
           if (!json.meta.isLastPage) {
             pageNumber++;
             getData();
@@ -73,20 +85,14 @@ const HomePage = () => {
   redirect("/");
   setLastPath("/");
 
-  console.log("rerender");
-
   return (
     <main>
       <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
-        <Searcher />
+        <Searcher data={data} />
       </div>
       <Section>
         <HomeContainer>
-          <FilterModule
-            data={data}
-            filteredData={filteredData}
-            setFilteredData={setFilteredData}
-          />
+          <FilterModule data={data} />
           <div className="grid grid-cols-[repeat(auto-fit,_minmax(340px,_1fr))] gap-6">
             {validatedVenues.map((venue: Venue) => {
               return (

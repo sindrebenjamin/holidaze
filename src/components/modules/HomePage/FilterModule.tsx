@@ -12,18 +12,13 @@ import Button from "../../Button";
 import { validateVenue } from "../../../utils/validateVenue";
 import { Venue } from "../../../interfaces";
 import Filter from "../../icons/Filter";
+import { useFilteredDataStore } from "../../../store/useFilteredDataStore";
 
 interface FilterModuleProps {
-  filteredData: Venue[];
-  setFilteredData: (venues: Venue[]) => void;
   data: Venue[];
 }
 
-const FilterModule: React.FC<FilterModuleProps> = ({
-  filteredData,
-  setFilteredData,
-  data,
-}) => {
+const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setAmenities, setMaxGuests, setMinimumRating, setSliderValue } =
     useFilterStore((state) => ({
@@ -41,6 +36,10 @@ const FilterModule: React.FC<FilterModuleProps> = ({
       sliderValue: state.sliderValue,
     })
   );
+
+  const { setFilteredData } = useFilteredDataStore((state) => ({
+    setFilteredData: state.setFilteredData,
+  }));
 
   function handleInputChange(
     event: React.ChangeEvent<HTMLInputElement>,
@@ -72,7 +71,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({
     setFilteredData(data);
   }
 
-  const filteredVenues = filteredData.filter((venue) => {
+  const filteredVenues = data.filter((venue) => {
     const validated = validateVenue(venue);
     const amenitiesFilter = amenities.every((amenity) => venue.meta[amenity]);
     const sliderFilter =
@@ -136,7 +135,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({
                 value={sliderValue}
                 onInput={setSliderValue}
                 step={100}
-                max={12000}
+                max={10000}
               />
               <div className="flex gap-3 items-center">
                 <PriceInput
