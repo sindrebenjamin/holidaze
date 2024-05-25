@@ -11,6 +11,7 @@ import { Divider } from "../../TailwindComponents";
 import Button from "../../Button";
 import { validateVenue } from "../../../utils/validateVenue";
 import { Venue } from "../../../interfaces";
+import Filter from "../../icons/Filter";
 
 interface FilterModuleProps {
   filteredData: Venue[];
@@ -92,6 +93,13 @@ const FilterModule: React.FC<FilterModuleProps> = ({
 
   return (
     <>
+      <button
+        onClick={() => setModalIsOpen(true)}
+        className="font-bold flex gap-2 items-center p-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors duration-200 mb-6"
+      >
+        <Filter color="#4B5563" />
+        Filter
+      </button>
       {modalIsOpen && (
         <BasicModal
           modalFooter={
@@ -103,7 +111,10 @@ const FilterModule: React.FC<FilterModuleProps> = ({
                 Clear all
               </button>
               <Button
-                onClick={() => setFilteredData(filteredVenues)}
+                onClick={() => {
+                  setFilteredData(filteredVenues);
+                  setModalIsOpen(false);
+                }}
                 size="xl"
                 color="gray-dark"
                 type="button"

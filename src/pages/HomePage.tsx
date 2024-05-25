@@ -8,6 +8,7 @@ import useLastPageStore from "../store/useLastPageStore";
 import { useRedirectStore } from "../store/useRedirectStore";
 import FilterModule from "../components/modules/HomePage/FilterModule";
 import Searcher from "../components/modules/HomePage/Searcher";
+import { HomeContainer, Section } from "../components/TailwindComponents";
 
 const HomePage = () => {
   const setLastPath = useLastPageStore((state) => state.setLastPath);
@@ -79,23 +80,29 @@ const HomePage = () => {
       <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
         <Searcher />
       </div>
-      <FilterModule
-        data={data}
-        filteredData={filteredData}
-        setFilteredData={setFilteredData}
-      />
-      {validatedVenues.map((venue: Venue) => {
-        return (
-          <VenueCard
-            key={venue.id}
-            id={venue.id}
-            media={venue.media[0]}
-            address={venue.location.address}
-            price={venue.price}
-            rating={venue.rating}
+      <Section>
+        <HomeContainer>
+          <FilterModule
+            data={data}
+            filteredData={filteredData}
+            setFilteredData={setFilteredData}
           />
-        );
-      })}
+          <div className="grid grid-cols-[repeat(auto-fit,_minmax(340px,_1fr))] gap-6">
+            {validatedVenues.map((venue: Venue) => {
+              return (
+                <VenueCard
+                  key={venue.id}
+                  id={venue.id}
+                  media={venue.media[0]}
+                  address={venue.location.address}
+                  price={venue.price}
+                  rating={venue.rating}
+                />
+              );
+            })}
+          </div>
+        </HomeContainer>
+      </Section>
     </main>
   );
 };
