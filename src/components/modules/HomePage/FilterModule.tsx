@@ -41,6 +41,8 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
     setFilteredData: state.setFilteredData,
   }));
 
+  const [localSliderValue, setLocalSliderValue] = useState(sliderValue);
+
   function handleInputChange(
     event: React.ChangeEvent<HTMLInputElement>,
     input: string
@@ -48,9 +50,9 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
     const { value, min, max } = event.target;
     const newValue = +value > +max ? +max : +value < +min ? min : +value;
     if (input === "left") {
-      setSliderValue([+newValue, sliderValue[1]]);
+      setLocalSliderValue([+newValue, localSliderValue[1]]);
     } else {
-      setSliderValue([sliderValue[0], +newValue]);
+      setLocalSliderValue([localSliderValue[0], +newValue]);
     }
   }
 
@@ -67,6 +69,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
     setAmenities([]);
     setMaxGuests(null);
     setMinimumRating(0);
+    setLocalSliderValue([0, 12000]);
     setSliderValue([0, 12000]);
     setFilteredData(data);
   }
@@ -75,7 +78,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
     const validated = validateVenue(venue);
     const amenitiesFilter = amenities.every((amenity) => venue.meta[amenity]);
     const sliderFilter =
-      venue.price >= sliderValue[0] && venue.price <= sliderValue[1];
+      venue.price >= localSliderValue[0] && venue.price <= localSliderValue[1];
     const ratingFilter = venue.rating >= minimumRating ? true : false;
     const guestFilter =
       maxGuests === null ? true : maxGuests <= venue.maxGuests ? true : false;
@@ -112,6 +115,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
               <Button
                 onClick={() => {
                   setFilteredData(filteredVenues);
+                  setSliderValue([localSliderValue[0], localSliderValue[1]]);
                   setModalIsOpen(false);
                 }}
                 size="xl"
@@ -132,22 +136,22 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data }) => {
               <h2 className="text-xl">Price per night</h2>
               <RangeSlider
                 id="holidaze-slider"
-                value={sliderValue}
-                onInput={setSliderValue}
+                value={localSliderValue}
+                onInput={setLocalSliderValue}
                 step={100}
                 max={10000}
               />
               <div className="flex gap-3 items-center">
                 <PriceInput
-                  sliderValue={sliderValue}
-                  setSliderValue={setSliderValue}
+                  sliderValue={localSliderValue}
+                  setSliderValue={setLocalSliderValue}
                   handleInputChange={handleInputChange}
                   inputSide={"left"}
                 />
                 <div className="h-[1px] bg-gray-400 w-12"></div>
                 <PriceInput
-                  sliderValue={sliderValue}
-                  setSliderValue={setSliderValue}
+                  sliderValue={localSliderValue}
+                  setSliderValue={setLocalSliderValue}
                   handleInputChange={handleInputChange}
                   inputSide={"right"}
                 />
