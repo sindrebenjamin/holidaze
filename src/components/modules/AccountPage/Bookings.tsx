@@ -36,14 +36,16 @@ const Bookings = ({ bookings }: { bookings: Booking[] }) => {
     return nextBooking;
   });
 
-  console.log(bookingsByTab);
-
   const bookingsByModalTab = sortedByDate.filter((booking) => {
     const nextBooking = handleFilterByTab(booking, currentModalTab);
     return nextBooking;
   });
 
   const noBookings = bookingsByTab.every((booking) => booking === undefined);
+
+  const noModalBookings = bookingsByModalTab.every(
+    (booking) => booking === undefined
+  );
 
   return (
     <>
@@ -90,10 +92,13 @@ const Bookings = ({ bookings }: { bookings: Booking[] }) => {
               bookings`}
             </p>
           )}
-          {bookingsByTab.length >= 4 && (
+          {bookingsByTab.length > 4 && (
             <button
               className="mt-2 w-fit underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              onClick={() => setModalIsOpen(true)}
+              onClick={() => {
+                setCurrentModalTab(currentTab);
+                setModalIsOpen(true);
+              }}
             >
               Show all ({bookingsByTab.length})
             </button>
@@ -138,7 +143,7 @@ const Bookings = ({ bookings }: { bookings: Booking[] }) => {
               }
             })}
 
-            {noBookings && (
+            {noModalBookings && (
               <p>
                 {`You have no ${
                   currentModalTab === "upcoming" ? "upcoming" : "completed"

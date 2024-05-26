@@ -26,7 +26,7 @@ const AccountSettings = () => {
 
   const baseOptions = useMemo(
     () => ({
-      method: "GET",
+      method: "PUT",
       headers: {
         "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
         Authorization: `Bearer ${user?.accessToken}`,
@@ -69,11 +69,12 @@ const AccountSettings = () => {
 
     if (debouncedBio !== user?.bio) {
       (async function () {
-        await basicApi(
+        const res = await basicApi(
           `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}`,
           bioOptions,
           setApiStatus
         );
+        // console.log(res);
         if (user && debouncedBio) {
           useUserStore.setState({ user: { ...user, bio: debouncedBio } });
         }
