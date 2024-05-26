@@ -8,6 +8,7 @@ interface GuestSelectorProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   incrementDisabled: boolean;
+  lowestAllowed?: number;
 }
 
 const GuestSelector: React.FC<GuestSelectorProps> = ({
@@ -18,6 +19,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
   isOpen,
   setIsOpen,
   incrementDisabled,
+  lowestAllowed,
 }) => {
   const classes = isOpen
     ? `translate-y-0 opacity-1 z-10`
@@ -34,7 +36,8 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
         </div>
         <QuantitySelector
           incrementDisabled={incrementDisabled}
-          lowestAllowed={1}
+          decrementDisabled={childQuantity > 0}
+          lowestAllowed={lowestAllowed !== undefined ? lowestAllowed : 1}
           quantity={adultQuantity}
           handleQuantity={handleQuantityAdult}
         />
@@ -45,8 +48,8 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
           <p className="text-sm text-gray-600">0-17 years</p>
         </div>
         <QuantitySelector
-          incrementDisabled={incrementDisabled}
-          lowestAllowed={0}
+          incrementDisabled={incrementDisabled || adultQuantity === 0}
+          lowestAllowed={lowestAllowed !== undefined ? lowestAllowed : 0}
           quantity={childQuantity}
           handleQuantity={handleQuantityChild}
         />

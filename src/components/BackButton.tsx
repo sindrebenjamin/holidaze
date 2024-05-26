@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useLastPageStore from "../store/useLastPageStore";
-import ArrowLeft from "./Layout/icons/ArrowLeft";
+import ArrowLeft from "./icons/ArrowLeft";
 
 const BackButton = ({ overrideClasses }: { overrideClasses?: string }) => {
   const navigate = useNavigate();

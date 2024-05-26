@@ -3,11 +3,13 @@ const QuantitySelector = ({
   handleQuantity,
   lowestAllowed,
   incrementDisabled,
+  decrementDisabled,
 }: {
   quantity: number;
   handleQuantity: (newQuantity: number) => void;
   lowestAllowed: number;
   incrementDisabled?: boolean;
+  decrementDisabled?: boolean;
 }) => {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = parseInt(e.target.value, 10);
@@ -24,7 +26,7 @@ const QuantitySelector = ({
     <div className="relative flex items-center max-w-[8rem]">
       <button
         onClick={() => handleQuantity(quantity - 1)}
-        disabled={quantity === lowestAllowed}
+        disabled={quantity === lowestAllowed || decrementDisabled}
         type="button"
         id="decrement-button"
         data-input-counter-decrement="quantity-input"

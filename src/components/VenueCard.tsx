@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 import { MediaItem } from "../interfaces";
-import Star from "./Layout/icons/Star";
+import Star from "./icons/Star";
 import { checkLongText } from "../utils/checkLongText";
 import { checkRating } from "../utils/checkRating";
 import { useCheckMedia } from "../hooks/useCheckMedia";
@@ -23,7 +23,7 @@ const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
         className="group flex flex-col gap-2 cursor-pointer"
       >
         <div className="relative rounded-xl overflow-hidden aspect-square">
-          <div className="absolute bg-black w-full h-full opacity-0 group-hover:opacity-80 transition-opacity duration-200  flex items-center justify-center z-10">
+          <div className="absolute bg-black w-full h-full opacity-0 group-hover:opacity-80 transition-opacity duration-200  flex items-center justify-center z-[2]">
             <p className="text-white">View more</p>
           </div>
 

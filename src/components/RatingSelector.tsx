@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import BigStar from "./Layout/icons/BigStar";
+import BigStar from "./icons/BigStar";
 
 const RatingSelector = ({
   rating,

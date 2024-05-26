@@ -9,9 +9,20 @@ import RatingSelector from "../../RatingSelector";
 import BasicModal from "../../BasicModal";
 import { Divider } from "../../TailwindComponents";
 import Button from "../../Button";
+import { validateVenue } from "../../../utils/validateVenue";
+import { Venue } from "../../../interfaces";
+import Filter from "../../icons/Filter";
+import { useFilteredDataStore } from "../../../store/useFilteredDataStore";
+import { checkQueryString } from "../../../utils/checkQueryString";
+import { isVenueAvailable } from "../../../utils/isVenueAvailable";
 
-const FilterModule = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+interface FilterModuleProps {
+  data: Venue[];
+  resetLoader: () => void;
+}
+
+const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { setAmenities, setMaxGuests, setMinimumRating, setSliderValue } =
     useFilterStore((state) => ({
       setAmenities: state.setAmenities,
@@ -20,14 +31,27 @@ const FilterModule = () => {
       setSliderValue: state.setSliderValue,
     }));
 
-  const { amenities, maxGuests, minimumRating, sliderValue } = useFilterStore(
-    (state) => ({
-      amenities: state.amenities,
-      maxGuests: state.maxGuests,
-      minimumRating: state.minimumRating,
-      sliderValue: state.sliderValue,
-    })
-  );
+  const {
+    amenities,
+    maxGuests,
+    minimumRating,
+    sliderValue,
+    queryString,
+    dates,
+  } = useFilterStore((state) => ({
+    amenities: state.amenities,
+    maxGuests: state.maxGuests,
+    minimumRating: state.minimumRating,
+    sliderValue: state.sliderValue,
+    queryString: state.queryString,
+    dates: state.dates,
+  }));
+
+  const { setFilteredData } = useFilteredDataStore((state) => ({
+    setFilteredData: state.setFilteredData,
+  }));
+
+  const [localSliderValue, setLocalSliderValue] = useState(sliderValue);
 
   function handleInputChange(
     event: React.ChangeEvent<HTMLInputElement>,
@@ -36,9 +60,9 @@ const FilterModule = () => {
     const { value, min, max } = event.target;
     const newValue = +value > +max ? +max : +value < +min ? min : +value;
     if (input === "left") {
-      setSliderValue([+newValue, sliderValue[1]]);
+      setLocalSliderValue([+newValue, localSliderValue[1]]);
     } else {
-      setSliderValue([sliderValue[0], +newValue]);
+      setLocalSliderValue([localSliderValue[0], +newValue]);
     }
   }
 
@@ -51,18 +75,71 @@ const FilterModule = () => {
     }
   }
 
+  function handleClearFilter() {
+    resetLoader();
+    setAmenities([]);
+    setMaxGuests(null);
+    setMinimumRating(0);
+    setLocalSliderValue([0, 12000]);
+    setSliderValue([0, 12000]);
+    setFilteredData(data);
+  }
+
+  const filteredVenues = data.filter((venue) => {
+    const validated = validateVenue(venue);
+    const amenitiesFilter = amenities.every((amenity) => venue.meta[amenity]);
+    const sliderFilter =
+      venue.price >= localSliderValue[0] && venue.price <= localSliderValue[1];
+    const ratingFilter = venue.rating >= minimumRating ? true : false;
+    const guestFilter =
+      maxGuests === null ? true : maxGuests <= venue.maxGuests ? true : false;
+
+    const query = checkQueryString(venue, queryString);
+    const venueIsAvailable = isVenueAvailable(dates, venue.bookings);
+    if (
+      validated &&
+      guestFilter &&
+      ratingFilter &&
+      sliderFilter &&
+      amenitiesFilter &&
+      query &&
+      venueIsAvailable
+    ) {
+      return venue;
+    }
+  });
+
   return (
     <>
-      <button onClick={() => setAmenities(["test5", "test62"])}>update</button>
+      <button
+        onClick={() => setModalIsOpen(true)}
+        className="font-bold flex gap-2 items-center p-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors duration-200 mb-6"
+      >
+        <Filter color="#4B5563" />
+        Filter
+      </button>
       {modalIsOpen && (
         <BasicModal
           modalFooter={
-            <div className="flex justify-between items-center pt-4 border-t border-gray-300">
-              <button className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+            <div className="flex justify-between items-center">
+              <button
+                onClick={handleClearFilter}
+                className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              >
                 Clear all
               </button>
-              <Button size="xl" color="gray-dark" type="button">
-                Show x venues
+              <Button
+                onClick={() => {
+                  resetLoader();
+                  setFilteredData(filteredVenues);
+                  setSliderValue([localSliderValue[0], localSliderValue[1]]);
+                  setModalIsOpen(false);
+                }}
+                size="xl"
+                color="gray-dark"
+                type="button"
+              >
+                Show {filteredVenues.length} venues
               </Button>
             </div>
           }
@@ -76,22 +153,22 @@ const FilterModule = () => {
               <h2 className="text-xl">Price per night</h2>
               <RangeSlider
                 id="holidaze-slider"
-                value={sliderValue}
-                onInput={setSliderValue}
+                value={localSliderValue}
+                onInput={setLocalSliderValue}
                 step={100}
-                max={20000}
+                max={10000}
               />
               <div className="flex gap-3 items-center">
                 <PriceInput
-                  sliderValue={sliderValue}
-                  setSliderValue={setSliderValue}
+                  sliderValue={localSliderValue}
+                  setSliderValue={setLocalSliderValue}
                   handleInputChange={handleInputChange}
                   inputSide={"left"}
                 />
                 <div className="h-[1px] bg-gray-400 w-12"></div>
                 <PriceInput
-                  sliderValue={sliderValue}
-                  setSliderValue={setSliderValue}
+                  sliderValue={localSliderValue}
+                  setSliderValue={setLocalSliderValue}
                   handleInputChange={handleInputChange}
                   inputSide={"right"}
                 />

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { MediaItem } from "../../interfaces";
 import SlideShowButton from "./SlideshowButton";
-import Close from "../Layout/icons/Close";
+import Close from "../icons/Close";
 
 const SlideShowModal = ({
   images,
