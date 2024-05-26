@@ -39,7 +39,7 @@ const BasicModal = ({
           </div>
         </div>
         {tabs && <div className="px-4 sm:px-6">{tabs}</div>}
-        <div className="overflow-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full px-4 sm:px-6 pb-4 sm:pb-6">
+        <div className="overflow-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-gray-200 mx-4 sm:mx-6 mb-4 sm:mb-6">
           {children}
         </div>
         {modalFooter && (
