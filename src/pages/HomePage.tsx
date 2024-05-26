@@ -117,6 +117,16 @@ const HomePage = () => {
     return <p>Loading....</p>;
   }
 
+  function createGhostVenues() {
+    let ghostArray = [];
+    for (let i = 0; i < 12; i++) {
+      ghostArray.push(<div></div>);
+    }
+    return ghostArray;
+  }
+
+  const ghostVenues = createGhostVenues();
+
   return (
     <main>
       <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
@@ -151,6 +161,13 @@ const HomePage = () => {
                   />
                 );
               })}
+              {validatedVenues.length < 12 && (
+                <>
+                  {ghostVenues.map((ghost) => {
+                    return ghost;
+                  })}
+                </>
+              )}
             </div>
           </InfiniteScroll>
         </HomeContainer>
