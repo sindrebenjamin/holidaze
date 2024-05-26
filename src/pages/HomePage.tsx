@@ -28,15 +28,15 @@ const HomePage = () => {
   const [hideScrollLoader, setHideScrollLoader] = useState(true);
   const venuesPerPage = 100;
 
-  //console.log(filteredData, data);
-
-  //console.log("hideScrollLoader:", hideScrollLoader);
-
-  if (filteredData < data) {
-    console.log("filtered data is smaller");
-  } else {
-    console.log("they the same");
-  }
+  useEffect(() => {
+    function resetScrollPos() {
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener("beforeunload", resetScrollPos);
+    return () => {
+      window.removeEventListener("beforeunload", resetScrollPos);
+    };
+  }, []);
 
   useEffect(() => {
     function handleScroll() {
@@ -134,15 +134,14 @@ const HomePage = () => {
     setVenuePage(nextPage);
   }
 
-  function createGhostVenues() {
+  function createGhostVenues(amount: number) {
     let ghostArray = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < amount; i++) {
       ghostArray.push({ id: i });
     }
     return ghostArray;
   }
 
-  const ghostVenues = createGhostVenues();
   const noVenuesFound = validatedVenues.length === 0;
 
   return (
@@ -164,16 +163,14 @@ const HomePage = () => {
               noVenuesFound || hideScrollLoader ? (
                 <div></div>
               ) : (
-                <div className="loader" key={0}>
-                  Loading ...
-                </div>
+                <div className="spinner-dark m-auto mt-2"></div>
               )
             }
           >
             <div className="grid grid-cols-[repeat(auto-fit,_minmax(340px,_1fr))] gap-6">
               {status === "loading" && (
                 <>
-                  {ghostVenues.map((ghost) => {
+                  {createGhostVenues(12).map((ghost) => {
                     return <VenueCardSkeleton key={ghost.id} />;
                   })}
                 </>
@@ -192,7 +189,7 @@ const HomePage = () => {
               })}
               {validatedVenues.length < 12 && !noVenuesFound && (
                 <>
-                  {ghostVenues.map((ghost) => {
+                  {createGhostVenues(12).map((ghost) => {
                     return <div key={ghost.id}></div>;
                   })}
                 </>
