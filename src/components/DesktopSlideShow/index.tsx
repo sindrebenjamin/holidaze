@@ -7,6 +7,7 @@ import { useCheckMultipleMedia } from "../../hooks/useCheckMultipleMedia";
 
 const DesktopSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [clickedIndex, setClickedIndex] = useState(0);
   const checkedMedia = useCheckMultipleMedia(images);
 
   useScrollLock(modalIsOpen);
@@ -17,12 +18,14 @@ const DesktopSlideShow = ({ images }: { images: MediaItem[] | undefined }) => {
         <SlideShowModal
           onClick={() => setModalIsOpen(false)}
           images={checkedMedia}
+          clickedIndex={clickedIndex}
         />
       )}
       <ImageDisplay
         images={checkedMedia}
         onClick={() => setModalIsOpen(true)}
         heightClass="h-[600px]"
+        setClickedIndex={setClickedIndex}
       />
     </>
   );
@@ -34,10 +37,12 @@ const ImageDisplay = ({
   images,
   heightClass,
   onClick,
+  setClickedIndex,
 }: {
   images: MediaItem[] | undefined;
   heightClass: string;
   onClick: () => void;
+  setClickedIndex: (index: number) => void;
 }) => {
   if (images) {
     if (images.length === 1) {
@@ -56,10 +61,16 @@ const ImageDisplay = ({
           onClick={onClick}
           className={`${heightClass} grid grid-cols-3 gap-2 rounded-lg overflow-hidden cursor-zoom-in`}
         >
-          <div className="relative w-full h-full col-span-2">
+          <div
+            onClick={() => setClickedIndex(0)}
+            className="relative w-full h-full col-span-2"
+          >
             <ImageItem image={images[0]} />
           </div>
-          <div className="relative w-full col-span-1 h-full">
+          <div
+            onClick={() => setClickedIndex(1)}
+            className="relative w-full col-span-1 h-full"
+          >
             <ImageItem image={images[1]} />
           </div>
         </div>
@@ -71,15 +82,24 @@ const ImageDisplay = ({
           onClick={onClick}
           className={`${heightClass} grid grid-cols-3 gap-2 rounded-lg overflow-hidden cursor-zoom-in`}
         >
-          <div className="relative w-full h-full col-span-2 min-w-0 min-h-0">
+          <div
+            onClick={() => setClickedIndex(0)}
+            className="relative w-full h-full col-span-2 min-w-0 min-h-0"
+          >
             <ImageItem image={images[0]} />
           </div>
 
           <div className="col-span-1 h-full flex flex-col gap-2 min-w-0 min-h-0">
-            <div className="w-full h-full relative">
+            <div
+              onClick={() => setClickedIndex(1)}
+              className="w-full h-full relative"
+            >
               <ImageItem image={images[1]} />
             </div>
-            <div className="relative w-full h-full">
+            <div
+              onClick={() => setClickedIndex(2)}
+              className="relative w-full h-full"
+            >
               <ImageItem image={images[2]} />
             </div>
           </div>

@@ -96,7 +96,7 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
                   Pets allowed
                 </div>
               )}
-              {data?.data.meta.pets && (
+              {data?.data.meta.breakfast && (
                 <div className="flex gap-2 items-center">
                   <Coffee color="#374151" />
                   Breakfast
