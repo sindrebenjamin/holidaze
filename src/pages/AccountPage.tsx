@@ -30,12 +30,33 @@ const AccountPage = () => {
     options
   );
 
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <div className="spinner-dark"></div>
+      </main>
+    );
+  }
+
   if (status === "error") {
-    return <p>Something went wrong.</p>;
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <p>Something went wrong</p>
+      </main>
+    );
   }
 
   if (!user) {
-    return <p>Please log in to view your account.</p>;
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <NavLink
+          className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100 text-center"
+          to="/login"
+        >
+          Log in to view your account
+        </NavLink>
+      </main>
+    );
   }
 
   if (status === "success") {

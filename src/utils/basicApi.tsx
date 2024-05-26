@@ -10,7 +10,6 @@ export async function basicApi(
     const response = await fetch(url, options);
     const result = await response.json();
 
-    console.log(result);
     if (response.ok) {
       setApiStatus("idle");
       return result;

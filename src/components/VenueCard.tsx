@@ -15,7 +15,10 @@ interface VenueCardProps {
 }
 
 const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
-  const checkedImage = useCheckMedia(media.url);
+  //console.log(media);
+  const imageUrl = media && media.url ? media.url : "/nomedia.jpg";
+  const altText = media && media.alt ? media.alt : "";
+  const checkedImage = useCheckMedia(imageUrl);
   if (address) {
     return (
       <NavLink
@@ -30,7 +33,7 @@ const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
           <img
             className="w-full h-full group-hover:scale-105 transition-transform duration-200 object-cover"
             src={checkedImage}
-            alt={media.alt}
+            alt={altText}
           />
         </div>
         <div>

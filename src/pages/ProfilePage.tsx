@@ -32,9 +32,18 @@ const ProfilePage = () => {
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/profile/" + params.name);
 
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <div className="spinner-dark"></div>
+      </main>
+    );
+  }
+
   if (status === "error") {
     return (
-      <main className="h-screen flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center">
         <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
         <p>Something went wrong</p>
       </main>
@@ -43,7 +52,7 @@ const ProfilePage = () => {
 
   if (!user) {
     return (
-      <main className="h-screen flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center">
         <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
         <NavLink
           className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100"
