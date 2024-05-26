@@ -121,7 +121,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
       {modalIsOpen && (
         <BasicModal
           modalFooter={
-            <div className="flex justify-between items-center pt-4 border-t border-gray-300">
+            <div className="flex justify-between items-center">
               <button
                 onClick={handleClearFilter}
                 className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
