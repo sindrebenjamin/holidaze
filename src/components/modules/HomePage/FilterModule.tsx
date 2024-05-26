@@ -250,7 +250,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
             </div>
             <Divider />
             {/* Minimum rating */}
-            <div className="flex flex-col gap-4 pb-4">
+            <div className="flex flex-col gap-4">
               <h2 className="text-xl">Minimum rating</h2>
               <RatingSelector
                 rating={minimumRating}
