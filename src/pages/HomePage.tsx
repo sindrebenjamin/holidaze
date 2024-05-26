@@ -9,6 +9,7 @@ import FilterModule from "../components/modules/HomePage/FilterModule";
 import Searcher from "../components/modules/HomePage/Searcher";
 import { HomeContainer, Section } from "../components/TailwindComponents";
 import { useFilteredDataStore } from "../store/useFilteredDataStore";
+import VenueCardSkeleton from "../components/VenueCardSkeleton";
 
 const HomePage = () => {
   const setLastPath = useLastPageStore((state) => state.setLastPath);
@@ -24,11 +25,34 @@ const HomePage = () => {
 
   const [venuePage, setVenuePage] = useState(1);
   const [visibleVenues, setVisibleVenues] = useState<Venue[]>([]);
+  const [hideScrollLoader, setHideScrollLoader] = useState(true);
   const venuesPerPage = 100;
+
+  //console.log(filteredData, data);
+
+  //console.log("hideScrollLoader:", hideScrollLoader);
+
+  if (filteredData < data) {
+    console.log("filtered data is smaller");
+  } else {
+    console.log("they the same");
+  }
+
+  useEffect(() => {
+    function handleScroll() {
+      setHideScrollLoader(false);
+    }
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const initialVenues = filteredData.slice(0, venuesPerPage);
     setVisibleVenues(initialVenues);
+    setHideScrollLoader(true);
   }, [filteredData]);
 
   useEffect(() => {
@@ -110,25 +134,19 @@ const HomePage = () => {
     setVenuePage(nextPage);
   }
 
-  console.log(hasMore);
-  console.log(venuePage);
-
-  if (status === "loading") {
-    return <p>Loading....</p>;
-  }
-
   function createGhostVenues() {
     let ghostArray = [];
     for (let i = 0; i < 12; i++) {
-      ghostArray.push(<div></div>);
+      ghostArray.push({ id: i });
     }
     return ghostArray;
   }
 
   const ghostVenues = createGhostVenues();
+  const noVenuesFound = validatedVenues.length === 0;
 
   return (
-    <main>
+    <main className="min-h-screen">
       <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
         <Searcher resetLoader={resetLoader} data={data} />
       </div>
@@ -141,14 +159,25 @@ const HomePage = () => {
             pageStart={0}
             loadMore={loadMoreVenues}
             hasMore={hasMore}
-            threshold={500}
+            threshold={0}
             loader={
-              <div className="loader" key={0}>
-                Loading ...
-              </div>
+              noVenuesFound || hideScrollLoader ? (
+                <div></div>
+              ) : (
+                <div className="loader" key={0}>
+                  Loading ...
+                </div>
+              )
             }
           >
             <div className="grid grid-cols-[repeat(auto-fit,_minmax(340px,_1fr))] gap-6">
+              {status === "loading" && (
+                <>
+                  {ghostVenues.map((ghost) => {
+                    return <VenueCardSkeleton key={ghost.id} />;
+                  })}
+                </>
+              )}
               {validatedVenues.map((venue: Venue) => {
                 return (
                   <VenueCard
@@ -161,13 +190,14 @@ const HomePage = () => {
                   />
                 );
               })}
-              {validatedVenues.length < 12 && (
+              {validatedVenues.length < 12 && !noVenuesFound && (
                 <>
                   {ghostVenues.map((ghost) => {
-                    return ghost;
+                    return <div key={ghost.id}></div>;
                   })}
                 </>
               )}
+              {noVenuesFound && status !== "loading" && <p>No venues found</p>}
             </div>
           </InfiniteScroll>
         </HomeContainer>
@@ -177,3 +207,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+//errorhandling

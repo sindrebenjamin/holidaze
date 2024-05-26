@@ -43,3 +43,28 @@ button.line-through {
   background: #ec4899;
   transition: height 0.3s;
 }
+
+.loader {
+  background: linear-gradient(
+    90deg,
+    rgba(76, 94, 121, 1) 0%,
+    rgba(126, 140, 159, 1) 50%,
+    rgba(204, 209, 217, 1) 100%
+  );
+  background-size: 200%;
+  animation: skeleton-loader 1s infinite;
+}
+
+@keyframes skeleton-loader {
+  0% {
+    background-position: 0%;
+  }
+
+  50% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
