@@ -52,6 +52,7 @@ const HomePage = () => {
   useEffect(() => {
     const initialVenues = filteredData.slice(0, venuesPerPage);
     setVisibleVenues(initialVenues);
+
     setHideScrollLoader(true);
   }, [filteredData]);
 
@@ -158,16 +159,16 @@ const HomePage = () => {
             pageStart={0}
             loadMore={loadMoreVenues}
             hasMore={hasMore}
-            threshold={0}
+            threshold={200}
             loader={
               noVenuesFound || hideScrollLoader ? (
-                <div></div>
+                <div key={1}></div>
               ) : (
-                <div className="spinner-dark m-auto mt-2"></div>
+                <div key={0} className="spinner-dark m-auto mt-2"></div>
               )
             }
           >
-            <div className="grid grid-cols-[repeat(auto-fit,_minmax(340px,_1fr))] gap-6">
+            <div className="grid grid-cols-[repeat(auto-fit,_minmax(260px,_1fr))] gap-6">
               {status === "loading" && (
                 <>
                   {createGhostVenues(12).map((ghost) => {
@@ -195,6 +196,7 @@ const HomePage = () => {
                 </>
               )}
               {noVenuesFound && status !== "loading" && <p>No venues found</p>}
+              {status === "error" && <p>Something went wrong</p>}
             </div>
           </InfiniteScroll>
         </HomeContainer>
@@ -204,5 +206,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-//errorhandling

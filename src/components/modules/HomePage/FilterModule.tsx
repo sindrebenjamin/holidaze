@@ -13,6 +13,8 @@ import { validateVenue } from "../../../utils/validateVenue";
 import { Venue } from "../../../interfaces";
 import Filter from "../../icons/Filter";
 import { useFilteredDataStore } from "../../../store/useFilteredDataStore";
+import { checkQueryString } from "../../../utils/checkQueryString";
+import { isVenueAvailable } from "../../../utils/isVenueAvailable";
 
 interface FilterModuleProps {
   data: Venue[];
@@ -29,14 +31,21 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
       setSliderValue: state.setSliderValue,
     }));
 
-  const { amenities, maxGuests, minimumRating, sliderValue } = useFilterStore(
-    (state) => ({
-      amenities: state.amenities,
-      maxGuests: state.maxGuests,
-      minimumRating: state.minimumRating,
-      sliderValue: state.sliderValue,
-    })
-  );
+  const {
+    amenities,
+    maxGuests,
+    minimumRating,
+    sliderValue,
+    queryString,
+    dates,
+  } = useFilterStore((state) => ({
+    amenities: state.amenities,
+    maxGuests: state.maxGuests,
+    minimumRating: state.minimumRating,
+    sliderValue: state.sliderValue,
+    queryString: state.queryString,
+    dates: state.dates,
+  }));
 
   const { setFilteredData } = useFilteredDataStore((state) => ({
     setFilteredData: state.setFilteredData,
@@ -84,12 +93,17 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
     const ratingFilter = venue.rating >= minimumRating ? true : false;
     const guestFilter =
       maxGuests === null ? true : maxGuests <= venue.maxGuests ? true : false;
+
+    const query = checkQueryString(venue, queryString);
+    const venueIsAvailable = isVenueAvailable(dates, venue.bookings);
     if (
       validated &&
       guestFilter &&
       ratingFilter &&
       sliderFilter &&
-      amenitiesFilter
+      amenitiesFilter &&
+      query &&
+      venueIsAvailable
     ) {
       return venue;
     }

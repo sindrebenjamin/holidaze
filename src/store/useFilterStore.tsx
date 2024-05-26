@@ -15,8 +15,8 @@ interface FilterProps {
   setDates: (newDates: DateValueType) => void;
   setAmenities: (newAmenities: string[]) => void;
   setMaxGuests: (newMaxGuests: number | null) => void;
-  setAdults: (newAdults: number | null) => void;
-  setChildren: (newChildren: number | null) => void;
+  setAdults: (newAdults: number) => void;
+  setChildren: (newChildren: number) => void;
   setMinimumRating: (newMinimumRating: number) => void;
   setSliderValue: (newSliderValue: [number, number]) => void;
 }
@@ -40,8 +40,8 @@ export const useFilterStore = create<FilterProps>()(
     setAmenities: (newAmenities: string[]) => set({ amenities: newAmenities }),
     setMaxGuests: (newMaxGuests: number | null) =>
       set({ maxGuests: newMaxGuests }),
-    setAdults: (newAdults: number | null) => set({ adults: newAdults }),
-    setChildren: (newChildren: number | null) => set({ children: newChildren }),
+    setAdults: (newAdults: number) => set({ adults: newAdults }),
+    setChildren: (newChildren: number) => set({ children: newChildren }),
     setMinimumRating: (newMinimumRating: number) =>
       set({ minimumRating: newMinimumRating }),
     setSliderValue: (newSliderValue: [number, number]) =>
