@@ -13,12 +13,17 @@ import { checkLongText } from "../../../utils/checkLongText";
 import { Divider } from "../../TailwindComponents";
 import BasicModal from "../../BasicModal";
 import { checkRating } from "../../../utils/checkRating";
+import { useCheckMedia } from "../../../hooks/useCheckMedia";
 
 const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const noAmenities = Object.values(data?.data.meta || {}).every(
     (amenity) => amenity === false
   );
+  const media = data?.data.owner.avatar;
+  const imageUrl = media && media.url ? media.url : "/nomedia.jpg";
+  const altText = media && media.alt ? media.alt : "";
+  const checkedImage = useCheckMedia(imageUrl);
 
   if (data) {
     return (
@@ -52,8 +57,8 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
           >
             <img
               className="rounded-full h-11 w-11 object-cover min-h-11 min-w-11"
-              src={data?.data.owner.avatar.url}
-              alt={data?.data.owner.avatar.alt}
+              src={checkedImage}
+              alt={altText}
             />
             <p>{data?.data.owner.name}</p>
           </NavLink>

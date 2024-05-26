@@ -17,6 +17,7 @@ import HostCard from "../components/HostCard";
 import { checkLongText } from "../utils/checkLongText";
 import { useRedirectStore } from "../store/useRedirectStore";
 import Booker from "../components/modules/VenuePage/Booker";
+import BackButton from "../components/BackButton";
 
 const VenuePage = () => {
   const user = useUserStore((state) => state.user);
@@ -27,12 +28,30 @@ const VenuePage = () => {
     }),
     []
   );
-  const { data } = useApi<SingleVenueResponse>(
+  const { data, status } = useApi<SingleVenueResponse>(
     `https://v2.api.noroff.dev/holidaze/venues/${params.id}?_owner=true&_bookings=true`,
     options
   );
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/venue/" + params.id);
+
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <div className="spinner-dark"></div>
+      </main>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <p>Something went wrong</p>
+      </main>
+    );
+  }
 
   if (data) {
     return (

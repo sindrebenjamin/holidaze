@@ -7,6 +7,7 @@ import { MediaItem } from "../interfaces";
 import Star from "./icons/Star";
 import { ProfileResponse } from "../interfaces";
 import { checkRating } from "../utils/checkRating";
+import { useCheckMedia } from "../hooks/useCheckMedia";
 
 interface HostCardPropos {
   name: string;
@@ -15,6 +16,9 @@ interface HostCardPropos {
 }
 
 const HostCard: React.FC<HostCardPropos> = ({ name, mediaItem, email }) => {
+  const imageUrl = mediaItem && mediaItem.url ? mediaItem.url : "/nomedia.jpg";
+  const altText = mediaItem && mediaItem.alt ? mediaItem.alt : "";
+  const checkedImage = useCheckMedia(imageUrl);
   const user = useUserStore((state) => state.user);
   const options = useMemo(
     () => ({
@@ -54,8 +58,8 @@ const HostCard: React.FC<HostCardPropos> = ({ name, mediaItem, email }) => {
     >
       <img
         className="rounded-full h-[160px] w-[160px] object-cover"
-        src={mediaItem.url}
-        alt={mediaItem.url}
+        src={checkedImage}
+        alt={altText}
       />
       <div className="flex flex-col items-center gap-2 ">
         <div className="text-center ">

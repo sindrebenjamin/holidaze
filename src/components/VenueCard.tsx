@@ -15,7 +15,6 @@ interface VenueCardProps {
 }
 
 const VenueCard = ({ media, address, price, rating, id }: VenueCardProps) => {
-  //console.log(media);
   const imageUrl = media && media.url ? media.url : "/nomedia.jpg";
   const altText = media && media.alt ? media.alt : "";
   const checkedImage = useCheckMedia(imageUrl);
