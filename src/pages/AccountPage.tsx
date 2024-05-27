@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useApi } from "../hooks/useApi";
@@ -11,8 +11,16 @@ import AccountSettings from "../components/modules/AccountPage/AccountSettings";
 import { Section } from "../components/TailwindComponents";
 import Bookings from "../components/modules/AccountPage/Bookings";
 import AccountVenues from "../components/modules/AccountPage/AccountVenues";
+import { useAccountDialogueStore } from "../store/useAccountDialogueStore";
+import SuccessDialogue from "../components/SuccessDialogue";
 
 const AccountPage = () => {
+  const { message, animationTrigger, setAnimationTrigger } =
+    useAccountDialogueStore((state) => ({
+      message: state.message,
+      animationTrigger: state.animationTrigger,
+      setAnimationTrigger: state.setAnimationTrigger,
+    }));
   const user = useUserStore((state) => state.user);
   const options = useMemo(
     () => ({
@@ -25,6 +33,14 @@ const AccountPage = () => {
     }),
     [user?.accessToken]
   );
+
+  useEffect(() => {
+    if (animationTrigger !== null) {
+      setTimeout(() => {
+        setAnimationTrigger(null);
+      }, 1000);
+    }
+  }, [animationTrigger, setAnimationTrigger]);
   const { data, status } = useApi<ProfileResponse>(
     `https://v2.api.noroff.dev/holidaze/profiles/${user?.name}?_venues=true&_bookings=true`,
     options
@@ -99,6 +115,10 @@ const AccountPage = () => {
             </Container>
           </Section>
         )}
+        <SuccessDialogue
+          message={message}
+          animationTrigger={animationTrigger}
+        />
       </main>
     );
   }

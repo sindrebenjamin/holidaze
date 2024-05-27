@@ -17,7 +17,6 @@ export async function basicApi(
       setApiStatus(result);
     }
   } catch (e) {
-    console.log(e);
     setApiStatus("error");
   } finally {
     //setApiStatus("idle");

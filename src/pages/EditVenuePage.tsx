@@ -23,6 +23,7 @@ import Bookings from "../components/modules/EditPage/Bookings";
 import BackButton from "../components/BackButton";
 import Button from "../components/Button";
 import WarningModal from "../components/WarningModal";
+import { useAccountDialogueStore } from "../store/useAccountDialogueStore";
 
 let nextId = 1;
 
@@ -42,6 +43,12 @@ const schema = yup.object({
 });
 
 const EditVenuePage = () => {
+  const { setAnimationTrigger, setMessage } = useAccountDialogueStore(
+    (state) => ({
+      setAnimationTrigger: state.setAnimationTrigger,
+      setMessage: state.setMessage,
+    })
+  );
   const params = useParams();
   const options = useMemo(
     () => ({
@@ -132,6 +139,8 @@ const EditVenuePage = () => {
       setApiStatus
     );
     navigate("/account");
+    setMessage(`Venue ${data?.data.name} was updated`);
+    setAnimationTrigger(false);
   }
 
   function onSubmit(data: VenueFormData) {

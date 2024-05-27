@@ -15,8 +15,6 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const wrapperRef = useRef(null);
 
-  // console.log(isOpen);
-
   useOutsideClick(wrapperRef, () => setIsOpen(false));
 
   const hideMobileHeader =

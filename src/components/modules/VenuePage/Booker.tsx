@@ -20,7 +20,7 @@ interface BookerProps {
 }
 
 const Booker: React.FC<BookerProps> = ({ data }) => {
-  const [animationTrigger, setAnimationTrigger] = useState<null | Boolean>(
+  const [animationTrigger, setAnimationTrigger] = useState<null | boolean>(
     null
   );
   const [dates, setDates] = useState<DateValueType>({

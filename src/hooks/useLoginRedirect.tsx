@@ -7,7 +7,6 @@ const useLoginRedirect = () => {
   const redirectPath = useRedirectStore((state) => state.redirect);
 
   function handleNavigation() {
-    console.log(redirectPath);
     navigate(redirectPath);
   }
   return handleNavigation;

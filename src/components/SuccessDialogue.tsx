@@ -6,7 +6,7 @@ const SuccessDialogue = ({
   animationTrigger,
 }: {
   message: string;
-  animationTrigger: Boolean | null;
+  animationTrigger: boolean | null;
 }) => {
   const [classes, setClasses] = useState("hidden");
 
