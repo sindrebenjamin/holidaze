@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 
 import { MediaItem } from "../interfaces";
-import User from "./icons/User";
 import { useCheckMedia } from "../hooks/useCheckMedia";
 
 interface VenueManagerCardProps {
@@ -9,7 +8,6 @@ interface VenueManagerCardProps {
   media: MediaItem;
   address: string | null;
   id: string;
-  bookings: number;
 }
 
 const VenueManagerCard = ({
@@ -17,7 +15,6 @@ const VenueManagerCard = ({
   media,
   address,
   id,
-  bookings,
 }: VenueManagerCardProps) => {
   const imageUrl = media && media.url ? media.url : "/nomedia.jpg";
   const altText = media && media.alt ? media.alt : "";
@@ -26,7 +23,7 @@ const VenueManagerCard = ({
   return (
     <NavLink
       to={`/edit/${id}`}
-      className="transition-all group flex flex-col cursor-pointer shadow-md hover:shadow-xl overflow-hidden rounded-xl"
+      className="transition-all group flex flex-col cursor-pointer shadow-md overflow-hidden rounded-xl"
     >
       <div className="aspect-[4/3] overflow-hidden">
         <img
@@ -40,10 +37,6 @@ const VenueManagerCard = ({
           <p className="font-bold">{name}</p>
           <p className="text-gray-700">{address}</p>
         </div>
-        <p className="text-gray-700 flex items-center gap-1">
-          <User />
-          {bookings} {bookings !== 1 ? "Bookings" : "Booking"}
-        </p>
       </div>
     </NavLink>
   );

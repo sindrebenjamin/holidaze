@@ -5,13 +5,7 @@ import VenueManagerCard from "../../VenueManagerCard";
 import Button from "../../Button";
 import { Venue } from "../../../interfaces";
 
-const AccountVenues = ({
-  venues,
-  bookings,
-}: {
-  venues: Venue[];
-  bookings: number;
-}) => {
+const AccountVenues = ({ venues }: { venues: Venue[] }) => {
   return (
     <>
       <div className="flex items-center justify-between mb-6 lg:mb-8">
@@ -33,7 +27,6 @@ const AccountVenues = ({
               address={venue.location.address}
               id={venue.id}
               key={venue.id}
-              bookings={bookings ?? 0}
             />
           );
         })}

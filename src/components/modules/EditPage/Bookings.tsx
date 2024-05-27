@@ -1,16 +1,17 @@
 import { useState } from "react";
 
-import { BookingData } from "../../../interfaces";
+import { Venue } from "../../../interfaces";
 import BasicModal from "../../BasicModal";
 import Button from "../../Button";
 import Tab from "../../Tab";
 import BookingCard from "../../BookingCard";
 import { formatDateRange } from "../../../utils/formatDateRange";
 
-const Bookings = ({ bookings }: { bookings: BookingData[] }) => {
+const Bookings = ({ venue }: { venue: Venue }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState("upcoming");
-  const sorted = bookings.sort(
+
+  const sorted = venue.bookings.sort(
     (a, b) => new Date(a.dateFrom).getTime() - new Date(b.dateFrom).getTime()
   );
   const today = new Date();
@@ -91,7 +92,7 @@ const Bookings = ({ bookings }: { bookings: BookingData[] }) => {
 
             {selectedBookings.length === 0 && (
               <p>
-                {`You have no ${
+                {`${venue.name} has no ${
                   currentTab === "upcoming" ? "upcoming" : "completed"
                 }
               bookings`}

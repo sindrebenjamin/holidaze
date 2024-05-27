@@ -95,10 +95,7 @@ const AccountPage = () => {
           <Section className="py-0 md:py-[60px] mb-[60px] md:mb-0">
             <Container>
               <Divider className="my-6 md:hidden" />
-              <AccountVenues
-                venues={data?.data.venues ?? []}
-                bookings={data?.data._count.bookings ?? 0}
-              />
+              <AccountVenues venues={data?.data.venues ?? []} />
             </Container>
           </Section>
         )}

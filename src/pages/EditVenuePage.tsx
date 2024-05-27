@@ -77,7 +77,7 @@ const EditVenuePage = () => {
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
   const watchedFields = watch(["title", "address", "price"]);
-  const priceCheck = !watchedFields[2] || watchedFields[2] >= 10000;
+  const priceCheck = !watchedFields[2] || watchedFields[2] > 10000;
 
   const mediaData = mediaArray.map((media) => {
     return {
@@ -284,38 +284,38 @@ const EditVenuePage = () => {
     },
   ];
 
-  return (
-    <>
-      <div className="items-start w-full hidden md:flex lg:hidden pt-4 pb-6 px-4 bg-gray-50">
-        <BackButton />
-      </div>
-      <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
-        >
-          <div className="lg:hidden flex justify-between items-center pr-4 pl-1 sm:pl-3 mb-6 mt-4 md:hidden">
-            <BackButton />
+  console.log(data?.data);
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <div className="spinner-dark"></div>
+      </main>
+    );
+  }
 
-            <Button
-              disabled={
-                mediaArray.length === 0 ||
-                priceCheck ||
-                !watchedFields[0] ||
-                !watchedFields[1]
-              }
-              type="submit"
-              color="gray-light"
-              size="sm"
-            >
-              Save and update
-            </Button>
-          </div>
-          <div>
-            <div className="flex items-start justify-between">
-              <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
-                {data?.data.name}
-              </FormH1>
+  if (status === "error") {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <p>Something went wrong</p>
+      </main>
+    );
+  }
+  if (data) {
+    return (
+      <>
+        <div className="items-start w-full hidden md:flex lg:hidden pt-4 pb-6 px-4 bg-gray-50 min-h-screen">
+          <BackButton />
+        </div>
+        <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
+          >
+            <div className="lg:hidden flex justify-between items-center pr-4 pl-1 sm:pl-3 mb-6 mt-4 md:hidden">
+              <BackButton />
+
               <Button
                 disabled={
                   mediaArray.length === 0 ||
@@ -323,7 +323,6 @@ const EditVenuePage = () => {
                   !watchedFields[0] ||
                   !watchedFields[1]
                 }
-                override="hidden md:block"
                 type="submit"
                 color="gray-light"
                 size="sm"
@@ -331,27 +330,48 @@ const EditVenuePage = () => {
                 Save and update
               </Button>
             </div>
+            <div>
+              <div className="flex items-start justify-between">
+                <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
+                  {data?.data.name}
+                </FormH1>
+                <Button
+                  disabled={
+                    mediaArray.length === 0 ||
+                    priceCheck ||
+                    !watchedFields[0] ||
+                    !watchedFields[1]
+                  }
+                  override="hidden md:block"
+                  type="submit"
+                  color="gray-light"
+                  size="sm"
+                >
+                  Save and update
+                </Button>
+              </div>
 
-            <div className="lg:hidden">
-              <Bookings bookings={data?.data.bookings ?? []} />
+              <div className="lg:hidden">
+                <Bookings venue={data?.data} />
+              </div>
+
+              <Tabs tabs={tabsData} venue={data?.data} />
             </div>
-
-            <Tabs bookings={data?.data.bookings} tabs={tabsData} />
-          </div>
-          <ul>
-            {apiErrors &&
-              apiErrors.map((error) => {
-                return (
-                  <li className="text-red-500" key={error.message}>
-                    {error.message}
-                  </li>
-                );
-              })}
-          </ul>
-        </form>
-      </main>
-    </>
-  );
+            <ul>
+              {apiErrors &&
+                apiErrors.map((error) => {
+                  return (
+                    <li className="text-red-500" key={error.message}>
+                      {error.message}
+                    </li>
+                  );
+                })}
+            </ul>
+          </form>
+        </main>
+      </>
+    );
+  }
 };
 
 export default EditVenuePage;
