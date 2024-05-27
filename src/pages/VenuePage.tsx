@@ -55,7 +55,7 @@ const VenuePage = () => {
 
   if (data) {
     return (
-      <main>
+      <main className="">
         <div className="lg:hidden">
           <MobileSlideShow images={data?.data.media} />
         </div>
@@ -70,11 +70,11 @@ const VenuePage = () => {
             </StyledH1>
             <div className="md:flex justify-between gap-8">
               <VenueDetails data={data} />
-              <Booker data={data} />
+              {data?.data.owner.name !== user?.name && <Booker data={data} />}
             </div>
           </Container>
         </Section>
-        <Section className="bg-gray-50">
+        <Section className="bg-gray-50 min-h-[700px] md:min-h-0">
           <Container className="flex flex-col">
             {user ? (
               <>
