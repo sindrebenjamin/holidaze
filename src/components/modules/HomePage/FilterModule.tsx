@@ -118,148 +118,146 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
         <Filter color="#4B5563" />
         Filter
       </button>
-      {modalIsOpen && (
-        <BasicModal
-          modalFooter={
-            <div className="flex justify-between items-center">
-              <button
-                onClick={handleClearFilter}
-                className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              >
-                Clear all
-              </button>
-              <Button
-                onClick={() => {
-                  resetLoader();
-                  setFilteredData(filteredVenues);
-                  setSliderValue([localSliderValue[0], localSliderValue[1]]);
-                  setModalIsOpen(false);
-                }}
-                size="xl"
-                color="gray-dark"
-                type="button"
-              >
-                Show {filteredVenues.length} venues
-              </Button>
-            </div>
-          }
-          modalIsOpen={modalIsOpen}
-          onCloseModal={() => setModalIsOpen(false)}
-          title="Filter"
-        >
-          <div className="flex flex-col gap-6">
-            {/* Slider */}
-            <div className="flex flex-col gap-4">
-              <h2 className="text-xl">Price per night</h2>
-              <RangeSlider
-                id="holidaze-slider"
-                value={localSliderValue}
-                onInput={setLocalSliderValue}
-                step={100}
-                max={10000}
+      <BasicModal
+        modalFooter={
+          <div className="flex justify-between items-center">
+            <button
+              onClick={handleClearFilter}
+              className="underline text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            >
+              Clear all
+            </button>
+            <Button
+              onClick={() => {
+                resetLoader();
+                setFilteredData(filteredVenues);
+                setSliderValue([localSliderValue[0], localSliderValue[1]]);
+                setModalIsOpen(false);
+              }}
+              size="xl"
+              color="gray-dark"
+              type="button"
+            >
+              Show {filteredVenues.length} venues
+            </Button>
+          </div>
+        }
+        modalIsOpen={modalIsOpen}
+        onCloseModal={() => setModalIsOpen(false)}
+        title="Filter"
+      >
+        <div className="flex flex-col gap-6">
+          {/* Slider */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-xl">Price per night</h2>
+            <RangeSlider
+              id="holidaze-slider"
+              value={localSliderValue}
+              onInput={setLocalSliderValue}
+              step={100}
+              max={10000}
+            />
+            <div className="flex gap-3 items-center">
+              <PriceInput
+                sliderValue={localSliderValue}
+                setSliderValue={setLocalSliderValue}
+                handleInputChange={handleInputChange}
+                inputSide={"left"}
               />
-              <div className="flex gap-3 items-center">
-                <PriceInput
-                  sliderValue={localSliderValue}
-                  setSliderValue={setLocalSliderValue}
-                  handleInputChange={handleInputChange}
-                  inputSide={"left"}
-                />
-                <div className="h-[1px] bg-gray-400 w-12"></div>
-                <PriceInput
-                  sliderValue={localSliderValue}
-                  setSliderValue={setLocalSliderValue}
-                  handleInputChange={handleInputChange}
-                  inputSide={"right"}
-                />
-              </div>
-            </div>
-            <Divider />
-            {/* Amenities */}
-            <div className="flex flex-col gap-4">
-              <h2 className="text-xl">Amenities</h2>
-              <div className="grid grid-cols-2 gap-2">
-                <AmenityCard
-                  onClick={() => handleAmenityClick("parking")}
-                  title="Parking"
-                  selected={amenities.includes("parking")}
-                  icon="car"
-                />
-                <AmenityCard
-                  onClick={() => handleAmenityClick("wifi")}
-                  title="Wifi"
-                  selected={amenities.includes("wifi")}
-                  icon="wifi"
-                />
-                <AmenityCard
-                  onClick={() => handleAmenityClick("pets")}
-                  title="Pets allowed"
-                  selected={amenities.includes("pets")}
-                  icon="dog"
-                />
-                <AmenityCard
-                  onClick={() => handleAmenityClick("breakfast")}
-                  title="breakfast"
-                  selected={amenities.includes("breakfast")}
-                  icon="coffee"
-                />
-              </div>
-            </div>
-            <Divider />
-            {/* Max guests */}
-            <div className="flex flex-col gap-4">
-              <h2 className="text-xl">Guests</h2>
-              <div className="grid grid-cols-3 gap-2">
-                <NumberSelector
-                  onClick={() => setMaxGuests(1)}
-                  selected={maxGuests === 1}
-                >
-                  1
-                </NumberSelector>
-                <NumberSelector
-                  onClick={() => setMaxGuests(2)}
-                  selected={maxGuests === 2}
-                >
-                  2
-                </NumberSelector>
-                <NumberSelector
-                  onClick={() => setMaxGuests(3)}
-                  selected={maxGuests === 3}
-                >
-                  3
-                </NumberSelector>
-                <NumberSelector
-                  onClick={() => setMaxGuests(4)}
-                  selected={maxGuests === 4}
-                >
-                  4
-                </NumberSelector>
-                <NumberSelector
-                  onClick={() => setMaxGuests(5)}
-                  selected={maxGuests === 5}
-                >
-                  5
-                </NumberSelector>
-                <NumberSelector
-                  onClick={() => setMaxGuests(6)}
-                  selected={maxGuests === 6}
-                >
-                  6+
-                </NumberSelector>
-              </div>
-            </div>
-            <Divider />
-            {/* Minimum rating */}
-            <div className="flex flex-col gap-4 pb-4">
-              <h2 className="text-xl">Minimum rating</h2>
-              <RatingSelector
-                rating={minimumRating}
-                setRating={setMinimumRating}
+              <div className="h-[1px] bg-gray-400 w-12"></div>
+              <PriceInput
+                sliderValue={localSliderValue}
+                setSliderValue={setLocalSliderValue}
+                handleInputChange={handleInputChange}
+                inputSide={"right"}
               />
             </div>
           </div>
-        </BasicModal>
-      )}
+          <Divider />
+          {/* Amenities */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-xl">Amenities</h2>
+            <div className="grid grid-cols-2 gap-2">
+              <AmenityCard
+                onClick={() => handleAmenityClick("parking")}
+                title="Parking"
+                selected={amenities.includes("parking")}
+                icon="car"
+              />
+              <AmenityCard
+                onClick={() => handleAmenityClick("wifi")}
+                title="Wifi"
+                selected={amenities.includes("wifi")}
+                icon="wifi"
+              />
+              <AmenityCard
+                onClick={() => handleAmenityClick("pets")}
+                title="Pets allowed"
+                selected={amenities.includes("pets")}
+                icon="dog"
+              />
+              <AmenityCard
+                onClick={() => handleAmenityClick("breakfast")}
+                title="breakfast"
+                selected={amenities.includes("breakfast")}
+                icon="coffee"
+              />
+            </div>
+          </div>
+          <Divider />
+          {/* Max guests */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-xl">Guests</h2>
+            <div className="grid grid-cols-3 gap-2">
+              <NumberSelector
+                onClick={() => setMaxGuests(1)}
+                selected={maxGuests === 1}
+              >
+                1
+              </NumberSelector>
+              <NumberSelector
+                onClick={() => setMaxGuests(2)}
+                selected={maxGuests === 2}
+              >
+                2
+              </NumberSelector>
+              <NumberSelector
+                onClick={() => setMaxGuests(3)}
+                selected={maxGuests === 3}
+              >
+                3
+              </NumberSelector>
+              <NumberSelector
+                onClick={() => setMaxGuests(4)}
+                selected={maxGuests === 4}
+              >
+                4
+              </NumberSelector>
+              <NumberSelector
+                onClick={() => setMaxGuests(5)}
+                selected={maxGuests === 5}
+              >
+                5
+              </NumberSelector>
+              <NumberSelector
+                onClick={() => setMaxGuests(6)}
+                selected={maxGuests === 6}
+              >
+                6+
+              </NumberSelector>
+            </div>
+          </div>
+          <Divider />
+          {/* Minimum rating */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-xl">Minimum rating</h2>
+            <RatingSelector
+              rating={minimumRating}
+              setRating={setMinimumRating}
+            />
+          </div>
+        </div>
+      </BasicModal>
     </>
   );
 };

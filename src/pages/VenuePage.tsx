@@ -17,6 +17,7 @@ import HostCard from "../components/HostCard";
 import { checkLongText } from "../utils/checkLongText";
 import { useRedirectStore } from "../store/useRedirectStore";
 import Booker from "../components/modules/VenuePage/Booker";
+import BackButton from "../components/BackButton";
 
 const VenuePage = () => {
   const user = useUserStore((state) => state.user);
@@ -27,23 +28,41 @@ const VenuePage = () => {
     }),
     []
   );
-  const { data } = useApi<SingleVenueResponse>(
+  const { data, status } = useApi<SingleVenueResponse>(
     `https://v2.api.noroff.dev/holidaze/venues/${params.id}?_owner=true&_bookings=true`,
     options
   );
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/venue/" + params.id);
 
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <div className="spinner-dark"></div>
+      </main>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
+        <p>Something went wrong</p>
+      </main>
+    );
+  }
+
   if (data) {
     return (
-      <main>
-        <div className="lg:hidden">
+      <main className="min-h-screen">
+        <div className="lg:hidden h-[400px]">
           <MobileSlideShow images={data?.data.media} />
         </div>
 
         <Section className="lg:mt-[60px]" $noYPadding={true}>
           <Container>
-            <div className="hidden lg:block">
+            <div className="hidden lg:block h-[600px]">
               <DesktopSlideShow images={data?.data.media} />
             </div>
             <StyledH1 className="mt-6 md:mt-[60px] break-words">
@@ -51,11 +70,11 @@ const VenuePage = () => {
             </StyledH1>
             <div className="md:flex justify-between gap-8">
               <VenueDetails data={data} />
-              <Booker data={data} />
+              {data?.data.owner.name !== user?.name && <Booker data={data} />}
             </div>
           </Container>
         </Section>
-        <Section className="bg-gray-50">
+        <Section className="bg-gray-50 min-h-[700px] md:min-h-0">
           <Container className="flex flex-col">
             {user ? (
               <>

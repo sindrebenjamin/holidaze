@@ -30,7 +30,6 @@ export async function registerUser(
         setApiStatus,
         navigate
       );
-      // console.log(result);
     } else {
       setApiStatus(result);
     }

@@ -1,16 +1,17 @@
 import { useState } from "react";
 
-import { BookingData } from "../../../interfaces";
+import { Venue } from "../../../interfaces";
 import BasicModal from "../../BasicModal";
 import Button from "../../Button";
 import Tab from "../../Tab";
 import BookingCard from "../../BookingCard";
 import { formatDateRange } from "../../../utils/formatDateRange";
 
-const Bookings = ({ bookings }: { bookings: BookingData[] }) => {
+const Bookings = ({ venue }: { venue: Venue }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState("upcoming");
-  const sorted = bookings.sort(
+
+  const sorted = venue.bookings.sort(
     (a, b) => new Date(a.dateFrom).getTime() - new Date(b.dateFrom).getTime()
   );
   const today = new Date();
@@ -53,53 +54,52 @@ const Bookings = ({ bookings }: { bookings: BookingData[] }) => {
           View bookings
         </Button>
       </div>
-      {modalIsOpen && (
-        <BasicModal
-          onCloseModal={() => setModalIsOpen(false)}
-          modalIsOpen={modalIsOpen}
-          title="Bookings"
-          tabs={
-            <div className="mb-6">
-              <Tab
-                sizing="w-[100px]"
-                title="Upcoming"
-                active={currentTab === "upcoming"}
-                onClick={() => setCurrentTab("upcoming")}
-              />
-              <Tab
-                sizing="w-[100px]"
-                title="Completed"
-                active={currentTab === "completed"}
-                onClick={() => setCurrentTab("completed")}
-              />
-            </div>
-          }
-        >
-          <div className="flex flex-col gap-2">
-            {selectedBookings.map((booking) => {
-              if (booking) {
-                return (
-                  <BookingCard
-                    key={booking.id}
-                    title={booking.customer.name}
-                    guests={booking.guests}
-                    duration={formatDateRange(booking.dateFrom, booking.dateTo)}
-                  />
-                );
-              }
-            })}
 
-            {selectedBookings.length === 0 && (
-              <p>
-                {`You have no ${
-                  currentTab === "upcoming" ? "upcoming" : "completed"
-                }
-              bookings`}
-              </p>
-            )}
+      <BasicModal
+        onCloseModal={() => setModalIsOpen(false)}
+        modalIsOpen={modalIsOpen}
+        title="Bookings"
+        tabs={
+          <div className="mb-6">
+            <Tab
+              sizing="w-[100px]"
+              title="Upcoming"
+              active={currentTab === "upcoming"}
+              onClick={() => setCurrentTab("upcoming")}
+            />
+            <Tab
+              sizing="w-[100px]"
+              title="Completed"
+              active={currentTab === "completed"}
+              onClick={() => setCurrentTab("completed")}
+            />
           </div>
-        </BasicModal>
-      )}
+        }
+      >
+        <div className="flex flex-col gap-2">
+          {selectedBookings.map((booking) => {
+            if (booking) {
+              return (
+                <BookingCard
+                  key={booking.id}
+                  title={booking.customer.name}
+                  guests={booking.guests}
+                  duration={formatDateRange(booking.dateFrom, booking.dateTo)}
+                />
+              );
+            }
+          })}
+
+          {selectedBookings.length === 0 && (
+            <p>
+              {`${venue.name} has no ${
+                currentTab === "upcoming" ? "upcoming" : "completed"
+              }
+              bookings`}
+            </p>
+          )}
+        </div>
+      </BasicModal>
     </>
   );
 };

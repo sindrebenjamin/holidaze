@@ -7,11 +7,13 @@ import Close from "../icons/Close";
 const SlideShowModal = ({
   images,
   onClick,
+  clickedIndex,
 }: {
   images: MediaItem[] | undefined;
   onClick: () => void;
+  clickedIndex: number;
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(clickedIndex);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);

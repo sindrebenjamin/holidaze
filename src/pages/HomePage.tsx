@@ -105,7 +105,7 @@ const HomePage = () => {
     return () => {
       ignore = true;
     };
-  }, []);
+  });
 
   const validatedVenues = visibleVenues.filter((venue) => {
     if (validateVenue(venue)) {
@@ -136,7 +136,7 @@ const HomePage = () => {
   }
 
   function createGhostVenues(amount: number) {
-    let ghostArray = [];
+    const ghostArray = [];
     for (let i = 0; i < amount; i++) {
       ghostArray.push({ id: i });
     }

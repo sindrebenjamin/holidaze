@@ -26,7 +26,7 @@ const AccountSettings = () => {
 
   const baseOptions = useMemo(
     () => ({
-      method: "GET",
+      method: "PUT",
       headers: {
         "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
         Authorization: `Bearer ${user?.accessToken}`,
@@ -74,6 +74,7 @@ const AccountSettings = () => {
           bioOptions,
           setApiStatus
         );
+
         if (user && debouncedBio) {
           useUserStore.setState({ user: { ...user, bio: debouncedBio } });
         }

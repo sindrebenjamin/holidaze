@@ -20,7 +20,9 @@ interface BookerProps {
 }
 
 const Booker: React.FC<BookerProps> = ({ data }) => {
-  const [showDialogueClasses, setShowDialogueClasses] = useState("hidden");
+  const [animationTrigger, setAnimationTrigger] = useState<null | boolean>(
+    null
+  );
   const [dates, setDates] = useState<DateValueType>({
     startDate: null,
     endDate: null,
@@ -76,13 +78,9 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
         ]);
       }
       if (result) {
-        setShowDialogueClasses("translate-y-4 opacity-0");
-        setTimeout(() => {
-          setShowDialogueClasses("translate-y-0 opacity-1");
-        }, 10);
-        setTimeout(() => {
-          setShowDialogueClasses("translate-y-4 opacity-0");
-        }, 5000);
+        setAnimationTrigger(
+          animationTrigger === null ? true : !animationTrigger
+        );
         setDates({
           startDate: null,
           endDate: null,
@@ -115,7 +113,6 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
 
           <div className="flex flex-col gap-2 ">
             <Datepicker
-              // toggleClassName="hidden"
               showFooter={true}
               minDate={new Date()}
               separator="->"
@@ -194,7 +191,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
           )}
 
           <SuccessDialogue
-            showDialogueClasses={showDialogueClasses}
+            animationTrigger={animationTrigger}
             message={`Venue successfully booked`}
           />
           <ul className="text-red-500 mt-2">

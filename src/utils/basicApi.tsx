@@ -9,6 +9,7 @@ export async function basicApi(
     setApiStatus("loading");
     const response = await fetch(url, options);
     const result = await response.json();
+
     if (response.ok) {
       setApiStatus("idle");
       return result;

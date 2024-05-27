@@ -58,7 +58,7 @@ const AddVenuePage = () => {
   const [mediaArray, setMediaArray] = useState<MediaArrayItem[]>([]);
 
   const watchedFields = watch(["title", "address", "price"]);
-  const priceCheck = !watchedFields[2] || watchedFields[2] >= 10000;
+  const priceCheck = !watchedFields[2] || watchedFields[2] > 10000;
 
   const mediaData = mediaArray.map((media) => {
     return {

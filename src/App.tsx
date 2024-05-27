@@ -28,6 +28,7 @@ function App() {
           <Route path="add" element={<AddVenuePage />} />
           <Route path="edit/:id" element={<EditVenuePage />} />
           <Route path="venue/:id" element={<VenuePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </>
