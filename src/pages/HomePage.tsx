@@ -10,6 +10,7 @@ import Searcher from "../components/modules/HomePage/Searcher";
 import { HomeContainer, Section } from "../components/TailwindComponents";
 import { useFilteredDataStore } from "../store/useFilteredDataStore";
 import VenueCardSkeleton from "../components/VenueCardSkeleton";
+import { testData } from "../testData";
 
 const HomePage = () => {
   const setLastPath = useLastPageStore((state) => state.setLastPath);
@@ -27,6 +28,7 @@ const HomePage = () => {
   const [visibleVenues, setVisibleVenues] = useState<Venue[]>([]);
   const [hideScrollLoader, setHideScrollLoader] = useState(true);
 
+  console.log("visible venues:", visibleVenues);
   const venuesPerPage = 100;
 
   useEffect(() => {
@@ -38,6 +40,13 @@ const HomePage = () => {
       window.removeEventListener("beforeunload", resetScrollPos);
     };
   }, []);
+
+  /*
+  useEffect(() => {
+    setFilteredData(testData);
+  }, []);
+
+  */
 
   useEffect(() => {
     function handleScroll() {
@@ -69,7 +78,6 @@ const HomePage = () => {
             "&_bookings=true"
         );
         const json = await res.json();
-        console.log(json);
         if (!ignore) {
           if (!res.ok) {
             setStatus("error");
@@ -83,22 +91,19 @@ const HomePage = () => {
             return [...prevData, ...newData];
           });
 
-          if (filteredData.length === 0) {
-            setFilteredData((prevData: Venue[]) => {
-              const venueSet = new Set(prevData.map((venue) => venue.id));
-              const newData = json.data.filter(
-                (venue: Venue) => !venueSet.has(venue.id)
-              );
-              return [...prevData, ...newData];
-            });
-          }
+          setFilteredData((prevData: Venue[]) => {
+            const venueSet = new Set(prevData.map((venue) => venue.id));
+            const newData = json.data.filter(
+              (venue: Venue) => !venueSet.has(venue.id)
+            );
+            return [...prevData, ...newData];
+          });
 
-          /*
           if (!json.meta.isLastPage && status !== "error") {
             pageNumber++;
+            console.log(pageNumber);
             getData();
           }
-          */
         }
       } catch (error) {
         setStatus("error");
@@ -114,7 +119,7 @@ const HomePage = () => {
     return () => {
       ignore = true;
     };
-  }, [filteredData, setFilteredData]);
+  }, []);
 
   const validatedVenues = visibleVenues.filter((venue) => {
     if (validateVenue(venue)) {
@@ -126,6 +131,8 @@ const HomePage = () => {
     setVenuePage(1);
     setHasMore(true);
   }
+
+  console.log("filtered data;", filteredData);
 
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/");
@@ -153,8 +160,6 @@ const HomePage = () => {
   }
 
   const noVenuesFound = validatedVenues.length === 0;
-
-  console.log(status);
 
   return (
     <main className="min-h-screen">
