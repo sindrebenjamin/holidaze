@@ -26,6 +26,7 @@ const HomePage = () => {
   const [venuePage, setVenuePage] = useState(1);
   const [visibleVenues, setVisibleVenues] = useState<Venue[]>([]);
   const [hideScrollLoader, setHideScrollLoader] = useState(true);
+
   const venuesPerPage = 100;
 
   useEffect(() => {
@@ -68,7 +69,12 @@ const HomePage = () => {
             "&_bookings=true"
         );
         const json = await res.json();
+        console.log(json);
         if (!ignore) {
+          if (!res.ok) {
+            setStatus("error");
+            return;
+          }
           setData((prevData) => {
             const venueSet = new Set(prevData.map((venue) => venue.id));
             const newData = json.data.filter(
@@ -76,6 +82,7 @@ const HomePage = () => {
             );
             return [...prevData, ...newData];
           });
+
           if (filteredData.length === 0) {
             setFilteredData((prevData: Venue[]) => {
               const venueSet = new Set(prevData.map((venue) => venue.id));
@@ -86,10 +93,12 @@ const HomePage = () => {
             });
           }
 
-          if (!json.meta.isLastPage) {
+          /*
+          if (!json.meta.isLastPage && status !== "error") {
             pageNumber++;
             getData();
           }
+          */
         }
       } catch (error) {
         setStatus("error");
@@ -105,7 +114,7 @@ const HomePage = () => {
     return () => {
       ignore = true;
     };
-  });
+  }, [filteredData, setFilteredData]);
 
   const validatedVenues = visibleVenues.filter((venue) => {
     if (validateVenue(venue)) {
@@ -144,6 +153,8 @@ const HomePage = () => {
   }
 
   const noVenuesFound = validatedVenues.length === 0;
+
+  console.log(status);
 
   return (
     <main className="min-h-screen">
