@@ -14,7 +14,7 @@ interface TabData {
   errorFlag?: boolean;
 }
 
-const Tabs = ({ tabs, venue }: { tabs: TabData[]; venue: Venue }) => {
+const Tabs = ({ tabs, venue }: { tabs: TabData[]; venue?: Venue }) => {
   const [currentTab, setCurrentTab] = useState(0);
   const isFirstPage = currentTab === 0;
   const isLastPage = currentTab === tabs.length - 1;

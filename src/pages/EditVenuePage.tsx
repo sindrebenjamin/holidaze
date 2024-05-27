@@ -4,10 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { FormH1 } from "../components/TailwindComponents";
+import { Divider, FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
 import { checkMedia } from "../utils/checkMedia";
-import { VenueFormData, ApiStatus } from "../interfaces";
+import { VenueFormData, ApiStatus, ApiOptions } from "../interfaces";
 import { useUserStore } from "../store/useUserStore";
 import { basicApi } from "../utils/basicApi";
 
@@ -22,6 +22,7 @@ import { useApi } from "../hooks/useApi";
 import Bookings from "../components/modules/EditPage/Bookings";
 import BackButton from "../components/BackButton";
 import Button from "../components/Button";
+import WarningModal from "../components/WarningModal";
 
 let nextId = 1;
 
@@ -68,7 +69,7 @@ const EditVenuePage = () => {
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
-
+  const [warningModalIsOpen, setWarningModalIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
@@ -116,18 +117,27 @@ const EditVenuePage = () => {
     }
   }, [data, setValue]);
 
-  console.log(status);
-
   const apiErrors = typeof apiStatus === "object" ? apiStatus.errors : null;
+
+  const apiHeaders = {
+    "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+    Authorization: `Bearer ${user?.accessToken}`,
+    "Content-Type": "application/json",
+  };
+
+  async function modifyVenue(options: ApiOptions) {
+    await basicApi(
+      "https://v2.api.noroff.dev/holidaze/venues/" + params.id,
+      options,
+      setApiStatus
+    );
+    navigate("/account");
+  }
 
   function onSubmit(data: VenueFormData) {
     const options = {
       method: "PUT",
-      headers: {
-        "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-        Authorization: `Bearer ${user?.accessToken}`,
-        "Content-Type": "application/json",
-      },
+      headers: apiHeaders,
       body: JSON.stringify({
         name: data.title,
         description: data.description,
@@ -150,14 +160,15 @@ const EditVenuePage = () => {
         },
       }),
     };
-    (async () => {
-      await basicApi(
-        "https://v2.api.noroff.dev/holidaze/venues/" + params.id,
-        options,
-        setApiStatus
-      );
-      navigate("/account");
-    })();
+    modifyVenue(options);
+  }
+
+  function handleDelete() {
+    const options = {
+      method: "DELETE",
+      headers: apiHeaders,
+    };
+    modifyVenue(options);
   }
 
   function handleMoveImage(dragIndex: number, hoverIndex: number): void {
@@ -284,7 +295,6 @@ const EditVenuePage = () => {
     },
   ];
 
-  console.log(data?.data);
   if (status === "loading") {
     return (
       <main className="min-h-screen flex justify-center items-center">
@@ -305,10 +315,10 @@ const EditVenuePage = () => {
   if (data) {
     return (
       <>
-        <div className="items-start w-full hidden md:flex lg:hidden pt-4 pb-6 px-4 bg-gray-50 min-h-screen">
+        <div className="items-start w-full hidden md:flex lg:hidden pt-4 pb-6 px-4 bg-gray-50">
           <BackButton />
         </div>
-        <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
+        <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center min-h-screen md:px-6 md:py-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
@@ -367,8 +377,27 @@ const EditVenuePage = () => {
                   );
                 })}
             </ul>
+            <div className="px-4 sm:px-6 md:px-0 flex flex-col gap-6 mt-6">
+              <Divider />
+              <Button
+                onClick={() => setWarningModalIsOpen(true)}
+                size="lg"
+                color="pink"
+                type="button"
+                override="sm:w-fit"
+              >
+                Delete venue
+              </Button>
+            </div>
           </form>
         </main>
+        <WarningModal
+          onConfirm={handleDelete}
+          onCloseModal={() => setWarningModalIsOpen(false)}
+          modalIsOpen={warningModalIsOpen}
+        >
+          Are you sure you want to delete this listing?
+        </WarningModal>
       </>
     );
   }
