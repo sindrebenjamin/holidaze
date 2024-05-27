@@ -1,15 +1,42 @@
-//import Close from "./icons/Close";
+import Close from "./icons/Close";
+import { useState, useEffect } from "react";
 
 const SuccessDialogue = ({
   message,
-  showDialogueClasses,
+  animationTrigger,
 }: {
   message: string;
-  showDialogueClasses: string;
+  animationTrigger: Boolean | null;
 }) => {
+  const [classes, setClasses] = useState("hidden");
+
+  useEffect(() => {
+    if (animationTrigger === false || animationTrigger === true) {
+      setClasses("translate-y-4 opacity-0");
+      setTimeout(() => {
+        setClasses("translate-y-0 opacity-1");
+      }, 10);
+      setTimeout(() => {
+        setClasses("translate-y-4 opacity-0");
+      }, 5000);
+      setTimeout(() => {
+        setClasses("hidden");
+      }, 5300);
+    }
+  }, [animationTrigger]);
+
+  function closeDialogue() {
+    setTimeout(() => {
+      setClasses("translate-y-4 opacity-0");
+    }, 10);
+    setTimeout(() => {
+      setClasses("hidden");
+    }, 300);
+  }
+
   return (
     <div
-      className={`${showDialogueClasses} text-green-700 bg-green-100 p-4 rounded-md flex items-center justify-between w-[90%] md:max-w-[800px] fixed left-[50%] translate-x-[-50%] bottom-10 transition-all duration-300 ease-out`}
+      className={`${classes} text-green-700 bg-green-100 p-4 rounded-md flex items-center justify-between w-[90%] md:max-w-[800px] fixed left-[50%] translate-x-[-50%] bottom-10 transition-all duration-300 ease-out`}
     >
       <div className="flex gap-4 items-center">
         <svg
@@ -31,9 +58,9 @@ const SuccessDialogue = ({
         <p>{message}</p>
       </div>
 
-      {/* <button type="button">
+      <button onClick={closeDialogue} type="button">
         <Close color="#046C4E" />
-      </button> */}
+      </button>
     </div>
   );
 };

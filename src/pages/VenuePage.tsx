@@ -55,14 +55,14 @@ const VenuePage = () => {
 
   if (data) {
     return (
-      <main className="">
-        <div className="lg:hidden">
+      <main className="min-h-screen">
+        <div className="lg:hidden h-[400px]">
           <MobileSlideShow images={data?.data.media} />
         </div>
 
         <Section className="lg:mt-[60px]" $noYPadding={true}>
           <Container>
-            <div className="hidden lg:block">
+            <div className="hidden lg:block h-[600px]">
               <DesktopSlideShow images={data?.data.media} />
             </div>
             <StyledH1 className="mt-6 md:mt-[60px] break-words">
