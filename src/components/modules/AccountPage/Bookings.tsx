@@ -105,55 +105,54 @@ const Bookings = ({ bookings }: { bookings: Booking[] }) => {
           )}
         </div>
       </Section>
-      {modalIsOpen && (
-        <BasicModal
-          tabs={
-            <div className="mb-6">
-              <Tab
-                sizing="w-[100px]"
-                title="Upcoming"
-                active={currentModalTab === "upcoming"}
-                onClick={() => setCurrentModalTab("upcoming")}
-              />
-              <Tab
-                sizing="w-[100px]"
-                title="Completed"
-                active={currentModalTab === "completed"}
-                onClick={() => setCurrentModalTab("completed")}
-              />
-            </div>
-          }
-          modalIsOpen={modalIsOpen}
-          title="Bookings"
-          onCloseModal={() => setModalIsOpen(false)}
-        >
-          <div className="flex flex-col gap-2">
-            {bookingsByModalTab.map((booking) => {
-              if (booking) {
-                return (
-                  <BookingCard
-                    key={booking.id}
-                    title={
-                      booking.venue.location.address ?? "No address available"
-                    }
-                    guests={booking.guests}
-                    duration={formatDateRange(booking.dateFrom, booking.dateTo)}
-                  />
-                );
-              }
-            })}
 
-            {noModalBookings && (
-              <p>
-                {`You have no ${
-                  currentModalTab === "upcoming" ? "upcoming" : "completed"
-                }
-              bookings`}
-              </p>
-            )}
+      <BasicModal
+        tabs={
+          <div className="mb-6">
+            <Tab
+              sizing="w-[100px]"
+              title="Upcoming"
+              active={currentModalTab === "upcoming"}
+              onClick={() => setCurrentModalTab("upcoming")}
+            />
+            <Tab
+              sizing="w-[100px]"
+              title="Completed"
+              active={currentModalTab === "completed"}
+              onClick={() => setCurrentModalTab("completed")}
+            />
           </div>
-        </BasicModal>
-      )}
+        }
+        modalIsOpen={modalIsOpen}
+        title="Bookings"
+        onCloseModal={() => setModalIsOpen(false)}
+      >
+        <div className="flex flex-col gap-2">
+          {bookingsByModalTab.map((booking) => {
+            if (booking) {
+              return (
+                <BookingCard
+                  key={booking.id}
+                  title={
+                    booking.venue.location.address ?? "No address available"
+                  }
+                  guests={booking.guests}
+                  duration={formatDateRange(booking.dateFrom, booking.dateTo)}
+                />
+              );
+            }
+          })}
+
+          {noModalBookings && (
+            <p>
+              {`You have no ${
+                currentModalTab === "upcoming" ? "upcoming" : "completed"
+              }
+              bookings`}
+            </p>
+          )}
+        </div>
+      </BasicModal>
     </>
   );
 };

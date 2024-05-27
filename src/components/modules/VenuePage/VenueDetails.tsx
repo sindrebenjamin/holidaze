@@ -125,15 +125,14 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
             </p>
           )}
         </div>
-        {modalIsOpen && (
-          <BasicModal
-            title="Description"
-            onCloseModal={() => setModalIsOpen(false)}
-            modalIsOpen={modalIsOpen}
-          >
-            <p>{data.data.description}</p>
-          </BasicModal>
-        )}
+
+        <BasicModal
+          title="Description"
+          onCloseModal={() => setModalIsOpen(false)}
+          modalIsOpen={modalIsOpen}
+        >
+          <p>{data.data.description}</p>
+        </BasicModal>
       </div>
     );
   }

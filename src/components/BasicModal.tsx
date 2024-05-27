@@ -20,7 +20,11 @@ const BasicModal = ({
 }: BasicModalProps) => {
   useScrollLock(modalIsOpen);
   return (
-    <div className="h-screen w-full fixed left-0 top-0 flex items-center justify-center z-[1002]">
+    <div
+      className={`${
+        !modalIsOpen && "hidden"
+      } h-screen w-full fixed left-0 top-0 flex items-center justify-center z-[1002]`}
+    >
       {/* Overlay */}
       <div
         onClick={onCloseModal}
