@@ -26,6 +26,8 @@ const HomePage = () => {
   const [venuePage, setVenuePage] = useState(1);
   const [visibleVenues, setVisibleVenues] = useState<Venue[]>([]);
   const [hideScrollLoader, setHideScrollLoader] = useState(true);
+
+  console.log("visible venues:", visibleVenues);
   const venuesPerPage = 100;
 
   useEffect(() => {
@@ -69,6 +71,10 @@ const HomePage = () => {
         );
         const json = await res.json();
         if (!ignore) {
+          if (!res.ok) {
+            setStatus("error");
+            return;
+          }
           setData((prevData) => {
             const venueSet = new Set(prevData.map((venue) => venue.id));
             const newData = json.data.filter(
@@ -76,18 +82,18 @@ const HomePage = () => {
             );
             return [...prevData, ...newData];
           });
-          if (filteredData.length === 0) {
-            setFilteredData((prevData: Venue[]) => {
-              const venueSet = new Set(prevData.map((venue) => venue.id));
-              const newData = json.data.filter(
-                (venue: Venue) => !venueSet.has(venue.id)
-              );
-              return [...prevData, ...newData];
-            });
-          }
 
-          if (!json.meta.isLastPage) {
+          setFilteredData((prevData: Venue[]) => {
+            const venueSet = new Set(prevData.map((venue) => venue.id));
+            const newData = json.data.filter(
+              (venue: Venue) => !venueSet.has(venue.id)
+            );
+            return [...prevData, ...newData];
+          });
+
+          if (!json.meta.isLastPage && status !== "error") {
             pageNumber++;
+            console.log(pageNumber);
             getData();
           }
         }
@@ -105,7 +111,7 @@ const HomePage = () => {
     return () => {
       ignore = true;
     };
-  });
+  }, []);
 
   const validatedVenues = visibleVenues.filter((venue) => {
     if (validateVenue(venue)) {
@@ -117,6 +123,8 @@ const HomePage = () => {
     setVenuePage(1);
     setHasMore(true);
   }
+
+  console.log("filtered data;", filteredData);
 
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/");
