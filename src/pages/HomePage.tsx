@@ -10,7 +10,6 @@ import Searcher from "../components/modules/HomePage/Searcher";
 import { HomeContainer, Section } from "../components/TailwindComponents";
 import { useFilteredDataStore } from "../store/useFilteredDataStore";
 import VenueCardSkeleton from "../components/VenueCardSkeleton";
-import { testData } from "../testData";
 
 const HomePage = () => {
   const setLastPath = useLastPageStore((state) => state.setLastPath);
@@ -40,13 +39,6 @@ const HomePage = () => {
       window.removeEventListener("beforeunload", resetScrollPos);
     };
   }, []);
-
-  /*
-  useEffect(() => {
-    setFilteredData(testData);
-  }, []);
-
-  */
 
   useEffect(() => {
     function handleScroll() {
