@@ -11,12 +11,11 @@ import Dog from "../../icons/Dog";
 import Coffee from "../../icons/Coffee";
 import { checkLongText } from "../../../utils/checkLongText";
 import { Divider } from "../../TailwindComponents";
-import BasicModal from "../../BasicModal";
 import { checkRating } from "../../../utils/checkRating";
 import { useCheckMedia } from "../../../hooks/useCheckMedia";
 
 const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const noAmenities = Object.values(data?.data.meta || {}).every(
     (amenity) => amenity === false
   );
@@ -26,6 +25,9 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
   const checkedImage = useCheckMedia(imageUrl);
 
   if (data) {
+    const desc = !showMore
+      ? checkLongText(data.data.description.trim(), 300)
+      : data?.data.description;
     return (
       <div className="flex flex-col gap-6 w-full lg:max-w-[660px] mt-2 md:mt-4 lg:mt-6 md:pb-[60px] lg:pb-[120px]">
         <div className="flex items-center gap-2 text-gray-700">
@@ -113,26 +115,18 @@ const VenueDetails = ({ data }: { data: SingleVenueResponse | undefined }) => {
             <p>This venue has no description.</p>
           ) : (
             <p>
-              {checkLongText(data.data.description.trim(), 300)}{" "}
+              {desc}{" "}
               {data.data.description.length > 300 && (
                 <button
-                  onClick={() => setModalIsOpen(true)}
+                  onClick={() => setShowMore(!showMore)}
                   className="underline font-bold hover:opacity-70 transition-opacity duration-100"
                 >
-                  Read more
+                  {showMore ? "Show less" : "Read more"}
                 </button>
               )}
             </p>
           )}
         </div>
-
-        <BasicModal
-          title="Description"
-          onCloseModal={() => setModalIsOpen(false)}
-          modalIsOpen={modalIsOpen}
-        >
-          <p>{data.data.description}</p>
-        </BasicModal>
       </div>
     );
   }

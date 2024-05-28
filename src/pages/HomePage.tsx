@@ -112,6 +112,7 @@ const HomePage = () => {
     return () => {
       ignore = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const validatedVenues = visibleVenues.filter((venue) => {

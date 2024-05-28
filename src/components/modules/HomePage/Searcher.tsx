@@ -11,6 +11,7 @@ import { useFilteredDataStore } from "../../../store/useFilteredDataStore";
 import { useFilterStore } from "../../../store/useFilterStore";
 import { isVenueAvailable } from "../../../utils/isVenueAvailable";
 import { checkQueryString } from "../../../utils/checkQueryString";
+import InputClose from "../../icons/InputClose";
 
 const Searcher = ({
   data,
@@ -80,13 +81,21 @@ const Searcher = ({
         onSubmit={handleSearch}
         className="flex flex-col gap-3 lg:flex-row w-full"
       >
-        <input
-          onChange={(e) => setQueryString(e.target.value)}
-          value={queryString}
-          placeholder="Where to?"
-          className="px-4 py-3.5 border-gray-300 border bg-gray-50 rounded-lg text-sm placeholder-gray-500 w-full focus:border-gray-800 outline-none hover:bg-gray-100 transition-colors duration-100"
-          type="text"
-        />
+        <label className="sr-only" htmlFor="where-to">
+          Where do you want to travel?
+        </label>
+        <div className="w-full relative">
+          <input
+            id="where-to"
+            onChange={(e) => setQueryString(e.target.value)}
+            value={queryString}
+            placeholder="Where to?"
+            className="px-4 py-3.5 border-gray-300 border bg-gray-50 rounded-lg text-sm placeholder-gray-500 w-full focus:border-gray-800 outline-none hover:bg-gray-100 transition-colors duration-100"
+            type="text"
+          />
+          {queryString && <InputClose onClick={() => setQueryString("")} />}
+        </div>
+
         {/* Bottom inputs */}
         <div className="flex flex-col gap-3 sm:flex-row lg:w-[200%]">
           <Datepicker
@@ -101,6 +110,17 @@ const Searcher = ({
             placeholder="Check in -> Check out"
           />
           <div className="relative w-full">
+            {adults > 0 || children > 0 ? (
+              <InputClose
+                onClick={() => {
+                  setAdults(0);
+                  setChildren(0);
+                }}
+              />
+            ) : (
+              ""
+            )}
+
             <div
               onClick={() => {
                 setGuestSelectorIsOpen(true);
