@@ -36,6 +36,8 @@ const VenuePage = () => {
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/venue/" + params.id);
 
+  const isOwnedByUser = data?.data.owner.name === user?.name;
+
   if (status !== "error" && status !== "success") {
     return (
       <main className="min-h-screen flex justify-center items-center">
@@ -73,9 +75,13 @@ const VenuePage = () => {
               <StyledH1 className="mt-6 md:mt-[60px] break-words">
                 {checkLongText(data?.data.name.trim(), 60)}
               </StyledH1>
-              <div className="md:flex justify-between gap-8">
+              <div
+                className={`md:flex justify-between gap-8 ${
+                  isOwnedByUser && "mb-6 md:mb-0"
+                }`}
+              >
                 <VenueDetails data={data} />
-                {data?.data.owner.name !== user?.name && <Booker data={data} />}
+                {!isOwnedByUser && <Booker data={data} />}
               </div>
             </Container>
           </Section>
