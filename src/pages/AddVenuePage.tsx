@@ -19,6 +19,7 @@ import AmenitiesModule from "../components/modules/Tabs/AmenitiesModule";
 import MediaModule from "../components/modules/Tabs/MediaModule";
 import PublishModule from "../components/modules/Tabs/PublishModule";
 import useLastPageStore from "../store/useLastPageStore";
+import { useAccountDialogueStore } from "../store/useAccountDialogueStore";
 
 let nextId = 1;
 
@@ -38,6 +39,12 @@ const schema = yup.object({
 });
 
 const AddVenuePage = () => {
+  const { setAnimationTrigger, setMessage } = useAccountDialogueStore(
+    (state) => ({
+      setAnimationTrigger: state.setAnimationTrigger,
+      setMessage: state.setMessage,
+    })
+  );
   const navigate = useNavigate();
   const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
   const user = useUserStore((state) => state.user);
@@ -106,7 +113,9 @@ const AddVenuePage = () => {
         setApiStatus
       );
       setLastPath("/add");
-      navigate(`/venue/${result.data.id}`);
+      navigate(`/account`);
+      setMessage(`Venue ${result.data.name} was created`);
+      setAnimationTrigger(false);
     })();
   }
 

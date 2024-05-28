@@ -47,7 +47,7 @@ const AccountPage = () => {
     options
   );
 
-  if (status === "loading") {
+  if (status !== "error" && status !== "success") {
     return (
       <main className="min-h-screen flex justify-center items-center">
         <div className="spinner-dark"></div>

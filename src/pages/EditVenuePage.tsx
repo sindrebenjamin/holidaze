@@ -309,7 +309,7 @@ const EditVenuePage = () => {
     },
   ];
 
-  if (status === "loading") {
+  if (status !== "error" && status !== "success") {
     return (
       <main className="min-h-screen flex justify-center items-center">
         <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />

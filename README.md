@@ -9,3 +9,7 @@ A little akward when testing in dev tools on different screen resolutions, have 
 husk .env!
 
 unit-test tester utility functions
+
+created with tailwind
+
+how to install..

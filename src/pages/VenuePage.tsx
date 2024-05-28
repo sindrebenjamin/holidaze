@@ -36,7 +36,7 @@ const VenuePage = () => {
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/venue/" + params.id);
 
-  if (status === "loading") {
+  if (status !== "error" && status !== "success") {
     return (
       <main className="min-h-screen flex justify-center items-center">
         <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
@@ -61,7 +61,7 @@ const VenuePage = () => {
           <title>Holidaze | {data?.data.name}</title>
         </Helmet>
         <main className="min-h-screen">
-          <div className="lg:hidden h-[400px]">
+          <div className="lg:hidden h-[400px] md:h-[600px]">
             <MobileSlideShow images={data?.data.media} />
           </div>
 

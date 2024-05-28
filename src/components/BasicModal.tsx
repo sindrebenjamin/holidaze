@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import { useScrollLock } from "../hooks/useScrollLock";
 import Close from "./icons/Close";
 
@@ -18,12 +20,25 @@ const BasicModal = ({
   tabs,
   modalFooter,
 }: BasicModalProps) => {
+  const [classes, setClasses] = useState("hidden");
   useScrollLock(modalIsOpen);
+
+  useEffect(() => {
+    if (modalIsOpen) {
+      setClasses("opacity-0");
+      setTimeout(() => {
+        setClasses("opacity-100");
+      }, 10);
+    } else {
+      setClasses("opacity-0");
+      setTimeout(() => {
+        setClasses("hidden");
+      }, 100);
+    }
+  }, [modalIsOpen]);
   return (
     <div
-      className={`${
-        !modalIsOpen && "hidden"
-      } h-screen w-full fixed left-0 top-0 flex items-center justify-center z-[1002]`}
+      className={`${classes} h-screen w-full fixed left-0 top-0 flex items-center justify-center z-[1002] duration-100 ease-in transition-opacity`}
     >
       {/* Overlay */}
       <div
