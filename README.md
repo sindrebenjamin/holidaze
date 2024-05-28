@@ -27,8 +27,7 @@ npm install
 yarn install
 ```
 
-3. Set up the environment variables:<br>
-   Create a .env file in the root of the project and add your Noroff API Key:
+3. Create a .env file in the root of the project and add your Noroff API Key:
 
 ```
 VITE_API_KEY=xxx-xxxx-xxx-xxxxx
