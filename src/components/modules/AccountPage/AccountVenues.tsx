@@ -10,7 +10,7 @@ const AccountVenues = ({ venues }: { venues: Venue[] }) => {
     <>
       <div className="mb-6 lg:mb-8">
         <div className="flex items-center justify-between">
-          <StyledH2 className="m-0 md:m-0">My Venues</StyledH2>
+          <StyledH2 className="m-0 md:m-0">Manage Venues</StyledH2>
 
           <NavLink to="/add">
             <Button type="button" color="gray-light" size="sm">

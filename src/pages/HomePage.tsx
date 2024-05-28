@@ -155,7 +155,7 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>Holidaze | Vacation homes</title>
+        <title>Holidaze | Vacation Homes</title>
         <meta
           name="description"
           content="Discover unique places to stay and experiences around the world on our platform. Whether you're looking for a cozy apartment, a luxurious villa, or a unique stay, find the perfect accommodation that feels like home."

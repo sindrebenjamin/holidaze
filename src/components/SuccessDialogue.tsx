@@ -36,7 +36,7 @@ const SuccessDialogue = ({
 
   return (
     <div
-      className={`${classes} text-green-700 bg-green-100 p-4 rounded-md flex items-center justify-between w-[90%] md:max-w-[800px] fixed left-[50%] translate-x-[-50%] bottom-10 transition-all duration-300 ease-out`}
+      className={`${classes} text-green-700 bg-green-100 p-4 rounded-md flex items-center justify-between w-[90%] md:max-w-[800px] fixed left-[50%] translate-x-[-50%] bottom-10 transition-all duration-300 ease-out z-[1000]`}
     >
       <div className="flex gap-4 items-center">
         <svg

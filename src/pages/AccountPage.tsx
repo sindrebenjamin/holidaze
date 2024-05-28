@@ -114,7 +114,7 @@ const AccountPage = () => {
           </div>
 
           {/* Settings - Bookings - Wrapper */}
-          <div className={`md:px-6 ${!user.venueManager && "py-[60px]"}`}>
+          <div className={`md:px-6 ${!user.venueManager && "pb-[60px]"}`}>
             <Container className="md:flex md:justify-between gap-12">
               <AccountSettings />
               <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
