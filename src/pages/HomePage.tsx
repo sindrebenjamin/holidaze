@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import InfiniteScroll from "react-infinite-scroller";
+
 import { Venue } from "../interfaces";
 import { validateVenue } from "../utils/validateVenue";
 import VenueCard from "../components/VenueCard";
@@ -27,7 +29,6 @@ const HomePage = () => {
   const [visibleVenues, setVisibleVenues] = useState<Venue[]>([]);
   const [hideScrollLoader, setHideScrollLoader] = useState(true);
 
-  console.log("visible venues:", visibleVenues);
   const venuesPerPage = 100;
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const HomePage = () => {
 
           if (!json.meta.isLastPage && status !== "error") {
             pageNumber++;
-            console.log(pageNumber);
+
             getData();
           }
         }
@@ -124,8 +125,6 @@ const HomePage = () => {
     setHasMore(true);
   }
 
-  console.log("filtered data;", filteredData);
-
   const redirect = useRedirectStore((state) => state.setRedirect);
   redirect("/");
   setLastPath("/");
@@ -154,62 +153,73 @@ const HomePage = () => {
   const noVenuesFound = validatedVenues.length === 0;
 
   return (
-    <main className="min-h-screen">
-      <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
-        <Searcher resetLoader={resetLoader} data={data} />
-      </div>
-      <Section>
-        <HomeContainer>
-          <FilterModule resetLoader={resetLoader} data={data} />
+    <>
+      <Helmet>
+        <title>Holidaze | Vacation homes</title>
+        <meta
+          name="description"
+          content="Discover unique places to stay and experiences around the world on our platform. Whether you're looking for a cozy apartment, a luxurious villa, or a unique stay, find the perfect accommodation that feels like home."
+        />
+      </Helmet>
+      <main className="min-h-screen">
+        <div className="bg-[url('/holidaze_banner.jpg')] bg-cover px-4 sm:px-6 py-[60px] lg:py-[120px]">
+          <Searcher resetLoader={resetLoader} data={data} />
+        </div>
+        <Section>
+          <HomeContainer>
+            <FilterModule resetLoader={resetLoader} data={data} />
 
-          <InfiniteScroll
-            initialLoad={false}
-            pageStart={0}
-            loadMore={loadMoreVenues}
-            hasMore={hasMore}
-            threshold={200}
-            loader={
-              noVenuesFound || hideScrollLoader ? (
-                <div key={1}></div>
-              ) : (
-                <div key={0} className="spinner-dark m-auto mt-2"></div>
-              )
-            }
-          >
-            <div className="grid grid-cols-[repeat(auto-fit,_minmax(260px,_1fr))] gap-6">
-              {status === "loading" && (
-                <>
-                  {createGhostVenues(12).map((ghost) => {
-                    return <VenueCardSkeleton key={ghost.id} />;
-                  })}
-                </>
-              )}
-              {validatedVenues.map((venue: Venue) => {
-                return (
-                  <VenueCard
-                    key={venue.id}
-                    id={venue.id}
-                    media={venue.media[0]}
-                    address={venue.location.address}
-                    price={venue.price}
-                    rating={venue.rating}
-                  />
-                );
-              })}
-              {validatedVenues.length < 12 && !noVenuesFound && (
-                <>
-                  {createGhostVenues(12).map((ghost) => {
-                    return <div key={ghost.id}></div>;
-                  })}
-                </>
-              )}
-              {noVenuesFound && status !== "loading" && <p>No venues found</p>}
-              {status === "error" && <p>Something went wrong</p>}
-            </div>
-          </InfiniteScroll>
-        </HomeContainer>
-      </Section>
-    </main>
+            <InfiniteScroll
+              initialLoad={false}
+              pageStart={0}
+              loadMore={loadMoreVenues}
+              hasMore={hasMore}
+              threshold={200}
+              loader={
+                noVenuesFound || hideScrollLoader ? (
+                  <div key={1}></div>
+                ) : (
+                  <div key={0} className="spinner-dark m-auto mt-2"></div>
+                )
+              }
+            >
+              <div className="grid grid-cols-[repeat(auto-fit,_minmax(260px,_1fr))] gap-6">
+                {status === "loading" && (
+                  <>
+                    {createGhostVenues(12).map((ghost) => {
+                      return <VenueCardSkeleton key={ghost.id} />;
+                    })}
+                  </>
+                )}
+                {validatedVenues.map((venue: Venue) => {
+                  return (
+                    <VenueCard
+                      key={venue.id}
+                      id={venue.id}
+                      media={venue.media[0]}
+                      address={venue.location.address}
+                      price={venue.price}
+                      rating={venue.rating}
+                    />
+                  );
+                })}
+                {validatedVenues.length < 12 && !noVenuesFound && (
+                  <>
+                    {createGhostVenues(12).map((ghost) => {
+                      return <div key={ghost.id}></div>;
+                    })}
+                  </>
+                )}
+                {noVenuesFound && status !== "loading" && (
+                  <p>No venues found</p>
+                )}
+                {status === "error" && <p>Something went wrong</p>}
+              </div>
+            </InfiniteScroll>
+          </HomeContainer>
+        </Section>
+      </main>
+    </>
   );
 };
 

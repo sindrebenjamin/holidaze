@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
@@ -66,16 +67,21 @@ const ProfilePage = () => {
 
   if (data) {
     return (
-      <main className="lg:px-6 lg:py-[120px] md:pb-[60px] min-h-screen">
-        <Container className="lg:flex lg:gap-12">
-          {data?.data && <ProfileInfo user={data?.data} />}
-          <div className="w-full px-4 sm:px-6 lg:px-0">
-            <Divider className="lg:hidden mb-6" />
-            <StyledH2>{data?.data.name}'s Venues</StyledH2>
-            <ProfileVenues venues={data?.data.venues ?? []} />
-          </div>
-        </Container>
-      </main>
+      <>
+        <Helmet>
+          <title>Holidaze | {data?.data.name}'s Profile</title>
+        </Helmet>
+        <main className="lg:px-6 lg:py-[120px] md:pb-[60px] min-h-screen">
+          <Container className="lg:flex lg:gap-12">
+            {data?.data && <ProfileInfo user={data?.data} />}
+            <div className="w-full px-4 sm:px-6 lg:px-0">
+              <Divider className="lg:hidden mb-6" />
+              <StyledH2>{data?.data.name}'s Venues</StyledH2>
+              <ProfileVenues venues={data?.data.venues ?? []} />
+            </div>
+          </Container>
+        </main>
+      </>
     );
   }
 };

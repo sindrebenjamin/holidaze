@@ -19,6 +19,7 @@ const BackButton = ({ overrideClasses }: { overrideClasses?: string }) => {
     <button
       className={`${overrideClasses} hover:bg-gray-100 duration-100 transition-colors p-2.5 rounded-full`}
       onClick={handleBackClick}
+      type="button"
     >
       <ArrowLeft color="#9CA3AF" />
     </button>

@@ -1,5 +1,6 @@
 import { useMemo, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { useApi } from "../hooks/useApi";
 import { useUserStore } from "../store/useUserStore";
@@ -77,49 +78,59 @@ const AccountPage = () => {
 
   if (status === "success") {
     return (
-      <main className="min-h-screen">
-        <div className="lg:hidden flex justify-between items-center px-4 mb-6 mt-4">
-          <BackButton />
-          <NavLink to={`/profile/${user?.name}`}>
-            <Button type="button" color="gray-light" size="sm">
-              View public profile
-            </Button>
-          </NavLink>
-        </div>
-
-        {/* H1 - View button - Wrapper */}
-        <div className="px-6 lg:mt-[120px]">
-          <Container className="lg:flex lg:justify-between items-center mb-6 lg:mb-8">
-            <StyledH1 className="text-center md:text-left">My Account</StyledH1>
-            <NavLink className="hidden lg:block" to={`/profile/${user?.name}`}>
+      <>
+        <Helmet>
+          <title>Holidaze | Account</title>
+        </Helmet>
+        <main className="min-h-screen">
+          <div className="lg:hidden flex justify-between items-center px-4 mb-6 mt-4">
+            <BackButton />
+            <NavLink to={`/profile/${user?.name}`}>
               <Button type="button" color="gray-light" size="sm">
                 View public profile
               </Button>
             </NavLink>
-          </Container>
-        </div>
+          </div>
 
-        {/* Settings - Bookings - Wrapper */}
-        <div className={`md:px-6 ${!user.venueManager && "py-[60px]"}`}>
-          <Container className="md:flex md:justify-between gap-12">
-            <AccountSettings />
-            <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
-            <Bookings bookings={data?.data.bookings ?? []} />
-          </Container>
-        </div>
-        {user.venueManager && (
-          <Section className="py-0 md:py-[60px] mb-[60px] md:mb-0">
-            <Container>
-              <Divider className="my-6 md:hidden" />
-              <AccountVenues venues={data?.data.venues ?? []} />
+          {/* H1 - View button - Wrapper */}
+          <div className="px-6 lg:mt-[120px]">
+            <Container className="lg:flex lg:justify-between items-center mb-6 lg:mb-8">
+              <StyledH1 className="text-center md:text-left">
+                My Account
+              </StyledH1>
+              <NavLink
+                className="hidden lg:block"
+                to={`/profile/${user?.name}`}
+              >
+                <Button type="button" color="gray-light" size="sm">
+                  View public profile
+                </Button>
+              </NavLink>
             </Container>
-          </Section>
-        )}
-        <SuccessDialogue
-          message={message}
-          animationTrigger={animationTrigger}
-        />
-      </main>
+          </div>
+
+          {/* Settings - Bookings - Wrapper */}
+          <div className={`md:px-6 ${!user.venueManager && "py-[60px]"}`}>
+            <Container className="md:flex md:justify-between gap-12">
+              <AccountSettings />
+              <Divider className="mx-4 sm:mx-4 mb-6 md:hidden" />
+              <Bookings bookings={data?.data.bookings ?? []} />
+            </Container>
+          </div>
+          {user.venueManager && (
+            <Section className="py-0 md:py-[60px] mb-[60px] md:mb-0">
+              <Container>
+                <Divider className="my-6 md:hidden" />
+                <AccountVenues venues={data?.data.venues ?? []} />
+              </Container>
+            </Section>
+          )}
+          <SuccessDialogue
+            message={message}
+            animationTrigger={animationTrigger}
+          />
+        </main>
+      </>
     );
   }
 };

@@ -137,6 +137,7 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
               size="xl"
               color="gray-dark"
               type="button"
+              override="w-[200px]"
             >
               Show {filteredVenues.length} venues
             </Button>

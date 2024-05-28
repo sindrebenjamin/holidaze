@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { Divider, FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
@@ -139,7 +140,11 @@ const EditVenuePage = () => {
       setApiStatus
     );
     navigate("/account");
-    setMessage(`Venue ${data?.data.name} was updated`);
+    setMessage(
+      `Venue ${data?.data.name} was ${
+        options.method === "PUT" ? "updated" : "deleted"
+      }`
+    );
     setAnimationTrigger(false);
   }
 
@@ -324,6 +329,9 @@ const EditVenuePage = () => {
   if (data) {
     return (
       <>
+        <Helmet>
+          <title>Holidaze | Edit Venue</title>
+        </Helmet>
         <div className="items-start w-full hidden md:flex lg:hidden pt-4 pb-6 px-4 bg-gray-50">
           <BackButton />
         </div>
