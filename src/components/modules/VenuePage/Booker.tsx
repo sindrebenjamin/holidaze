@@ -187,7 +187,7 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
             color="gray-dark"
           >
             {apiStatus === "loading" ? (
-              <div className="spinner-light"></div>
+              <div className="spinner-light spinner-sm"></div>
             ) : (
               "Book"
             )}
