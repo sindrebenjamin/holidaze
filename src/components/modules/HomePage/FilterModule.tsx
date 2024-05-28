@@ -80,8 +80,8 @@ const FilterModule: React.FC<FilterModuleProps> = ({ data, resetLoader }) => {
     setAmenities([]);
     setMaxGuests(null);
     setMinimumRating(0);
-    setLocalSliderValue([0, 12000]);
-    setSliderValue([0, 12000]);
+    setLocalSliderValue([0, 10000]);
+    setSliderValue([0, 10000]);
     setFilteredData(data);
   }
 
