@@ -23,15 +23,18 @@ git clone https://github.com/sindrebenjamin/holidaze.git
 
 ```
 npm install
-/* or */
+```
+
+or
+
+```
 yarn install
 ```
 
 3. Set up the environment variables:
-   Create a .env file in the root of the project and add the following:
+   Create a .env file in the root of the project and add your Noroff API Key:
 
 ```
-/* .env file */
 VITE_API_KEY=xxx-xxxx-xxx-xxxxx
 ```
 
@@ -39,7 +42,11 @@ VITE_API_KEY=xxx-xxxx-xxx-xxxxx
 
 ```
 npm run dev
-/* or */
+```
+
+or
+
+```
 yarn dev
 ```
 
@@ -55,3 +62,12 @@ yarn dev
 ![REACT](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TYPESCRIPT](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![TAILWIND](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+
+## Links
+
+🖥️ [Live Website](https://holydaze.netlify.app/ "View the project live on Netlify")  
+✒️ [Figma Project](https://www.figma.com/design/QcYDzt2AhyZtYzuSllkGBw/Project-Exam-02---Sindre-Skoglund-Hansen?node-id=1-4&t=wJJLKWFwKnC499Cy-1 "View the Figma prototype")
+
+## Contact
+
+Reach me at [LinkedIn](https://www.linkedin.com/in/sindre-skoglund-hansen-673825148/) or send me an email at sindskog@gmail.com
