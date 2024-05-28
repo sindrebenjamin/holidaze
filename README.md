@@ -1,4 +1,5 @@
 # Holidaze
+![holidaze_thumb](https://github.com/sindrebenjamin/holidaze/assets/111867312/64424162-3a39-4a82-8fbb-ee9e32d86cc4)
 
 ## Description
 
