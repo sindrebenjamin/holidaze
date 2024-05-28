@@ -53,7 +53,7 @@ yarn unit-test
 
 ## Known Issues
 
-- **DatePicker:** Touch devices require an extra tap to select dates. [Check out the issue to read more](https://github.com/onesine/react-tailwindcss-datepicker/issues/254)
+- **DatePicker:** Touch devices require an extra tap to select dates. [Read issue for more information](https://github.com/onesine/react-tailwindcss-datepicker/issues/254)
 
 - **Responsiveness:** The DatePicker might not adjust to screen resolution immediately when using DevTools but will adjust upon refresh.
 
@@ -66,8 +66,8 @@ yarn unit-test
 
 ## Links
 
-🖥️ [Live Website](https://holydaze.netlify.app "View the project live on Netlify")  
-✒️ [Figma Project](https://www.figma.com/design/QcYDzt2AhyZtYzuSllkGBw/Project-Exam-02---Sindre-Skoglund-Hansen?node-id=1-4&t=wJJLKWFwKnC499Cy-1 "View the Figma prototype")
+🖥️ [Netlify](https://holydaze.netlify.app "View the project live on Netlify")  
+✒️ [Figma](https://www.figma.com/design/QcYDzt2AhyZtYzuSllkGBw/Project-Exam-02---Sindre-Skoglund-Hansen?node-id=1-4&t=wJJLKWFwKnC499Cy-1 "View the Figma prototype")
 
 ## Contact
 
