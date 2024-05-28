@@ -139,7 +139,11 @@ const EditVenuePage = () => {
       setApiStatus
     );
     navigate("/account");
-    setMessage(`Venue ${data?.data.name} was updated`);
+    setMessage(
+      `Venue ${data?.data.name} was ${
+        options.method === "PUT" ? "updated" : "deleted"
+      }`
+    );
     setAnimationTrigger(false);
   }
 
