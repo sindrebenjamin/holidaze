@@ -85,7 +85,7 @@ const AccountPage = () => {
         <main className="min-h-screen">
           <div className="lg:hidden flex justify-between items-center px-4 mb-6 mt-4">
             <BackButton />
-            <NavLink to={`/profile/${user?.name}`}>
+            <NavLink className="md:hidden" to={`/profile/${user?.name}`}>
               <Button type="button" color="gray-light" size="sm">
                 View public profile
               </Button>
@@ -94,18 +94,22 @@ const AccountPage = () => {
 
           {/* H1 - View button - Wrapper */}
           <div className="px-6 lg:mt-[120px]">
-            <Container className="lg:flex lg:justify-between items-center mb-6 lg:mb-8">
-              <StyledH1 className="text-center md:text-left">
-                My Account
-              </StyledH1>
-              <NavLink
-                className="hidden lg:block"
-                to={`/profile/${user?.name}`}
-              >
-                <Button type="button" color="gray-light" size="sm">
-                  View public profile
-                </Button>
-              </NavLink>
+            <Container className="mb-6 lg:mb-8">
+              <div className="md:flex md:justify-between items-center">
+                <StyledH1 className="text-center md:text-left">
+                  My Account
+                </StyledH1>
+                <NavLink
+                  className="hidden md:block"
+                  to={`/profile/${user?.name}`}
+                >
+                  <Button type="button" color="gray-light" size="sm">
+                    View public profile
+                  </Button>
+                </NavLink>
+              </div>
+
+              <Divider className="hidden md:block mt-4" />
             </Container>
           </div>
 
