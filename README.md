@@ -8,7 +8,7 @@ This is a fictional accommodation booking site for users looking to book holiday
 
 ### Prerequisites
 
-- Node.js (>= 14.x)
+- Node.js (>= 10.x)
 - npm or yarn
 
 ### Steps
@@ -19,24 +19,39 @@ This is a fictional accommodation booking site for users looking to book holiday
 git clone https://github.com/sindrebenjamin/holidaze.git
 ```
 
-2. Install dependencies
+2. Install dependencies:
 
 ```
 npm install
-# or
+/* or */
 yarn install
 ```
 
-Datepicker issue, have to tap extra time on touch devices, opened issue about it: https://github.com/onesine/react-tailwindcss-datepicker/issues/254
+3. Set up the environment variables:
+   Create a .env file in the root of the project and add the following:
 
-Bug hvor infinite scroll kan henge seg opp.
+```
+/* .env file */
+VITE_API_KEY=xxx-xxxx-xxx-xxxxx
+```
 
-A little akward when testing in dev tools on different screen resolutions, have to reload in order to see the datepicker adjust properly.
+4. Run the application:
 
-husk .env!
+```
+npm run dev
+/* or */
+yarn dev
+```
 
-unit-test tester utility functions
+## Known Issues
 
-created with tailwind
+- **DatePicker:** Touch devices require an extra tap to select dates. [Check out the issue to read more](https://github.com/onesine/react-tailwindcss-datepicker/issues/254)
 
-how to install..
+- **Responsiveness:** The DatePicker might not adjust to screen resolution immediately when using DevTools but will adjust upon refresh.
+
+## Built With
+
+![VITE](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![REACT](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TYPESCRIPT](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![TAILWIND](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
