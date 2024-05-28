@@ -14,6 +14,7 @@ import { basicApi } from "../../../utils/basicApi";
 import { useUserStore } from "../../../store/useUserStore";
 import { ApiStatus } from "../../../interfaces";
 import SuccessDialogue from "../../SuccessDialogue";
+import InputClose from "../../icons/InputClose";
 
 interface BookerProps {
   data: SingleVenueResponse | undefined;
@@ -126,6 +127,16 @@ const Booker: React.FC<BookerProps> = ({ data }) => {
             />
 
             <div className="relative">
+              {adults > 1 || children > 0 ? (
+                <InputClose
+                  onClick={() => {
+                    setAdults(1);
+                    setChildren(0);
+                  }}
+                />
+              ) : (
+                ""
+              )}
               <div
                 onClick={() => {
                   setGuestSelectorIsOpen(true);

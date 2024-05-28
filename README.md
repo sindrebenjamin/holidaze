@@ -41,6 +41,16 @@ npm run dev
 yarn dev
 ```
 
+## Testing
+
+Test utility functions:
+
+```
+npm run unit-test
+/* or */
+yarn unit-test
+```
+
 ## Known Issues
 
 - **DatePicker:** Touch devices require an extra tap to select dates. [Check out the issue to read more](https://github.com/onesine/react-tailwindcss-datepicker/issues/254)
