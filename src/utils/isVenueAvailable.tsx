@@ -2,6 +2,14 @@ import { DateValueType, DateType } from "react-tailwindcss-datepicker";
 
 import { Booking } from "../interfaces";
 
+/**
+ * Checks if a venue is available for the desired dates by comparing with booked dates.
+ *
+ * @param desiredDates - The desired start and end dates for booking.
+ * @param bookedDates - An array of already booked date ranges.
+ * @returns True if the venue is available for the desired dates, otherwise false.
+ */
+
 export function isVenueAvailable(
   desiredDates: DateValueType,
   bookedDates: Booking[]
