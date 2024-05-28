@@ -36,7 +36,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({
         </div>
         <QuantitySelector
           incrementDisabled={incrementDisabled}
-          decrementDisabled={childQuantity > 0}
+          decrementDisabled={childQuantity > 0 && adultQuantity < 2}
           lowestAllowed={lowestAllowed !== undefined ? lowestAllowed : 1}
           quantity={adultQuantity}
           handleQuantity={handleQuantityAdult}
