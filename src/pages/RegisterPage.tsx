@@ -12,6 +12,7 @@ import SelectorButton from "../components/SelectorButton";
 import Button from "../components/Button";
 import { ApiStatus, RegisterFormData } from "../interfaces";
 import useLoginRedirect from "../hooks/useLoginRedirect";
+import ArrowLeft from "../components/icons/ArrowLeft";
 
 const schema = yup
   .object({
@@ -85,6 +86,17 @@ const RegisterPage = () => {
 
       <main className="sm:bg-gray-50 sm:flex sm:flex-col sm:justify-center sm:items-center sm:min-h-screen sm:py-12">
         <div className="bg-white w-full px-4 py-12 min-h-screen sm:min-h-0 sm:p-10 sm:rounded-lg sm:shadow-md sm:max-w-[535px]">
+          {subPage === "form" && (
+            <button
+              className={`hover:opacity-70 transition-opacity duration-100 mb-6 rounded-lg flex gap-0.5 items-center`}
+              onClick={() => setSubPage("accountType")}
+              type="button"
+            >
+              <ArrowLeft color="#9CA3AF" />
+              <p className="text-gray-500">Account type</p>
+            </button>
+          )}
+
           <FormH1 className="mb-6">Create Account</FormH1>
           {subPage === "accountType" ? (
             <div className="gap-6 flex flex-col">
@@ -162,15 +174,6 @@ const RegisterPage = () => {
                   message={errors.confirmPassword?.message}
                 />
                 <div className="flex flex-col gap-4 mt-2">
-                  <Button
-                    type="button"
-                    fullWidth={true}
-                    onClick={() => setSubPage("accountType")}
-                    size="xl"
-                    color="white"
-                  >
-                    Back
-                  </Button>
                   <Button
                     disabled={!isValid}
                     type="submit"
