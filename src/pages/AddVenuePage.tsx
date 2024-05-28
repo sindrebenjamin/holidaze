@@ -3,6 +3,7 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { FormH1 } from "../components/TailwindComponents";
 import Tabs from "../components/Tabs";
@@ -226,17 +227,22 @@ const AddVenuePage = () => {
     },
   ];
   return (
-    <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
-      >
-        <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
-          List Venue
-        </FormH1>
-        <Tabs tabs={tabsData} />
-      </form>
-    </main>
+    <>
+      <Helmet>
+        <title>Holidaze | Add Venue</title>
+      </Helmet>
+      <main className="md:bg-gray-50 md:flex md:flex-col md:justify-center md:items-center md:min-h-screen md:px-6 md:py-12">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="max-w-[1000px] bg-white w-full py-12 min-h-screen md:min-h-0 md:p-10 lg:p-[60px] md:rounded-lg md:shadow-md overflow-hidden"
+        >
+          <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
+            List Venue
+          </FormH1>
+          <Tabs tabs={tabsData} />
+        </form>
+      </main>
+    </>
   );
 };
 

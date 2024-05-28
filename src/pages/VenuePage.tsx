@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { useUserStore } from "../store/useUserStore";
 import VenueDetails from "../components/modules/VenuePage/VenueDetails";
@@ -55,50 +56,55 @@ const VenuePage = () => {
 
   if (data) {
     return (
-      <main className="min-h-screen">
-        <div className="lg:hidden h-[400px]">
-          <MobileSlideShow images={data?.data.media} />
-        </div>
+      <>
+        <Helmet>
+          <title>Holidaze | {data?.data.name}</title>
+        </Helmet>
+        <main className="min-h-screen">
+          <div className="lg:hidden h-[400px]">
+            <MobileSlideShow images={data?.data.media} />
+          </div>
 
-        <Section className="lg:mt-[60px]" $noYPadding={true}>
-          <Container>
-            <div className="hidden lg:block h-[600px]">
-              <DesktopSlideShow images={data?.data.media} />
-            </div>
-            <StyledH1 className="mt-6 md:mt-[60px] break-words">
-              {checkLongText(data?.data.name.trim(), 60)}
-            </StyledH1>
-            <div className="md:flex justify-between gap-8">
-              <VenueDetails data={data} />
-              {data?.data.owner.name !== user?.name && <Booker data={data} />}
-            </div>
-          </Container>
-        </Section>
-        <Section className="bg-gray-50 min-h-[700px] md:min-h-0">
-          <Container className="flex flex-col">
-            {user ? (
-              <>
-                <StyledH2 className="text-center">Meet your host</StyledH2>
-                <div className="flex flex-col gap-6 md:items-center">
-                  <HostCard
-                    name={data.data.owner.name}
-                    mediaItem={data.data.owner.avatar}
-                    email={data.data.owner.email}
-                  />
-                  {/* <p>{data.data.owner.bio}</p> */}
-                </div>
-              </>
-            ) : (
-              <NavLink
-                className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100 text-center"
-                to="/login"
-              >
-                Log in to view more info
-              </NavLink>
-            )}
-          </Container>
-        </Section>
-      </main>
+          <Section className="lg:mt-[60px]" $noYPadding={true}>
+            <Container>
+              <div className="hidden lg:block h-[600px]">
+                <DesktopSlideShow images={data?.data.media} />
+              </div>
+              <StyledH1 className="mt-6 md:mt-[60px] break-words">
+                {checkLongText(data?.data.name.trim(), 60)}
+              </StyledH1>
+              <div className="md:flex justify-between gap-8">
+                <VenueDetails data={data} />
+                {data?.data.owner.name !== user?.name && <Booker data={data} />}
+              </div>
+            </Container>
+          </Section>
+          <Section className="bg-gray-50 min-h-[700px] md:min-h-0">
+            <Container className="flex flex-col">
+              {user ? (
+                <>
+                  <StyledH2 className="text-center">Meet your host</StyledH2>
+                  <div className="flex flex-col gap-6 md:items-center">
+                    <HostCard
+                      name={data.data.owner.name}
+                      mediaItem={data.data.owner.avatar}
+                      email={data.data.owner.email}
+                    />
+                    {/* <p>{data.data.owner.bio}</p> */}
+                  </div>
+                </>
+              ) : (
+                <NavLink
+                  className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100 text-center"
+                  to="/login"
+                >
+                  Log in to view more info
+                </NavLink>
+              )}
+            </Container>
+          </Section>
+        </main>
+      </>
     );
   }
 };

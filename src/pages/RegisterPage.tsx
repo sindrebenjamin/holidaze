@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { NavLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { registerUser } from "../auth/registerUser";
 import { FormH1 } from "../components/TailwindComponents";
@@ -77,128 +78,134 @@ const RegisterPage = () => {
   }
 
   return (
-    <main className="sm:bg-gray-50 sm:flex sm:flex-col sm:justify-center sm:items-center sm:min-h-screen sm:py-12">
-      <div className="bg-white w-full px-4 py-12 min-h-screen sm:min-h-0 sm:p-10 sm:rounded-lg sm:shadow-md sm:max-w-[535px]">
-        <FormH1 className="mb-6">Create Account</FormH1>
-        {subPage === "accountType" ? (
-          <div className="gap-6 flex flex-col">
-            <p className="text-gray-600">
-              What type of account do you wish to create?
-            </p>
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium">Account type</p>
-              <SelectorButton
-                onClick={() => setVenueManager(true)}
-                selected={venueManager === true}
-              >
-                Venue manager
-              </SelectorButton>
-              <SelectorButton
-                onClick={() => setVenueManager(false)}
-                selected={!venueManager && venueManager !== null}
-              >
-                Guest
-              </SelectorButton>
-            </div>
-            <Button
-              fullWidth={true}
-              onClick={() => setSubPage("form")}
-              size="xl"
-              color="white"
-              disabled={venueManager === null}
-            >
-              Continue
-            </Button>
-          </div>
-        ) : (
-          <>
-            <form
-              className="flex flex-col gap-4"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <InputAndLabelAndMessage
-                type="text"
-                register={register}
-                placeholder="John Johnson"
-                name="name"
-                label="Name"
-                error={Boolean(errors.name)}
-                message={errors.name?.message}
-              />
-              <InputAndLabelAndMessage
-                autocomplete="username"
-                type="email"
-                register={register}
-                placeholder="john@stud.noroff.no"
-                name="email"
-                label="Email"
-                error={Boolean(errors.email)}
-                message={errors.email?.message}
-              />
-              <InputAndLabelAndMessage
-                autocomplete="new-password"
-                type="password"
-                register={register}
-                placeholder="********"
-                name="password"
-                label="Password"
-                error={Boolean(errors.password)}
-                message={errors.password?.message}
-              />
-              <InputAndLabelAndMessage
-                autocomplete="new-password"
-                type="password"
-                register={register}
-                placeholder="********"
-                name="confirmPassword"
-                label="Confirm password"
-                error={Boolean(errors.confirmPassword)}
-                message={errors.confirmPassword?.message}
-              />
-              <div className="flex flex-col gap-4 mt-2">
-                <Button
-                  type="button"
-                  fullWidth={true}
-                  onClick={() => setSubPage("accountType")}
-                  size="xl"
-                  color="white"
+    <>
+      <Helmet>
+        <title>Holidaze | Register</title>
+      </Helmet>
+
+      <main className="sm:bg-gray-50 sm:flex sm:flex-col sm:justify-center sm:items-center sm:min-h-screen sm:py-12">
+        <div className="bg-white w-full px-4 py-12 min-h-screen sm:min-h-0 sm:p-10 sm:rounded-lg sm:shadow-md sm:max-w-[535px]">
+          <FormH1 className="mb-6">Create Account</FormH1>
+          {subPage === "accountType" ? (
+            <div className="gap-6 flex flex-col">
+              <p className="text-gray-600">
+                What type of account do you wish to create?
+              </p>
+              <div className="flex flex-col gap-2">
+                <p className="text-sm font-medium">Account type</p>
+                <SelectorButton
+                  onClick={() => setVenueManager(true)}
+                  selected={venueManager === true}
                 >
-                  Back
-                </Button>
-                <Button
-                  disabled={!isValid}
-                  type="submit"
-                  fullWidth={true}
-                  size="xl"
-                  color="gray-dark"
+                  Venue manager
+                </SelectorButton>
+                <SelectorButton
+                  onClick={() => setVenueManager(false)}
+                  selected={!venueManager && venueManager !== null}
                 >
-                  {apiStatus === "loading" ? (
-                    <div className="spinner-light"></div>
-                  ) : (
-                    "Create account"
-                  )}
-                </Button>
+                  Guest
+                </SelectorButton>
               </div>
-            </form>
-          </>
-        )}
-        <p className="text-gray-800 mt-4">
-          Already have a user?{" "}
-          <NavLink
-            to="/login"
-            className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100"
-          >
-            Log in here
-          </NavLink>
-        </p>
-        <ul className="text-red-500 mt-2">
-          {apiErrors &&
-            apiErrors.map((error) => {
-              return <li key={error.message}>{error.message}</li>;
-            })}
-        </ul>
-      </div>
-    </main>
+              <Button
+                fullWidth={true}
+                onClick={() => setSubPage("form")}
+                size="xl"
+                color="white"
+                disabled={venueManager === null}
+              >
+                Continue
+              </Button>
+            </div>
+          ) : (
+            <>
+              <form
+                className="flex flex-col gap-4"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <InputAndLabelAndMessage
+                  type="text"
+                  register={register}
+                  placeholder="John Johnson"
+                  name="name"
+                  label="Name"
+                  error={Boolean(errors.name)}
+                  message={errors.name?.message}
+                />
+                <InputAndLabelAndMessage
+                  autocomplete="username"
+                  type="email"
+                  register={register}
+                  placeholder="john@stud.noroff.no"
+                  name="email"
+                  label="Email"
+                  error={Boolean(errors.email)}
+                  message={errors.email?.message}
+                />
+                <InputAndLabelAndMessage
+                  autocomplete="new-password"
+                  type="password"
+                  register={register}
+                  placeholder="********"
+                  name="password"
+                  label="Password"
+                  error={Boolean(errors.password)}
+                  message={errors.password?.message}
+                />
+                <InputAndLabelAndMessage
+                  autocomplete="new-password"
+                  type="password"
+                  register={register}
+                  placeholder="********"
+                  name="confirmPassword"
+                  label="Confirm password"
+                  error={Boolean(errors.confirmPassword)}
+                  message={errors.confirmPassword?.message}
+                />
+                <div className="flex flex-col gap-4 mt-2">
+                  <Button
+                    type="button"
+                    fullWidth={true}
+                    onClick={() => setSubPage("accountType")}
+                    size="xl"
+                    color="white"
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    disabled={!isValid}
+                    type="submit"
+                    fullWidth={true}
+                    size="xl"
+                    color="gray-dark"
+                  >
+                    {apiStatus === "loading" ? (
+                      <div className="spinner-light"></div>
+                    ) : (
+                      "Create account"
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </>
+          )}
+          <p className="text-gray-800 mt-4">
+            Already have a user?{" "}
+            <NavLink
+              to="/login"
+              className="underline text-pink-700 hover:text-pink-800 transition-colors duration-100"
+            >
+              Log in here
+            </NavLink>
+          </p>
+          <ul className="text-red-500 mt-2">
+            {apiErrors &&
+              apiErrors.map((error) => {
+                return <li key={error.message}>{error.message}</li>;
+              })}
+          </ul>
+        </div>
+      </main>
+    </>
   );
 };
 
