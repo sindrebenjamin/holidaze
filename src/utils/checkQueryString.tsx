@@ -1,5 +1,14 @@
 import { Venue } from "../interfaces";
 
+/**
+ * Checks if a query string matches any relevant fields of a given venue.
+ * The relevant fields include the venue's address, name, city, country, continent, and description.
+ *
+ * @param venue - The venue object to be checked against the query string. The venue object should contain location (address, city, country, continent) and description fields.
+ * @param queryString - The query string to be matched against the venue's fields.
+ * @returns True if the query string matches any of the venue's fields, otherwise false.
+ */
+
 export function checkQueryString(venue: Venue, queryString: string) {
   const queryLocation =
     venue.location.address &&
