@@ -5,6 +5,16 @@ interface UseDataReturn<T> {
   status: string;
 }
 
+/**
+ * Fetch data from an API endpoint.
+ *
+ * @function useApi
+ * @param url - The URL of the API endpoint.
+ * @param options - The options for the fetch request.
+ * @returns An object containing the fetched data and the request status.
+ *
+ */
+
 export function useApi<T>(url: string, options: object): UseDataReturn<T> {
   const [data, setData] = useState<T | undefined>(undefined);
   const [status, setStatus] = useState("idle");
