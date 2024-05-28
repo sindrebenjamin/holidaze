@@ -309,7 +309,7 @@ const EditVenuePage = () => {
     },
   ];
 
-  if (status === "loading") {
+  if (status !== "error" && status !== "success") {
     return (
       <main className="min-h-screen flex justify-center items-center">
         <BackButton overrideClasses="absolute top-4 left-4 lg:hidden" />
@@ -342,40 +342,12 @@ const EditVenuePage = () => {
           >
             <div className="lg:hidden flex justify-between items-center pr-4 pl-1 sm:pl-3 mb-6 mt-4 md:hidden">
               <BackButton />
-
-              <Button
-                disabled={
-                  mediaArray.length === 0 ||
-                  priceCheck ||
-                  !watchedFields[0] ||
-                  !watchedFields[1]
-                }
-                type="submit"
-                color="gray-light"
-                size="sm"
-              >
-                Save and update
-              </Button>
             </div>
             <div>
               <div className="flex items-start justify-between">
                 <FormH1 className="mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
                   {data?.data.name}
                 </FormH1>
-                <Button
-                  disabled={
-                    mediaArray.length === 0 ||
-                    priceCheck ||
-                    !watchedFields[0] ||
-                    !watchedFields[1]
-                  }
-                  override="hidden md:block"
-                  type="submit"
-                  color="gray-light"
-                  size="sm"
-                >
-                  Save and update
-                </Button>
               </div>
 
               <div className="lg:hidden">
@@ -396,15 +368,30 @@ const EditVenuePage = () => {
             </ul>
             <div className="px-4 sm:px-6 md:px-0 flex flex-col gap-6 mt-6">
               <Divider />
-              <Button
-                onClick={() => setWarningModalIsOpen(true)}
-                size="lg"
-                color="pink"
-                type="button"
-                override="sm:w-fit"
-              >
-                Delete venue
-              </Button>
+              <div className="flex justify-between items-center">
+                <Button
+                  onClick={() => setWarningModalIsOpen(true)}
+                  size="md"
+                  color="pink"
+                  type="button"
+                  override="sm:w-fit"
+                >
+                  Delete venue
+                </Button>
+                <Button
+                  disabled={
+                    mediaArray.length === 0 ||
+                    priceCheck ||
+                    !watchedFields[0] ||
+                    !watchedFields[1]
+                  }
+                  type="submit"
+                  color="gray-light"
+                  size="md"
+                >
+                  Save and update
+                </Button>
+              </div>
             </div>
           </form>
         </main>
